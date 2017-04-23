@@ -431,7 +431,7 @@ editingComPage = {
 				end
 			end
 			if pad.isPress(KEY_A) then
-				editingComPage.setFace(editingComPage.currentIndex_faceEdit)
+				editingComPage.setFace(editingComPage.currentIndex_faceEdit-1)
 				editingComPage.padLoop()
 			end
 			if pad.isPress(KEY_B) then
