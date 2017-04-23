@@ -33,6 +33,9 @@ display = {
 		if editingItemPage.visible then
 			editingItemPage.display()
 		end
+		if editingIllusionPage.visible then
+			editingIllusionPage.display()
+		end
 		
 		if editingMenuPage.visible then
 			editingMenuPage.display()

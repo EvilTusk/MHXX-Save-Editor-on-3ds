@@ -1,8 +1,12 @@
 COLOR_EDITINGMENUPAGE_FONT = Color.new(255,255,255)
 COLOR_EDITINGMENUPAGE_BACKGROUND = Color.new(0,0,0)
+
 editingMenuPage = {
+
 	visible = false,
+	
 	currentIndex = 1,
+	
 	display = function()
 		----上屏
 		--背景
@@ -22,9 +26,11 @@ editingMenuPage = {
 			{"B","上一层"}
 		}
 	end,
+	
 	padLoop = function()
 		editingComPage.visible = false
 		editingItemPage.visible = false
+		editingIllusionPage.visible = false
 		editingMenuPage.visible = true
 		userSelect.visible = false
 		display.mark.nextMark = {name = userSelect.userStr[userSelect.currentIndex]}
@@ -51,7 +57,7 @@ editingMenuPage = {
 				end
 				--幻化
 				if editingMenuPage.currentIndex==3 then
-					messageBox.show("             对不起 ，暂不支持修改幻化 ！","确认","取消")
+					editingIllusionPage.padLoop()
 				end
 				--护石
 				if editingMenuPage.currentIndex==4 then
