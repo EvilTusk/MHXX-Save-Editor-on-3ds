@@ -161,7 +161,7 @@ sav = {
 							System.deleteFile(path)
 						end
 						messageBox.show("                            删除成功 ！","确认","取消")
-						sav.init()
+						sav.padLoop()
 					end
 				end
 			end
@@ -174,7 +174,7 @@ sav = {
 						local path = "/XXBackup/"..year.."___"..month.."___"..day.."___"..h.."___"..m.."___"..s..".xxsav"
 						sav.export(path)
 						messageBox.show("                            创建成功 ！","确认","取消")
-						sav.init()
+						sav.padLoop()
 					end
 				else
 					if messageBox.show("                    确认要还原该存档吗 ？","确认","取消")=="A" then
