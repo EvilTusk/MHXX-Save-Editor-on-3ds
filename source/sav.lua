@@ -151,6 +151,9 @@ sav = {
 				if sav.displayIndexFirst>#sav.backupFileList-9 then
 					sav.displayIndexFirst = #sav.backupFileList-9
 				end
+				if sav.displayIndexFirst<1 then
+					sav.displayIndexFirst = 1
+				end
 			end
 			if pad.isPress(KEY_X) then
 				if sav.currentIndex~=1 then
