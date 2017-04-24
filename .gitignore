@@ -1,0 +1,4 @@
+*.cia
+*.zip
+*.txt
+!ignore_3dstool.txt

@@ -120,13 +120,13 @@ editingComPage = {
 	end,
 	
 	getFace = function()
-		return buffer.get(offset + 146254)
+		return buffer.get(offset + 146254) + 1
 	end,
 	
 	setFace = function(o)
-		buffer.set(offset+583,o)
-		buffer.set(offset+146254,o)
-		buffer.set(offset+815580,o)
+		buffer.set(offset+583,o-1)
+		buffer.set(offset+146254,o-1)
+		buffer.set(offset+815580,o-1)
 	end,
 
 	toDisplay = {},
@@ -431,7 +431,7 @@ editingComPage = {
 				end
 			end
 			if pad.isPress(KEY_A) then
-				editingComPage.setFace(editingComPage.currentIndex_faceEdit-1)
+				editingComPage.setFace(editingComPage.currentIndex_faceEdit)
 				editingComPage.padLoop()
 			end
 			if pad.isPress(KEY_B) then
