@@ -273,7 +273,7 @@ editingItemPage = {
 						item.rewriteItemBox()
 						messageBox.show("                            添加成功 ！","确认","取消")
 					else
-						messageBox.show("                            添加失败 ！","确认","取消")
+						messageBox.show("                 添加失败 ，箱子可能已满 ！","确认","取消")
 					end
 				end
 			end

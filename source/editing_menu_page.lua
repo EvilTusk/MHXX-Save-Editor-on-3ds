@@ -31,6 +31,7 @@ editingMenuPage = {
 		editingComPage.visible = false
 		editingItemPage.visible = false
 		editingIllusionPage.visible = false
+		editingTalismanPage.visible = false
 		editingMenuPage.visible = true
 		userSelect.visible = false
 		display.mark.nextMark = {name = userSelect.userStr[userSelect.currentIndex]}
@@ -61,7 +62,7 @@ editingMenuPage = {
 				end
 				--护石
 				if editingMenuPage.currentIndex==4 then
-					messageBox.show("             对不起 ，暂不支持修改护石 ！","确认","取消")
+					editingTalismanPage.padLoop()
 				end
 			end
 			if pad.isPress(KEY_B) then

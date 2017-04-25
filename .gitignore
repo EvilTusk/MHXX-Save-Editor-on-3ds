@@ -2,3 +2,4 @@
 *.zip
 *.txt
 !ignore_3dstool.txt
+!使用说明.txt

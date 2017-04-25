@@ -6,7 +6,7 @@ theFont = Font.load(romfsPath.."Deng.ttf")
 Font.setPixelSizes(theFont,12)
 
 
-version = "0.3"
+version = "0.4"
 
 
 COLOR_MAKA = Color.new(0,255,0)
@@ -22,6 +22,7 @@ dofile(romfsPath.."editing_menu_page.lua")
 dofile(romfsPath.."editing_com_page.lua")
 dofile(romfsPath.."editing_item_page.lua")
 dofile(romfsPath.."editing_illusion_page.lua")
+dofile(romfsPath.."editing_talisman_page.lua")
 dofile(romfsPath.."display.lua")
 
 
