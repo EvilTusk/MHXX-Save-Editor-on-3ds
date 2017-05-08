@@ -240,7 +240,7 @@ editingComPage = {
 			if pad.isPress(KEY_A) then
 				--名字
 				if editingComPage.currentIndex==1 then
-					local str = keyboard.get(editingComPage.getHunterName(),10)
+					local str = keyboard.get("修改名字 ：",editingComPage.getHunterName(),10)
 					if str~="" then
 						if messageBox.show("  确认将名字修改为 “"..str.."” ？","确认","取消")=="A" then
 							editingComPage.setHunterName(str)

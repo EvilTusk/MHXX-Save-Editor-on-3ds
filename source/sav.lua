@@ -170,11 +170,13 @@ sav = {
 			end
 			if pad.isPress(KEY_A) then
 				if sav.currentIndex==1 then
-					if messageBox.show("                确认创建一个新的备份吗 ？","确认","取消")=="A" then
+					local week,day,month,year = System.getDate()
+					local h,m,s = System.getTime()
+					local fileName = year.."___"..month.."___"..day.."___"..h.."___"..m.."___"..s
+					fileName = keyboard.get("备份存档名称 ：",fileName,40)
+					if fileName~="" then
+						local path = "/XXBackup/"..fileName..".xxsav"
 						messageBox.toast("                            备份中 ...")
-						local week,day,month,year = System.getDate()
-						local h,m,s = System.getTime()
-						local path = "/XXBackup/"..year.."___"..month.."___"..day.."___"..h.."___"..m.."___"..s..".xxsav"
 						sav.export(path)
 						messageBox.show("                            创建成功 ！","确认","取消")
 						sav.padLoop()
