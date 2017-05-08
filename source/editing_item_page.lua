@@ -1,4 +1,6 @@
 COLOR_EDITINGITEMPAGE_FONT = Color.new(255,255,255)
+COLOR_EDITINGITEMPAGE_SCROLLBAR = Color.new(102,204,255)
+COLOR_EDITINGITEMPAGE_SCROLLLINE = Color.new(128,128,128)
 COLOR_EDITINGITEMPAGE_BACKGROUND = Color.new(0,0,0)
 
 function Dec2Bin(dec,bitNum)
@@ -119,19 +121,28 @@ editingItemPage = {
 	currentIndex = 1,
 	
 	display = function()
+		if editingItemPage.mode==1 then
+			editingItemPage.display_medicAdd()
+			return
+		end
 		if editingItemPage.mode==2 then
-			editingItemPage.display_fastAdd()
+			editingItemPage.display_longrangeAdd()
+			return
+		end
+		if editingItemPage.mode==3 then
+			editingItemPage.display_otherAdd()
 			return
 		end
 		----上屏
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGITEMPAGE_BACKGROUND,TOP_SCREEN)
 		--光标
-		Font.print(theFont,155,50+editingItemPage.currentIndex*40,"=>",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,230,50+editingItemPage.currentIndex*40,"<=",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,155,30+editingItemPage.currentIndex*40,"=>",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,230,30+editingItemPage.currentIndex*40,"<=",COLOR_MAKA,TOP_SCREEN)
 		--字
-		Font.print(theFont,175,90,"选择添加",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,175,130,"快速添加",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,180,70,"消耗品",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,175,110,"远程素材",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,175,150,"其他物品",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
 		----下屏
 		display.hint = {
 			{"↑↓","移动光标"},
@@ -148,17 +159,24 @@ editingItemPage = {
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
-				editingItemPage.currentIndex = 1
+				if editingItemPage.currentIndex>1 then
+					editingItemPage.currentIndex = editingItemPage.currentIndex-1
+				end
 			end
 			if pad.isPress(KEY_DDOWN) then
-				editingItemPage.currentIndex = 2
+				if editingItemPage.currentIndex<3 then
+					editingItemPage.currentIndex = editingItemPage.currentIndex+1
+				end
 			end
 			if pad.isPress(KEY_A) then
 				if editingItemPage.currentIndex==1 then
-					messageBox.show("             对不起 ，暂不支持选择添加 ！","确认","取消")
+					editingItemPage.padLoop_medicAdd()
 				end
 				if editingItemPage.currentIndex==2 then
-					editingItemPage.padLoop_fastAdd()
+					editingItemPage.padLoop_longrangeAdd()
+				end
+				if editingItemPage.currentIndex==3 then
+					editingItemPage.padLoop_otherAdd()
 				end
 			end
 			if pad.isPress(KEY_B) then
@@ -169,7 +187,7 @@ editingItemPage = {
 	end,
 
 
-	fastAddItemList = {
+	medicAddItemList = {
 		{
 			name = "鬼人药G",
 			id = 18
@@ -202,6 +220,350 @@ editingItemPage = {
 			name = "生命大粉尘",
 			id = 32
 		},
+	},
+	
+	currentIndex_medicAdd = 1,
+	displayIndexFirst_medicAdd = 1,
+	
+	display_medicAdd = function()
+		----上屏
+		--背景
+		Screen.fillRect(0,399,0,239,COLOR_EDITINGITEMPAGE_BACKGROUND,TOP_SCREEN)
+		--标题
+		Font.print(theFont,265,10,"添加消耗品 (+99)",COLOR_MAKA,TOP_SCREEN)
+		--光标
+		Font.print(theFont,35,15+20*(editingItemPage.currentIndex_medicAdd-editingItemPage.displayIndexFirst_medicAdd+1),"=>",COLOR_MAKA,TOP_SCREEN)
+		--字
+		for i=1,10 do
+			if i<=#editingItemPage.medicAddItemList then
+				Font.print(theFont,55,15+20*i,editingItemPage.medicAddItemList[editingItemPage.displayIndexFirst_medicAdd+i-1].name,COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+			end
+		end
+		--滑条
+		if #editingItemPage.medicAddItemList>10 then
+			local barLength = math.floor(10 / #editingItemPage.medicAddItemList*192)
+			local barLoc = math.floor((editingItemPage.displayIndexFirst_medicAdd-1)/(#editingItemPage.medicAddItemList-10)*(192-barLength))
+			Screen.fillRect(362,362,35,35+192,COLOR_EDITINGITEMPAGE_SCROLLLINE,TOP_SCREEN)
+			Screen.fillRect(360,364,35+barLoc,35+barLoc+barLength,COLOR_EDITINGITEMPAGE_SCROLLBAR,TOP_SCREEN)
+		end
+		
+		----下屏
+		display.hint = {
+			{"↑↓","移动光标"},
+			{"←→","翻页"},
+			{"A","添加"},
+			{"B","上一层"}
+		}
+	end,
+	
+	padLoop_medicAdd = function()
+		editingItemPage.mode = 1
+		editingItemPage.currentIndex_medicAdd = 1
+		editingItemPage.displayIndexFirst_medicAdd = 1
+		display.mark.nextMark.nextMark.nextMark = {name = "消耗品"}
+		while true do
+			pad.reload()
+			if pad.isPress(KEY_DUP) then
+				if editingItemPage.currentIndex_medicAdd>1 then
+					editingItemPage.currentIndex_medicAdd = editingItemPage.currentIndex_medicAdd-1
+				end
+				if editingItemPage.currentIndex_medicAdd<editingItemPage.displayIndexFirst_medicAdd then
+					editingItemPage.displayIndexFirst_medicAdd = editingItemPage.displayIndexFirst_medicAdd-1
+				end
+			end
+			if pad.isPress(KEY_DDOWN) then
+				if editingItemPage.currentIndex_medicAdd<#editingItemPage.medicAddItemList then
+					editingItemPage.currentIndex_medicAdd = editingItemPage.currentIndex_medicAdd+1
+				end
+				if editingItemPage.currentIndex_medicAdd>(editingItemPage.displayIndexFirst_medicAdd+9) then
+					editingItemPage.displayIndexFirst_medicAdd = editingItemPage.displayIndexFirst_medicAdd+1
+				end
+			end
+			if pad.isPress(KEY_DLEFT) then
+				editingItemPage.currentIndex_medicAdd = editingItemPage.currentIndex_medicAdd-10
+				editingItemPage.displayIndexFirst_medicAdd = editingItemPage.displayIndexFirst_medicAdd-10
+				if editingItemPage.currentIndex_medicAdd<1 then
+					editingItemPage.currentIndex_medicAdd = 1
+				end
+				if editingItemPage.displayIndexFirst_medicAdd<1 then
+					editingItemPage.displayIndexFirst_medicAdd = 1
+				end
+			end
+			if pad.isPress(KEY_DRIGHT) then
+				editingItemPage.currentIndex_medicAdd = editingItemPage.currentIndex_medicAdd+10
+				editingItemPage.displayIndexFirst_medicAdd = editingItemPage.displayIndexFirst_medicAdd+10
+				if editingItemPage.currentIndex_medicAdd>#editingItemPage.medicAddItemList then
+					editingItemPage.currentIndex_medicAdd = #editingItemPage.medicAddItemList
+				end
+				if editingItemPage.displayIndexFirst_medicAdd>#editingItemPage.medicAddItemList-9 then
+					editingItemPage.displayIndexFirst_medicAdd = #editingItemPage.medicAddItemList-9
+				end
+				if editingItemPage.displayIndexFirst_medicAdd<1 then
+					editingItemPage.displayIndexFirst_medicAdd = 1
+				end
+			end
+			if pad.isPress(KEY_A) then
+				if messageBox.show("确认添加99个"..editingItemPage.medicAddItemList[editingItemPage.currentIndex_medicAdd].name.."到你的道具箱吗 ？","确认","取消")=="A" then
+					messageBox.toast(   "                            执行中 ...")
+					if item.addItemToBox(editingItemPage.medicAddItemList[editingItemPage.currentIndex_medicAdd].id,99) then
+						item.rewriteItemBox()
+						messageBox.show("                            添加成功 ！","确认","取消")
+					else
+						messageBox.show("                 添加失败 ，箱子可能已满 ！","确认","取消")
+					end
+				end
+			end
+			if pad.isPress(KEY_B) then
+				editingItemPage.padLoop()
+			end
+			display.refresh()
+		end
+	end,
+
+
+	longrangeAddItemList = {
+		{
+			name = "空心果",
+			id = 98
+		},
+		{
+			name = "空心骨",
+			id = 99
+		},
+		{
+			name = "回复药",
+			id = 9
+		},
+		{
+			name = "砥石",
+			id = 56
+		},
+		{
+			name = "空瓶",
+			id = 207
+		},
+		{
+			name = "药草",
+			id = 272
+		},
+		{
+			name = "火药草",
+			id = 274
+		},
+		{
+			name = "睡眠草",
+			id = 276
+		},
+		{
+			name = "洛阳草之根",
+			id = 279
+		},
+		{
+			name = "降霜草",
+			id = 281
+		},
+		{
+			name = "硝化菇",
+			id = 293
+		},
+		{
+			name = "麻痹菇",
+			id = 294
+		},
+		{
+			name = "毒伞菇",
+			id = 295
+		},
+		{
+			name = "疲劳伞菇",
+			id = 296
+		},
+		{
+			name = "染色果",
+			id = 302
+		},
+		{
+			name = "杀龙果",
+			id = 306
+		},
+		{
+			name = "爆裂核桃",
+			id = 307
+		},
+		{
+			name = "针果",
+			id = 308
+		},
+		{
+			name = "贯通果",
+			id = 309
+		},
+		{
+			name = "扩散果",
+			id = 310
+		},
+		{
+			name = "切味鱼",
+			id = 362
+		},
+		{
+			name = "眠鱼",
+			id = 364
+		},
+		{
+			name = "针金枪鱼",
+			id = 365
+		},
+		{
+			name = "爆裂沙丁鱼",
+			id = 367
+		},
+		{
+			name = "扩散凸眼金鱼",
+			id = 368
+		},
+		{
+			name = "破裂龙鱼",
+			id = 369
+		},
+		{
+			name = "爆裂龙鱼",
+			id = 370
+		},
+		{
+			name = "深水沙丁鱼",
+			id = 375
+		},
+		{
+			name = "苦虫",
+			id = 385
+		},
+		{
+			name = "光虫",
+			id = 386
+		},
+		{
+			name = "龙牙",
+			id = 432
+		},
+		{
+			name = "龙爪",
+			id = 433
+		},
+		{
+			name = "鸟龙种的牙",
+			id = 571
+		},
+		{
+			name = "黄速龙的麻痹牙",
+			id = 603
+		},
+		{
+			name = "红速龙的毒牙",
+			id = 616
+		}
+	},
+	
+	currentIndex_longrangeAdd = 1,
+	displayIndexFirst_longrangeAdd = 1,
+	
+	display_longrangeAdd = function()
+		----上屏
+		--背景
+		Screen.fillRect(0,399,0,239,COLOR_EDITINGITEMPAGE_BACKGROUND,TOP_SCREEN)
+		--标题
+		Font.print(theFont,260,10,"添加远程素材 (+99)",COLOR_MAKA,TOP_SCREEN)
+		--光标
+		Font.print(theFont,35,15+20*(editingItemPage.currentIndex_longrangeAdd-editingItemPage.displayIndexFirst_longrangeAdd+1),"=>",COLOR_MAKA,TOP_SCREEN)
+		--字
+		for i=1,10 do
+			if i<=#editingItemPage.longrangeAddItemList then
+				Font.print(theFont,55,15+20*i,editingItemPage.longrangeAddItemList[editingItemPage.displayIndexFirst_longrangeAdd+i-1].name,COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+			end
+		end
+		--滑条
+		if #editingItemPage.longrangeAddItemList>10 then
+			local barLength = math.floor(10 / #editingItemPage.longrangeAddItemList*192)
+			local barLoc = math.floor((editingItemPage.displayIndexFirst_longrangeAdd-1)/(#editingItemPage.longrangeAddItemList-10)*(192-barLength))
+			Screen.fillRect(362,362,35,35+192,COLOR_EDITINGITEMPAGE_SCROLLLINE,TOP_SCREEN)
+			Screen.fillRect(360,364,35+barLoc,35+barLoc+barLength,COLOR_EDITINGITEMPAGE_SCROLLBAR,TOP_SCREEN)
+		end
+		
+		----下屏
+		display.hint = {
+			{"↑↓","移动光标"},
+			{"←→","翻页"},
+			{"A","添加"},
+			{"B","上一层"}
+		}
+	end,
+	
+	padLoop_longrangeAdd = function()
+		editingItemPage.mode = 2
+		editingItemPage.currentIndex_longrangeAdd = 1
+		editingItemPage.displayIndexFirst_longrangeAdd = 1
+		display.mark.nextMark.nextMark.nextMark = {name = "远程素材"}
+		while true do
+			pad.reload()
+			if pad.isPress(KEY_DUP) then
+				if editingItemPage.currentIndex_longrangeAdd>1 then
+					editingItemPage.currentIndex_longrangeAdd = editingItemPage.currentIndex_longrangeAdd-1
+				end
+				if editingItemPage.currentIndex_longrangeAdd<editingItemPage.displayIndexFirst_longrangeAdd then
+					editingItemPage.displayIndexFirst_longrangeAdd = editingItemPage.displayIndexFirst_longrangeAdd-1
+				end
+			end
+			if pad.isPress(KEY_DDOWN) then
+				if editingItemPage.currentIndex_longrangeAdd<#editingItemPage.longrangeAddItemList then
+					editingItemPage.currentIndex_longrangeAdd = editingItemPage.currentIndex_longrangeAdd+1
+				end
+				if editingItemPage.currentIndex_longrangeAdd>(editingItemPage.displayIndexFirst_longrangeAdd+9) then
+					editingItemPage.displayIndexFirst_longrangeAdd = editingItemPage.displayIndexFirst_longrangeAdd+1
+				end
+			end
+			if pad.isPress(KEY_DLEFT) then
+				editingItemPage.currentIndex_longrangeAdd = editingItemPage.currentIndex_longrangeAdd-10
+				editingItemPage.displayIndexFirst_longrangeAdd = editingItemPage.displayIndexFirst_longrangeAdd-10
+				if editingItemPage.currentIndex_longrangeAdd<1 then
+					editingItemPage.currentIndex_longrangeAdd = 1
+				end
+				if editingItemPage.displayIndexFirst_longrangeAdd<1 then
+					editingItemPage.displayIndexFirst_longrangeAdd = 1
+				end
+			end
+			if pad.isPress(KEY_DRIGHT) then
+				editingItemPage.currentIndex_longrangeAdd = editingItemPage.currentIndex_longrangeAdd+10
+				editingItemPage.displayIndexFirst_longrangeAdd = editingItemPage.displayIndexFirst_longrangeAdd+10
+				if editingItemPage.currentIndex_longrangeAdd>#editingItemPage.longrangeAddItemList then
+					editingItemPage.currentIndex_longrangeAdd = #editingItemPage.longrangeAddItemList
+				end
+				if editingItemPage.displayIndexFirst_longrangeAdd>#editingItemPage.longrangeAddItemList-9 then
+					editingItemPage.displayIndexFirst_longrangeAdd = #editingItemPage.longrangeAddItemList-9
+				end
+				if editingItemPage.displayIndexFirst_longrangeAdd<1 then
+					editingItemPage.displayIndexFirst_longrangeAdd = 1
+				end
+			end
+			if pad.isPress(KEY_A) then
+				if messageBox.show("确认添加99个"..editingItemPage.longrangeAddItemList[editingItemPage.currentIndex_longrangeAdd].name.."到你的道具箱吗 ？","确认","取消")=="A" then
+					messageBox.toast(   "                            执行中 ...")
+					if item.addItemToBox(editingItemPage.longrangeAddItemList[editingItemPage.currentIndex_longrangeAdd].id,99) then
+						item.rewriteItemBox()
+						messageBox.show("                            添加成功 ！","确认","取消")
+					else
+						messageBox.show("                 添加失败 ，箱子可能已满 ！","确认","取消")
+					end
+				end
+			end
+			if pad.isPress(KEY_B) then
+				editingItemPage.padLoop()
+			end
+			display.refresh()
+		end
+	end,
+
+
+	otherAddItemList = {
 		{
 			name = "素材玉",
 			id = 69
@@ -212,64 +574,90 @@ editingItemPage = {
 		}
 	},
 	
-	currentIndex_fastAdd = 1,
+	currentIndex_otherAdd = 1,
+	displayIndexFirst_otherAdd = 1,
 	
-	display_fastAdd = function()
+	display_otherAdd = function()
 		----上屏
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGITEMPAGE_BACKGROUND,TOP_SCREEN)
-		--标签
-		Font.print(theFont,155,40,"快速添加物品 (+99)",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+		--标题
+		Font.print(theFont,260,10,"添加其他物品 (+99)",COLOR_MAKA,TOP_SCREEN)
 		--光标
-		if editingItemPage.currentIndex_fastAdd>=1 and editingItemPage.currentIndex_fastAdd<=5 then
-			Font.print(theFont,110,50+editingItemPage.currentIndex_fastAdd*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
-		if editingItemPage.currentIndex_fastAdd>=6 and editingItemPage.currentIndex_fastAdd<=10 then
-			Font.print(theFont,210,50+(editingItemPage.currentIndex_fastAdd-5)*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
+		Font.print(theFont,35,15+20*(editingItemPage.currentIndex_otherAdd-editingItemPage.displayIndexFirst_otherAdd+1),"=>",COLOR_MAKA,TOP_SCREEN)
 		--字
-		for i=1,5 do
-			Font.print(theFont,130,50+i*20,editingItemPage.fastAddItemList[i].name,COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
-			Font.print(theFont,230,50+i*20,editingItemPage.fastAddItemList[i+5].name,COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+		for i=1,10 do
+			if i<=#editingItemPage.otherAddItemList then
+				Font.print(theFont,55,15+20*i,editingItemPage.otherAddItemList[editingItemPage.displayIndexFirst_otherAdd+i-1].name,COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+			end
 		end
+		--滑条
+		if #editingItemPage.otherAddItemList>10 then
+			local barLength = math.floor(10 / #editingItemPage.otherAddItemList*192)
+			local barLoc = math.floor((editingItemPage.displayIndexFirst_otherAdd-1)/(#editingItemPage.otherAddItemList-10)*(192-barLength))
+			Screen.fillRect(362,362,35,35+192,COLOR_EDITINGITEMPAGE_SCROLLLINE,TOP_SCREEN)
+			Screen.fillRect(360,364,35+barLoc,35+barLoc+barLength,COLOR_EDITINGITEMPAGE_SCROLLBAR,TOP_SCREEN)
+		end
+		
 		----下屏
 		display.hint = {
 			{"↑↓","移动光标"},
+			{"←→","翻页"},
 			{"A","添加"},
 			{"B","上一层"}
 		}
 	end,
 	
-	padLoop_fastAdd = function()
-		editingItemPage.mode = 2
-		editingItemPage.currentIndex_fastAdd = 1
-		display.mark.nextMark.nextMark.nextMark = {name = "快速添加"}
+	padLoop_otherAdd = function()
+		editingItemPage.mode = 3
+		editingItemPage.currentIndex_otherAdd = 1
+		editingItemPage.displayIndexFirst_otherAdd = 1
+		display.mark.nextMark.nextMark.nextMark = {name = "其他物品"}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
-				if editingItemPage.currentIndex_fastAdd>1 then
-					editingItemPage.currentIndex_fastAdd = editingItemPage.currentIndex_fastAdd-1
+				if editingItemPage.currentIndex_otherAdd>1 then
+					editingItemPage.currentIndex_otherAdd = editingItemPage.currentIndex_otherAdd-1
+				end
+				if editingItemPage.currentIndex_otherAdd<editingItemPage.displayIndexFirst_otherAdd then
+					editingItemPage.displayIndexFirst_otherAdd = editingItemPage.displayIndexFirst_otherAdd-1
 				end
 			end
 			if pad.isPress(KEY_DDOWN) then
-				if editingItemPage.currentIndex_fastAdd<10 then
-					editingItemPage.currentIndex_fastAdd = editingItemPage.currentIndex_fastAdd+1
+				if editingItemPage.currentIndex_otherAdd<#editingItemPage.otherAddItemList then
+					editingItemPage.currentIndex_otherAdd = editingItemPage.currentIndex_otherAdd+1
+				end
+				if editingItemPage.currentIndex_otherAdd>(editingItemPage.displayIndexFirst_otherAdd+9) then
+					editingItemPage.displayIndexFirst_otherAdd = editingItemPage.displayIndexFirst_otherAdd+1
 				end
 			end
 			if pad.isPress(KEY_DLEFT) then
-				if editingItemPage.currentIndex_fastAdd>5 then
-					editingItemPage.currentIndex_fastAdd = editingItemPage.currentIndex_fastAdd-5
+				editingItemPage.currentIndex_otherAdd = editingItemPage.currentIndex_otherAdd-10
+				editingItemPage.displayIndexFirst_otherAdd = editingItemPage.displayIndexFirst_otherAdd-10
+				if editingItemPage.currentIndex_otherAdd<1 then
+					editingItemPage.currentIndex_otherAdd = 1
+				end
+				if editingItemPage.displayIndexFirst_otherAdd<1 then
+					editingItemPage.displayIndexFirst_otherAdd = 1
 				end
 			end
 			if pad.isPress(KEY_DRIGHT) then
-				if editingItemPage.currentIndex_fastAdd<6 then
-					editingItemPage.currentIndex_fastAdd = editingItemPage.currentIndex_fastAdd+5
+				editingItemPage.currentIndex_otherAdd = editingItemPage.currentIndex_otherAdd+10
+				editingItemPage.displayIndexFirst_otherAdd = editingItemPage.displayIndexFirst_otherAdd+10
+				if editingItemPage.currentIndex_otherAdd>#editingItemPage.otherAddItemList then
+					editingItemPage.currentIndex_otherAdd = #editingItemPage.otherAddItemList
+				end
+				if editingItemPage.displayIndexFirst_otherAdd>#editingItemPage.otherAddItemList-9 then
+					editingItemPage.displayIndexFirst_otherAdd = #editingItemPage.otherAddItemList-9
+				end
+				if editingItemPage.displayIndexFirst_otherAdd<1 then
+					editingItemPage.displayIndexFirst_otherAdd = 1
 				end
 			end
 			if pad.isPress(KEY_A) then
-				if messageBox.show("   确认添加99个"..editingItemPage.fastAddItemList[editingItemPage.currentIndex_fastAdd].name.."到你的道具箱吗 ？","确认","取消")=="A" then
+				if messageBox.show("确认添加99个"..editingItemPage.otherAddItemList[editingItemPage.currentIndex_otherAdd].name.."到你的道具箱吗 ？","确认","取消")=="A" then
 					messageBox.toast(   "                            执行中 ...")
-					if item.addItemToBox(editingItemPage.fastAddItemList[editingItemPage.currentIndex_fastAdd].id,99) then
+					if item.addItemToBox(editingItemPage.otherAddItemList[editingItemPage.currentIndex_otherAdd].id,99) then
 						item.rewriteItemBox()
 						messageBox.show("                            添加成功 ！","确认","取消")
 					else
