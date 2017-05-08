@@ -10,7 +10,27 @@ editingComPage = {
 	
 	getHunterName = function()
 		local name = string.char(buffer.get(offset+146301,32))
+		for i=1,32 do
+			if string.sub(name,i,i)=="\0" then
+				name = string.sub(name,1,i-1)
+				break
+			end
+		end
 		return name
+	end,
+
+	setHunterName = function(o)
+		if subStringGetTotalIndex(o)>10 then
+			o = subStringUTF8(o,1,10)
+		end
+		local t = {}
+		for i=1,32 do
+			t[i] = string.byte(string.sub(o,i,i))
+			buffer.set(offset + i - 1 , 0)
+			buffer.set(offset + i - 1 + 146301 , 0)
+		end
+		buffer.set(offset , t)
+		buffer.set(offset + 146301 , t)
 	end,
 	
 	getMoney = function()
@@ -220,7 +240,13 @@ editingComPage = {
 			if pad.isPress(KEY_A) then
 				--名字
 				if editingComPage.currentIndex==1 then
-					messageBox.show("             对不起 ，暂不支持修改名字 ！","确认","取消")
+					local str = keyboard.get(editingComPage.getHunterName(),10)
+					if str~="" then
+						if messageBox.show("  确认将名字修改为 “"..str.."” ？","确认","取消")=="A" then
+							editingComPage.setHunterName(str)
+							editingComPage.toDisplayRefresh()
+						end
+					end
 				end
 				--性别
 				if editingComPage.currentIndex==2 then

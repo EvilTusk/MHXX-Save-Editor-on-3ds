@@ -58,6 +58,12 @@ display = {
 		if messageBox.visible then
 			messageBox.display()
 		end
+
+		if keyboard.visible then
+			keyboard.display()
+			Screen.flip()
+			return
+		end
 		
 		--上层标识
 		Font.print(theFont,10,10,display.getMarkStr(display.mark),COLOR_MARK_FONT,TOP_SCREEN)
@@ -70,7 +76,7 @@ display = {
 			Font.print(theFont,150,60+20*i, "：　"..v[2],COLOR_HINT_FONT,BOTTOM_SCREEN)
 		end
 		Font.print(theFont,260,220,"by EvilTusk",COLOR_HINT_TITLE,BOTTOM_SCREEN)
-		
+
 		Screen.flip()
 	end
 }
