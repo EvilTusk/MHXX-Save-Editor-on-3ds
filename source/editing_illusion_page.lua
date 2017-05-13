@@ -53,6 +53,7 @@ editingIllusionPage = {
 			{"A","确定"},
 			{"B","上一层"}
 		}
+		display.explain = "使用方法举例 ：将你要穿戴的防具放在装备箱第一页\n第一格 ,将你需要幻化成的样子的美型防具放在第一页第\n二格 ,使用本页面第一个选项即可完成幻化 。"
 	end,
 	
 	padLoop = function()

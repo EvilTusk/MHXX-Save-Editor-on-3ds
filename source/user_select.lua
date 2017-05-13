@@ -55,6 +55,7 @@ userSelect = {
 			{"A","进入"},
 			{"B","上一层"}
 		}
+		display.explain = "请选择你要进行修改的存档 。"
 	end,
 	
 	padLoop = function()
@@ -80,6 +81,7 @@ userSelect = {
 					messageBox.toast("                            读取中 ...")
 					offset = userSelect.userOffset[userSelect.currentIndex]
 					item.getItemBox()
+					palico.getPalicoZone()
 					editingMenuPage.padLoop()
 				else
 					messageBox.show("                  该位置没有检测到存档 ！","确认","取消")

@@ -12,19 +12,21 @@ editingMenuPage = {
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGMENUPAGE_BACKGROUND,TOP_SCREEN)
 		--光标
-		Font.print(theFont,155,10+editingMenuPage.currentIndex*40,"=>",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,225,10+editingMenuPage.currentIndex*40,"<=",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,155,20+editingMenuPage.currentIndex*30,"=>",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,225,20+editingMenuPage.currentIndex*30,"<=",COLOR_MAKA,TOP_SCREEN)
 		--字
 		Font.print(theFont,185,50,"综合",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,185,90,"物品",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,185,130,"幻化",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,185,170,"护石",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,80,"物品",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,110,"幻化",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,140,"护石",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,170,"猎猫",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
 		----下屏
 		display.hint = {
 			{"↑↓","移动光标"},
 			{"A","进入"},
 			{"B","上一层"}
 		}
+		display.explain = "请选择你要进行的修改类型 。"
 	end,
 	
 	padLoop = function()
@@ -32,6 +34,7 @@ editingMenuPage = {
 		editingItemPage.visible = false
 		editingIllusionPage.visible = false
 		editingTalismanPage.visible = false
+		editingPalicoPage.visible = false
 		editingMenuPage.visible = true
 		userSelect.visible = false
 		display.mark.nextMark = {name = userSelect.userStr[userSelect.currentIndex]}
@@ -43,7 +46,7 @@ editingMenuPage = {
 				end
 			end
 			if pad.isPress(KEY_DDOWN) then
-				if editingMenuPage.currentIndex<4 then
+				if editingMenuPage.currentIndex<5 then
 					editingMenuPage.currentIndex = editingMenuPage.currentIndex+1
 				end
 			end
@@ -63,6 +66,10 @@ editingMenuPage = {
 				--护石
 				if editingMenuPage.currentIndex==4 then
 					editingTalismanPage.padLoop()
+				end
+				--猎猫
+				if editingMenuPage.currentIndex==5 then
+					editingPalicoPage.padLoop()
 				end
 			end
 			if pad.isPress(KEY_B) then

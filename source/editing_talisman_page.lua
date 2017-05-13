@@ -151,6 +151,7 @@ editingTalismanPage = {
 				{"B","上一层"}
 			}
 		end
+		display.explain = "在选择技能时会提示你当前稀有度下 ，对应的该技能\n的[技能1]/[技能2]的理论极限值 ，强行突破造成的后果此\n修改器不承担 。护石会添加到你的装备箱最靠前的空位 。"
 	end,
 
 	padLoop = function()

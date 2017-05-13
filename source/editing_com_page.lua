@@ -79,13 +79,13 @@ editingComPage = {
 	end,
 	
 	setHR = function(o)
-		if o>=13 then
+		if tonumber(o)>=13 then
 			buffer.set(offset+40,math.floor(o%(16*16)))
 			buffer.set(offset+41,math.floor(o/(16*16)))
 		end
 		local hrpts = 29420
 		local i = 13
-		while i<=o do
+		while i<=tonumber(o) do
 			hrpts = hrpts + math.min((i-9) * 70 + 1000, 4010) + math.floor((i-2)/100) * 70
 			i=i+1
 		end
@@ -196,6 +196,12 @@ editingComPage = {
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGCOMPAGE_BACKGROUND,TOP_SCREEN)
 		--光标
 		Font.print(theFont,100,45+editingComPage.currentIndex*20,"=>",COLOR_MAKA,TOP_SCREEN)
+		if editingComPage.currentIndex==3 or editingComPage.currentIndex==4 then
+			Font.print(theFont,225,45+editingComPage.currentIndex*20,"<",COLOR_MAKA,TOP_SCREEN)
+			Font.print(theFont,260,45+editingComPage.currentIndex*20,">",COLOR_MAKA,TOP_SCREEN)
+		else
+			Font.print(theFont,225,45+editingComPage.currentIndex*20,"(A)",COLOR_MAKA,TOP_SCREEN)
+		end
 		--字
 		Font.print(theFont,120,65,"名字",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,65,editingComPage.toDisplay.hunterName,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
@@ -212,11 +218,20 @@ editingComPage = {
 		Font.print(theFont,120,185," ＨＲ ",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,185,editingComPage.toDisplay.hr,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		----下屏
-		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","修改"},
-			{"B","上一层"}
-		}
+		if editingComPage.currentIndex==3 or editingComPage.currentIndex==4 then
+			display.hint = {
+				{"↑↓","移动光标"},
+				{"←→","更改"},
+				{"B","上一层"}
+			}
+		else
+			display.hint = {
+				{"↑↓","移动光标"},
+				{"A","修改"},
+				{"B","上一层"}
+			}
+		end
+		display.explain = "名字修改暂不支持中文 、日文 。\nHR修改请猎人先解禁HR上限 ，避免出现问题 。\n并且不能直接修改为999 。"
 	end,
 	
 	padLoop = function()
@@ -237,6 +252,34 @@ editingComPage = {
 					editingComPage.currentIndex = editingComPage.currentIndex+1
 				end
 			end
+			if pad.isPress(KEY_DLEFT) then
+				if editingComPage.currentIndex==3 then
+					if editingComPage.toDisplay.voice>1 then
+						editingComPage.toDisplay.voice = editingComPage.toDisplay.voice-1
+						editingComPage.setVoice(editingComPage.toDisplay.voice)
+					end
+				end
+				if editingComPage.currentIndex==4 then
+					if editingComPage.toDisplay.face>1 then
+						editingComPage.toDisplay.face = editingComPage.toDisplay.face-1
+						editingComPage.setVoice(editingComPage.toDisplay.face)
+					end
+				end
+			end
+			if pad.isPress(KEY_DRIGHT) then
+				if editingComPage.currentIndex==3 then
+					if editingComPage.toDisplay.voice<20 then
+						editingComPage.toDisplay.voice = editingComPage.toDisplay.voice+1
+						editingComPage.setVoice(editingComPage.toDisplay.voice)
+					end
+				end
+				if editingComPage.currentIndex==4 then
+					if editingComPage.toDisplay.face<18 then
+						editingComPage.toDisplay.face = editingComPage.toDisplay.face+1
+						editingComPage.setVoice(editingComPage.toDisplay.face)
+					end
+				end
+			end
 			if pad.isPress(KEY_A) then
 				--名字
 				if editingComPage.currentIndex==1 then
@@ -252,25 +295,32 @@ editingComPage = {
 				if editingComPage.currentIndex==2 then
 					editingComPage.padLoop_sexEdit()
 				end
-				--声音
-				if editingComPage.currentIndex==3 then
-					editingComPage.padLoop_voiceEdit()
-				end
-				--脸型
-				if editingComPage.currentIndex==4 then
-					editingComPage.padLoop_faceEdit()
-				end
 				--所持金
 				if editingComPage.currentIndex==5 then
-					editingComPage.padLoop_moneyEdit()
+					local money = keyboard.get("请输入金钱 ，不能超过7位数 ：",editingComPage.toDisplay.money,7,ONLY_NUMBER)
+					if money~="" then
+						editingComPage.setMoney(money)
+						editingComPage.toDisplayRefresh()
+					end
 				end
 				--龙历院点数
 				if editingComPage.currentIndex==6 then
-					editingComPage.padLoop_apEdit()
+					local ap = keyboard.get("请输入龙历院点数 ，不能超过7位数 ：",editingComPage.toDisplay.ap,7,ONLY_NUMBER)
+					if ap~="" then
+						editingComPage.setAP(ap)
+						editingComPage.toDisplayRefresh()
+					end
 				end
 				--HR
 				if editingComPage.currentIndex==7 then
-					editingComPage.padLoop_hrEdit()
+					local hr = keyboard.get("请输入HR ，不能超过3位数 ：",editingComPage.toDisplay.hr,3,ONLY_NUMBER)
+					if hr~="" then
+						if hr==999 then
+							hr = 998
+						end
+						editingComPage.setHR(hr)
+						editingComPage.toDisplayRefresh()
+					end
 				end
 			end
 			if pad.isPress(KEY_B) then
@@ -299,6 +349,7 @@ editingComPage = {
 			{"A","确认修改"},
 			{"B","上一层"}
 		}
+		display.explain = "注意 ！修改性别后猎人在进入游戏后会发现存档上标\n注的性别和人物模型的性别不符 ，这属于正常现象 ，在\n游戏中保存一次存档即可正确修改 。"
 	end,
 	
 	padLoop_sexEdit = function()
@@ -323,337 +374,6 @@ editingComPage = {
 			if pad.isPress(KEY_B) then
 				editingComPage.padLoop()
 			end
-		end
-	end,
-
-
-	currentIndex_voiceEdit = 0,
-	
-	display_voiceEdit = function()
-		----上屏
-		--背景
-		Screen.fillRect(0,399,0,239,COLOR_EDITINGCOMPAGE_BACKGROUND,TOP_SCREEN)
-		--光标
-		if editingComPage.currentIndex_voiceEdit>=1 and editingComPage.currentIndex_voiceEdit<=5 then
-			Font.print(theFont,120,50+editingComPage.currentIndex_voiceEdit*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
-		if editingComPage.currentIndex_voiceEdit>=6 and editingComPage.currentIndex_voiceEdit<=10 then
-			Font.print(theFont,160,50+(editingComPage.currentIndex_voiceEdit-5)*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
-		if editingComPage.currentIndex_voiceEdit>=11 and editingComPage.currentIndex_voiceEdit<=15 then
-			Font.print(theFont,200,50+(editingComPage.currentIndex_voiceEdit-10)*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
-		if editingComPage.currentIndex_voiceEdit>=16 and editingComPage.currentIndex_voiceEdit<=20 then
-			Font.print(theFont,240,50+(editingComPage.currentIndex_voiceEdit-15)*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
-		--字
-		for i=1,5 do
-			Font.print(theFont,140,50+i*20,i,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-			Font.print(theFont,180,50+i*20,i+5,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-			Font.print(theFont,220,50+i*20,i+10,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-			Font.print(theFont,260,50+i*20,i+15,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		end
-		----下屏
-		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","确认修改"},
-			{"B","上一层"}
-		}
-	end,
-	
-	padLoop_voiceEdit = function()
-		editingComPage.mode = 3
-		editingComPage.currentIndex_voiceEdit = editingComPage.getVoice()
-		display.mark.nextMark.nextMark.nextMark = {name = "声音"}
-		while true do
-			pad.reload()
-			if pad.isPress(KEY_DUP) then
-				if editingComPage.currentIndex_voiceEdit>1 then
-					editingComPage.currentIndex_voiceEdit = editingComPage.currentIndex_voiceEdit-1
-				end
-			end
-			if pad.isPress(KEY_DDOWN) then
-				if editingComPage.currentIndex_voiceEdit<20 then
-					editingComPage.currentIndex_voiceEdit = editingComPage.currentIndex_voiceEdit+1
-				end
-			end
-			if pad.isPress(KEY_DLEFT) then
-				if editingComPage.currentIndex_voiceEdit>5 then
-					editingComPage.currentIndex_voiceEdit = editingComPage.currentIndex_voiceEdit-5
-				end
-			end
-			if pad.isPress(KEY_DRIGHT) then
-				if editingComPage.currentIndex_voiceEdit<16 then
-					editingComPage.currentIndex_voiceEdit = editingComPage.currentIndex_voiceEdit+5
-				end
-			end
-			if pad.isPress(KEY_A) then
-				editingComPage.setVoice(editingComPage.currentIndex_voiceEdit)
-				editingComPage.padLoop()
-			end
-			if pad.isPress(KEY_B) then
-				editingComPage.padLoop()
-			end
-			display.refresh()
-		end
-	end,
-	
-
-	currentIndex_faceEdit = 0,
-	
-	display_faceEdit = function()
-		----上屏
-		--背景
-		Screen.fillRect(0,399,0,239,COLOR_EDITINGCOMPAGE_BACKGROUND,TOP_SCREEN)
-		--光标
-		if editingComPage.currentIndex_faceEdit>=1 and editingComPage.currentIndex_faceEdit<=6 then
-			Font.print(theFont,130,50+editingComPage.currentIndex_faceEdit*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
-		if editingComPage.currentIndex_faceEdit>=7 and editingComPage.currentIndex_faceEdit<=12 then
-			Font.print(theFont,170,50+(editingComPage.currentIndex_faceEdit-6)*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
-		if editingComPage.currentIndex_faceEdit>=13 and editingComPage.currentIndex_faceEdit<=18 then
-			Font.print(theFont,210,50+(editingComPage.currentIndex_faceEdit-12)*20,"=>",COLOR_MAKA,TOP_SCREEN)
-		end
-		--字
-		for i=1,6 do
-			Font.print(theFont,150,50+i*20,i,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-			Font.print(theFont,190,50+i*20,i+6,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-			Font.print(theFont,230,50+i*20,i+12,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		end
-		----下屏
-		--背景
-		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","确认修改"},
-			{"B","上一层"}
-		}
-	end,
-	
-	padLoop_faceEdit = function()
-		editingComPage.mode = 4
-		editingComPage.currentIndex_faceEdit = editingComPage.getFace()
-		display.mark.nextMark.nextMark.nextMark = {name = "脸型"}
-		while true do
-			pad.reload()
-			if pad.isPress(KEY_DUP) then
-				if editingComPage.currentIndex_faceEdit>1 then
-					editingComPage.currentIndex_faceEdit = editingComPage.currentIndex_faceEdit-1
-				end
-			end
-			if pad.isPress(KEY_DDOWN) then
-				if editingComPage.currentIndex_faceEdit<18 then
-					editingComPage.currentIndex_faceEdit = editingComPage.currentIndex_faceEdit+1
-				end
-			end
-			if pad.isPress(KEY_DLEFT) then
-				if editingComPage.currentIndex_faceEdit>6 then
-					editingComPage.currentIndex_faceEdit = editingComPage.currentIndex_faceEdit-6
-				end
-			end
-			if pad.isPress(KEY_DRIGHT) then
-				if editingComPage.currentIndex_faceEdit<13 then
-					editingComPage.currentIndex_faceEdit = editingComPage.currentIndex_faceEdit+6
-				end
-			end
-			if pad.isPress(KEY_A) then
-				editingComPage.setFace(editingComPage.currentIndex_faceEdit)
-				editingComPage.padLoop()
-			end
-			if pad.isPress(KEY_B) then
-				editingComPage.padLoop()
-			end
-			display.refresh()
-		end
-	end,
-
-
-	currentIndex_moneyEdit = 0,
-	
-	currentMoney = 0,
-	
-	display_moneyEdit = function()
-		----上屏
-		--背景
-		Screen.fillRect(0,399,0,239,COLOR_EDITINGCOMPAGE_BACKGROUND,TOP_SCREEN)
-		--光标
-		Font.print(theFont,120+editingComPage.currentIndex_moneyEdit*20,70,"∧",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,120+editingComPage.currentIndex_moneyEdit*20,130,"∨",COLOR_MAKA,TOP_SCREEN)
-		--字
-		for i=1,7 do
-			Font.print(theFont,120+i*20,100,math.floor((editingComPage.currentMoney)%(10^(8-i))/(10^(7-i))),COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		end
-		----下屏
-		display.hint = {
-			{"←→","移动光标"},
-			{"↑↓","更改数值"},
-			{"A","确认修改"},
-			{"B","上一层"}
-		}
-	end,
-	
-	padLoop_moneyEdit = function()
-		editingComPage.mode = 5
-		editingComPage.currentIndex_moneyEdit = 1
-		editingComPage.currentMoney = editingComPage.getMoney()
-		display.mark.nextMark.nextMark.nextMark = {name = "所持金"}
-		while true do
-			pad.reload()
-			if pad.isPress(KEY_DUP) then
-				if editingComPage.currentMoney + 10^(7-editingComPage.currentIndex_moneyEdit) < 9999999 then
-					editingComPage.currentMoney = editingComPage.currentMoney + 10^(7-editingComPage.currentIndex_moneyEdit)
-				end
-				display.refresh()
-			end
-			if pad.isPress(KEY_DDOWN) then
-				if editingComPage.currentMoney > 10^(7-editingComPage.currentIndex_moneyEdit) then
-					editingComPage.currentMoney = editingComPage.currentMoney - 10^(7-editingComPage.currentIndex_moneyEdit)
-				end
-			end
-			if pad.isPress(KEY_DLEFT) then
-				if editingComPage.currentIndex_moneyEdit>1 then
-					editingComPage.currentIndex_moneyEdit = editingComPage.currentIndex_moneyEdit-1
-				end
-			end
-			if pad.isPress(KEY_DRIGHT) then
-				if editingComPage.currentIndex_moneyEdit<7 then
-					editingComPage.currentIndex_moneyEdit = editingComPage.currentIndex_moneyEdit+1
-				end
-			end
-			if pad.isPress(KEY_A) then
-				editingComPage.setMoney(editingComPage.currentMoney)
-				editingComPage.padLoop()
-			end
-			if pad.isPress(KEY_B) then
-				editingComPage.padLoop()
-			end
-			display.refresh()
-		end
-	end,
-
-
-	currentIndex_apEdit = 0,
-	
-	currentAP = 0,
-	
-	display_apEdit = function()
-		----上屏
-		--背景
-		Screen.fillRect(0,399,0,239,COLOR_EDITINGCOMPAGE_BACKGROUND,TOP_SCREEN)
-		--光标
-		Font.print(theFont,120+editingComPage.currentIndex_apEdit*20,70,"∧",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,120+editingComPage.currentIndex_apEdit*20,130,"∨",COLOR_MAKA,TOP_SCREEN)
-		--字
-		for i=1,7 do
-			Font.print(theFont,120+i*20,100,math.floor((editingComPage.currentAP)%(10^(8-i))/(10^(7-i))),COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		end
-		----下屏
-		display.hint = {
-			{"←→","移动光标"},
-			{"↑↓","更改数值"},
-			{"A","确认修改"},
-			{"B","上一层"}
-		}
-	end,
-	
-	padLoop_apEdit = function()
-		editingComPage.mode = 6
-		editingComPage.currentIndex_apEdit = 1
-		editingComPage.currentAP = editingComPage.getAP()
-		display.mark.nextMark.nextMark.nextMark = {name = "龙历院点数"}
-		while true do
-			pad.reload()
-			if pad.isPress(KEY_DUP) then
-				if editingComPage.currentAP + 10^(7-editingComPage.currentIndex_apEdit) < 9999999 then
-					editingComPage.currentAP = editingComPage.currentAP + 10^(7-editingComPage.currentIndex_apEdit)
-				end
-			end
-			if pad.isPress(KEY_DDOWN) then
-				if editingComPage.currentAP > 10^(7-editingComPage.currentIndex_apEdit) then
-					editingComPage.currentAP = editingComPage.currentAP - 10^(7-editingComPage.currentIndex_apEdit)
-				end
-			end
-			if pad.isPress(KEY_DLEFT) then
-				if editingComPage.currentIndex_apEdit>1 then
-					editingComPage.currentIndex_apEdit = editingComPage.currentIndex_apEdit-1
-				end
-			end
-			if pad.isPress(KEY_DRIGHT) then
-				if editingComPage.currentIndex_apEdit<7 then
-					editingComPage.currentIndex_apEdit = editingComPage.currentIndex_apEdit+1
-				end
-			end
-			if pad.isPress(KEY_A) then
-				editingComPage.setAP(editingComPage.currentAP)
-				editingComPage.padLoop()
-			end
-			if pad.isPress(KEY_B) then
-				editingComPage.padLoop()
-			end
-			display.refresh()
-		end
-	end,
-
-
-	currentIndex_hrEdit = 0,
-	
-	currentHR = 0,
-	
-	display_hrEdit = function()
-		----上屏
-		--背景
-		Screen.fillRect(0,399,0,239,COLOR_EDITINGCOMPAGE_BACKGROUND,TOP_SCREEN)
-		--光标
-		Font.print(theFont,160+editingComPage.currentIndex_hrEdit*20,70,"∧",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,160+editingComPage.currentIndex_hrEdit*20,130,"∨",COLOR_MAKA,TOP_SCREEN)
-		--字
-		for i=1,3 do
-			Font.print(theFont,160+i*20,100,math.floor((editingComPage.currentHR)%(10^(4-i))/(10^(3-i))),COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		end
-		----下屏
-		display.hint = {
-			{"←→","移动光标"},
-			{"↑↓","更改数值"},
-			{"A","确认修改"},
-			{"B","上一层"}
-		}
-	end,
-	
-	padLoop_hrEdit = function()
-		editingComPage.mode = 7
-		editingComPage.currentIndex_hrEdit = 1
-		editingComPage.currentHR = editingComPage.getHR()
-		display.mark.nextMark.nextMark.nextMark = {name = "HR"}
-		while true do
-			pad.reload()
-			if pad.isPress(KEY_DUP) then
-				if editingComPage.currentHR + 10^(3-editingComPage.currentIndex_hrEdit) < 999 then
-					editingComPage.currentHR = editingComPage.currentHR + 10^(3-editingComPage.currentIndex_hrEdit)
-				end
-			end
-			if pad.isPress(KEY_DDOWN) then
-				if editingComPage.currentHR > 10^(3-editingComPage.currentIndex_hrEdit) then
-					editingComPage.currentHR = editingComPage.currentHR - 10^(3-editingComPage.currentIndex_hrEdit)
-				end
-			end
-			if pad.isPress(KEY_DLEFT) then
-				if editingComPage.currentIndex_hrEdit>1 then
-					editingComPage.currentIndex_hrEdit = editingComPage.currentIndex_hrEdit-1
-				end
-			end
-			if pad.isPress(KEY_DRIGHT) then
-				if editingComPage.currentIndex_hrEdit<3 then
-					editingComPage.currentIndex_hrEdit = editingComPage.currentIndex_hrEdit+1
-				end
-			end
-			if pad.isPress(KEY_A) then
-				editingComPage.setHR(editingComPage.currentHR)
-				editingComPage.padLoop()
-			end
-			if pad.isPress(KEY_B) then
-				editingComPage.padLoop()
-			end
-			display.refresh()
 		end
 	end
 }

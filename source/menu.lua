@@ -23,6 +23,7 @@ menu = {
 			{"A","进入"},
 			{"START","退出"}
 		}
+		display.explain = "欢迎使用MHXX存档修改器3DS ！\n修改完毕后请回到此页面进行保存 ，以让你的修改生效\n修改前还请先备份存档 ，以免发生意外 。"
 	end,
 	
 	padLoop = function()

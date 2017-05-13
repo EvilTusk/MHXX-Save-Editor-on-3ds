@@ -149,6 +149,7 @@ editingItemPage = {
 			{"A","进入"},
 			{"B","上一层"}
 		}
+		display.explain = "暂不支持在所有物品的列表随意选择进行添加 。"
 	end,
 	
 	padLoop = function()
@@ -254,6 +255,7 @@ editingItemPage = {
 			{"A","添加"},
 			{"B","上一层"}
 		}
+		display.explain = "物品会被添加到你道具箱里最靠前的空位 。"
 	end,
 	
 	padLoop_medicAdd = function()
@@ -496,6 +498,7 @@ editingItemPage = {
 			{"A","添加"},
 			{"B","上一层"}
 		}
+		display.explain = "物品会被添加到你道具箱里最靠前的空位 。"
 	end,
 	
 	padLoop_longrangeAdd = function()
@@ -606,6 +609,7 @@ editingItemPage = {
 			{"A","添加"},
 			{"B","上一层"}
 		}
+		display.explain = "物品会被添加到你道具箱里最靠前的空位 。"
 	end,
 	
 	padLoop_otherAdd = function()

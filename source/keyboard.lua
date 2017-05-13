@@ -2,6 +2,9 @@ COLOR_TYPING_FONT = Color.new(255,255,255)
 COLOR_TYPING_BACKGROUND = Color.new(0,0,0)
 COLOR_TYPING_UNDETLINE = Color.new(128,128,128)
 
+ALL_SUPPORT = 0
+ONLY_NUMBER = 1
+
 keyboard = {
 	displayText = "",
 	title = "",
@@ -29,7 +32,8 @@ keyboard = {
 		Screen.fillRect(45,354,65,66,COLOR_TYPING_UNDETLINE,TOP_SCREEN)
 	end,
 
-	get = function(title,initText,maxLength)
+	get = function(title,initText,maxLength,mode)
+		mode = mode or ALL_SUPPORT
 		keyboard.visible = true
 		Keyboard.setText(initText)
 		keyboard.displayText = initText
@@ -44,9 +48,21 @@ keyboard = {
 				if kbState ~= NOT_PRESSED then
 					if kbState == PRESSED then
 						keyboard.displayText = Keyboard.getInput()
-						if subStringGetTotalIndex(keyboard.displayText) > maxLength then
-							keyboard.displayText = subStringUTF8(keyboard.displayText,1,maxLength)
-							Keyboard.setText(keyboard.displayText)
+						keyboard.displayText = subStringUTF8(tostring(keyboard.displayText),1,maxLength)
+						Keyboard.setText(keyboard.displayText)
+						if mode == ONLY_NUMBER then
+							local len = string.len(keyboard.displayText)
+							if len ~= 0 then
+								local b = string.byte(string.sub(keyboard.displayText,-1,-1))
+								if b < 48 or b > 57 then
+									if len > 1 then
+										keyboard.displayText = string.sub(keyboard.displayText,1,-2)
+									else
+										keyboard.displayText = ""
+									end
+									Keyboard.setText(keyboard.displayText)
+								end
+							end
 						end
 					end
 					if kbState == CLEANED then
