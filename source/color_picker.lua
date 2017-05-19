@@ -12,7 +12,7 @@ colorPicker = {
 	beforeColor = {},
 	currentColor = {},
 	bright = 128,
-	colorLoc = {},
+	colorLoc = { x=8, y=28 },
 
 	deckLoc = { x=8, y=28 },
 	brightLoc = { x=8, y=186 },
@@ -29,12 +29,10 @@ colorPicker = {
 		Font.print(theFont,130,130,"现在 ：",COLOR_COLORPICKER_FONT,TOP_SCREEN)
 		Screen.fillRect(239,271,124,156,COLOR_COLORPICKER_COLORBACKGROUND,TOP_SCREEN)
 		Screen.fillRect(240,270,125,155,Color.new(table.unpack(colorPicker.currentColor)),TOP_SCREEN)
-		if colorPicker.colorLoc.x~=nil and colorPicker.colorLoc.y~=nil then
-			Screen.fillRect(colorPicker.colorLoc.x  ,colorPicker.colorLoc.x  ,colorPicker.colorLoc.y-6,colorPicker.colorLoc.y-3,Color.new(0,0,0),BOTTOM_SCREEN)
-			Screen.fillRect(colorPicker.colorLoc.x  ,colorPicker.colorLoc.x  ,colorPicker.colorLoc.y+3,colorPicker.colorLoc.y+6,Color.new(0,0,0),BOTTOM_SCREEN)
-			Screen.fillRect(colorPicker.colorLoc.x-6,colorPicker.colorLoc.x-3,colorPicker.colorLoc.y  ,colorPicker.colorLoc.y  ,Color.new(0,0,0),BOTTOM_SCREEN)
-			Screen.fillRect(colorPicker.colorLoc.x+3,colorPicker.colorLoc.x+6,colorPicker.colorLoc.y  ,colorPicker.colorLoc.y  ,Color.new(0,0,0),BOTTOM_SCREEN)
-		end
+		Screen.fillRect(colorPicker.colorLoc.x  ,colorPicker.colorLoc.x  ,colorPicker.colorLoc.y-6,colorPicker.colorLoc.y-3,Color.new(0,0,0),BOTTOM_SCREEN)
+		Screen.fillRect(colorPicker.colorLoc.x  ,colorPicker.colorLoc.x  ,colorPicker.colorLoc.y+3,colorPicker.colorLoc.y+6,Color.new(0,0,0),BOTTOM_SCREEN)
+		Screen.fillRect(colorPicker.colorLoc.x-6,colorPicker.colorLoc.x-3,colorPicker.colorLoc.y  ,colorPicker.colorLoc.y  ,Color.new(0,0,0),BOTTOM_SCREEN)
+		Screen.fillRect(colorPicker.colorLoc.x+3,colorPicker.colorLoc.x+6,colorPicker.colorLoc.y  ,colorPicker.colorLoc.y  ,Color.new(0,0,0),BOTTOM_SCREEN)
 		Screen.fillRect(colorPicker.brightLoc.x+colorPicker.bright,colorPicker.brightLoc.x+colorPicker.bright,colorPicker.brightLoc.y+20+1,colorPicker.brightLoc.y+20+6,Color.new(0,0,0),BOTTOM_SCREEN)
 	end,
 	
@@ -88,7 +86,7 @@ colorPicker = {
 					colorPicker.colorLoc.x = x
 					colorPicker.colorLoc.y = y
 					local bmp = Graphics.loadImage(romfsPath.."color_picker.bmp")
-					local p = Graphics.getPixel(x,y,bmp)
+					local p = Graphics.getPixel(colorPicker.colorLoc.x,colorPicker.colorLoc.y,bmp)
 					local r,g,b
 					if colorPicker.bright>=128 then
 						l = colorPicker.bright-128
@@ -107,6 +105,23 @@ colorPicker = {
 				end
 				if x>=colorPicker.brightLoc.x and x<=colorPicker.brightLoc.x+255 and y>=colorPicker.brightLoc.y and y<=colorPicker.brightLoc.y+20 then
 					colorPicker.bright = x-colorPicker.brightLoc.x
+					local bmp = Graphics.loadImage(romfsPath.."color_picker.bmp")
+					local p = Graphics.getPixel(colorPicker.colorLoc.x,colorPicker.colorLoc.y,bmp)
+					local r,g,b
+					if colorPicker.bright>=128 then
+						l = colorPicker.bright-128
+						r = Color.getR(p)+math.floor((255-Color.getR(p))*(l/128))
+						g = Color.getG(p)+math.floor((255-Color.getG(p))*(l/128))
+						b = Color.getB(p)+math.floor((255-Color.getB(p))*(l/128))
+					end
+					if colorPicker.bright<=127 then
+						l = 127-colorPicker.bright
+						r = Color.getR(p)-math.floor((Color.getR(p))*(l/128))
+						g = Color.getG(p)-math.floor((Color.getG(p))*(l/128))
+						b = Color.getB(p)-math.floor((Color.getB(p))*(l/128))
+					end
+					Graphics.freeImage(bmp)
+					colorPicker.currentColor = { r, g, b }
 				end
 			end
 			if pad.isPress(KEY_A) then
