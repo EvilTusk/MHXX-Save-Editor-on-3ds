@@ -5,7 +5,6 @@ COLOR_EDITINGTALISMANPAGE_BACKGROUND = Color.new(0,0,0)
 
 MAX_RAM_ALLOCATION = 10485760
 
-dofile(romfsPath.."skill_list.lua")
 
 editingTalismanPage = {
 

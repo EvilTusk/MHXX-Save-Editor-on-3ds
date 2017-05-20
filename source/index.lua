@@ -6,7 +6,7 @@ theFont = Font.load(romfsPath.."Deng.ttf")
 Font.setPixelSizes(theFont,12)
 
 
-version = "0.50"
+version = "0.51"
 
 
 COLOR_MAKA = Color.new(0,255,0)
@@ -27,6 +27,7 @@ dofile(romfsPath.."message_box.lua")
 dofile(romfsPath.."pad.lua")
 dofile(romfsPath.."sav.lua")
 dofile(romfsPath.."skill_list.lua")
+dofile(romfsPath.."skill_list_palico.lua")
 dofile(romfsPath.."user_select.lua")
 
 offset = 0
