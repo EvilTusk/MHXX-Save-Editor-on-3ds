@@ -13,20 +13,20 @@ editingMenuPage = {
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGMENUPAGE_BACKGROUND,TOP_SCREEN)
 		--光标
 		Font.print(theFont,155,20+editingMenuPage.currentIndex*30,"=>",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,225,20+editingMenuPage.currentIndex*30,"<=",COLOR_MAKA,TOP_SCREEN)
+		--Font.print(theFont,225,20+editingMenuPage.currentIndex*30,"<=",COLOR_MAKA,TOP_SCREEN)
 		--字
-		Font.print(theFont,185,50,"综合",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,185,80,"物品",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,185,110,"幻化",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,185,140,"护石",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,185,170,"猎猫",COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,50,TEXT_EDITINGMENUPAGE[1],COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,80,TEXT_EDITINGMENUPAGE[2],COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,110,TEXT_EDITINGMENUPAGE[3],COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,140,TEXT_EDITINGMENUPAGE[4],COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,185,170,TEXT_EDITINGMENUPAGE[5],COLOR_EDITINGMENUPAGE_FONT,TOP_SCREEN)
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","进入"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"A",TEXT_ENTER},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "请选择你要进行的修改类型 。"
+		display.explain = TEXT_EDITINGMENUPAGE_E
 	end,
 	
 	padLoop = function()
@@ -37,7 +37,7 @@ editingMenuPage = {
 		editingPalicoPage.visible = false
 		editingMenuPage.visible = true
 		userSelect.visible = false
-		display.mark.nextMark = {name = userSelect.userStr[userSelect.currentIndex]}
+		display.mark.nextMark = {name = TEXT_USERSELECT[userSelect.currentIndex]}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then

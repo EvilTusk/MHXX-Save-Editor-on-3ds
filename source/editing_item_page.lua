@@ -138,25 +138,25 @@ editingItemPage = {
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGITEMPAGE_BACKGROUND,TOP_SCREEN)
 		--光标
 		Font.print(theFont,155,30+editingItemPage.currentIndex*40,"=>",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,230,30+editingItemPage.currentIndex*40,"<=",COLOR_MAKA,TOP_SCREEN)
+		--Font.print(theFont,230,30+editingItemPage.currentIndex*40,"<=",COLOR_MAKA,TOP_SCREEN)
 		--字
-		Font.print(theFont,180,70,"消耗品",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,175,110,"远程素材",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,175,150,"其他物品",COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,175,70,TEXT_EDITINGITEMPAGE[1],COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,175,110,TEXT_EDITINGITEMPAGE[2],COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,175,150,TEXT_EDITINGITEMPAGE[3],COLOR_EDITINGITEMPAGE_FONT,TOP_SCREEN)
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","进入"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"A",TEXT_ENTER},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "暂不支持在所有物品的列表随意选择进行添加 。"
+		display.explain = TEXT_EDITINGITEMPAGE_E
 	end,
 	
 	padLoop = function()
 		editingItemPage.mode = 0
 		editingItemPage.visible = true
 		editingMenuPage.visible = false
-		display.mark.nextMark.nextMark = {name = "物品"}
+		display.mark.nextMark.nextMark = {name = TEXT_EDITINGITEMPAGE_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -190,35 +190,27 @@ editingItemPage = {
 
 	medicAddItemList = {
 		{
-			name = "鬼人药G",
 			id = 18
 		},
 		{
-			name = "硬化药G",
 			id = 21
 		},
 		{
-			name = "强走药G",
 			id = 16
 		},
 		{
-			name = "怪力之种",
 			id = 303
 		},
 		{
-			name = "忍耐之种",
 			id = 304
 		},
 		{
-			name = "秘药",
 			id = 28
 		},
 		{
-			name = "古代秘药",
 			id = 29
 		},
 		{
-			name = "生命大粉尘",
 			id = 32
 		},
 	},
@@ -231,7 +223,7 @@ editingItemPage = {
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGITEMPAGE_BACKGROUND,TOP_SCREEN)
 		--标题
-		Font.print(theFont,265,10,"添加消耗品 (+99)",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,265,10,TEXT_EDITINGITEMPAGE_MEDICADD[1],COLOR_MAKA,TOP_SCREEN)
 		--光标
 		Font.print(theFont,35,15+20*(editingItemPage.currentIndex_medicAdd-editingItemPage.displayIndexFirst_medicAdd+1),"=>",COLOR_MAKA,TOP_SCREEN)
 		--字
@@ -250,19 +242,19 @@ editingItemPage = {
 		
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"←→","翻页"},
-			{"A","添加"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"←→",TEXT_PAGETURN},
+			{"A",TEXT_ADD},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "物品会被添加到你道具箱里最靠前的空位 。"
+		display.explain = TEXT_EDITINGITEMPAGE_ALLADD_E
 	end,
 	
 	padLoop_medicAdd = function()
 		editingItemPage.mode = 1
 		editingItemPage.currentIndex_medicAdd = 1
 		editingItemPage.displayIndexFirst_medicAdd = 1
-		display.mark.nextMark.nextMark.nextMark = {name = "消耗品"}
+		display.mark.nextMark.nextMark.nextMark = {name = TEXT_EDITINGITEMPAGE_MEDICADD_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -305,13 +297,13 @@ editingItemPage = {
 				end
 			end
 			if pad.isPress(KEY_A) then
-				if messageBox.show("确认添加99个"..editingItemPage.medicAddItemList[editingItemPage.currentIndex_medicAdd].name.."到你的道具箱吗 ？","确认","取消")=="A" then
-					messageBox.toast(   "                            执行中 ...")
+				if messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[1]..editingItemPage.medicAddItemList[editingItemPage.currentIndex_medicAdd].name..TEXT_EDITINGITEMPAGE_ALLADD_O[2],TEXT_OK,TEXT_CANCEL)=="A" then
+					messageBox.toast(TEXT_EDITINGITEMPAGE_ALLADD_O[3])
 					if item.addItemToBox(editingItemPage.medicAddItemList[editingItemPage.currentIndex_medicAdd].id,99) then
 						item.rewriteItemBox()
-						messageBox.show("                            添加成功 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[4],TEXT_OK,TEXT_CANCEL)
 					else
-						messageBox.show("                 添加失败 ，箱子可能已满 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[5],TEXT_OK,TEXT_CANCEL)
 					end
 				end
 			end
@@ -325,143 +317,108 @@ editingItemPage = {
 
 	longrangeAddItemList = {
 		{
-			name = "空心果",
 			id = 98
 		},
 		{
-			name = "空心骨",
 			id = 99
 		},
 		{
-			name = "回复药",
 			id = 9
 		},
 		{
-			name = "砥石",
 			id = 56
 		},
 		{
-			name = "空瓶",
 			id = 207
 		},
 		{
-			name = "药草",
 			id = 272
 		},
 		{
-			name = "火药草",
 			id = 274
 		},
 		{
-			name = "睡眠草",
 			id = 276
 		},
 		{
-			name = "洛阳草之根",
 			id = 279
 		},
 		{
-			name = "降霜草",
 			id = 281
 		},
 		{
-			name = "硝化菇",
 			id = 293
 		},
 		{
-			name = "麻痹菇",
 			id = 294
 		},
 		{
-			name = "毒伞菇",
 			id = 295
 		},
 		{
-			name = "疲劳伞菇",
 			id = 296
 		},
 		{
-			name = "染色果",
 			id = 302
 		},
 		{
-			name = "杀龙果",
 			id = 306
 		},
 		{
-			name = "爆裂核桃",
 			id = 307
 		},
 		{
-			name = "针果",
 			id = 308
 		},
 		{
-			name = "贯通果",
 			id = 309
 		},
 		{
-			name = "扩散果",
 			id = 310
 		},
 		{
-			name = "切味鱼",
 			id = 362
 		},
 		{
-			name = "眠鱼",
 			id = 364
 		},
 		{
-			name = "针金枪鱼",
 			id = 365
 		},
 		{
-			name = "爆裂沙丁鱼",
 			id = 367
 		},
 		{
-			name = "扩散凸眼金鱼",
 			id = 368
 		},
 		{
-			name = "破裂龙鱼",
 			id = 369
 		},
 		{
-			name = "爆裂龙鱼",
 			id = 370
 		},
 		{
-			name = "深水沙丁鱼",
 			id = 375
 		},
 		{
-			name = "苦虫",
 			id = 385
 		},
 		{
-			name = "光虫",
 			id = 386
 		},
 		{
-			name = "龙牙",
 			id = 432
 		},
 		{
-			name = "龙爪",
 			id = 433
 		},
 		{
-			name = "鸟龙种的牙",
 			id = 571
 		},
 		{
-			name = "黄速龙的麻痹牙",
 			id = 603
 		},
 		{
-			name = "红速龙的毒牙",
 			id = 616
 		}
 	},
@@ -474,7 +431,7 @@ editingItemPage = {
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGITEMPAGE_BACKGROUND,TOP_SCREEN)
 		--标题
-		Font.print(theFont,260,10,"添加远程素材 (+99)",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,260,10,TEXT_EDITINGITEMPAGE_LONGRANGEADD[1],COLOR_MAKA,TOP_SCREEN)
 		--光标
 		Font.print(theFont,35,15+20*(editingItemPage.currentIndex_longrangeAdd-editingItemPage.displayIndexFirst_longrangeAdd+1),"=>",COLOR_MAKA,TOP_SCREEN)
 		--字
@@ -493,19 +450,19 @@ editingItemPage = {
 		
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"←→","翻页"},
-			{"A","添加"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"←→",TEXT_PAGETURN},
+			{"A",TEXT_ADD},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "物品会被添加到你道具箱里最靠前的空位 。"
+		display.explain = TEXT_EDITINGITEMPAGE_ALLADD_E
 	end,
 	
 	padLoop_longrangeAdd = function()
 		editingItemPage.mode = 2
 		editingItemPage.currentIndex_longrangeAdd = 1
 		editingItemPage.displayIndexFirst_longrangeAdd = 1
-		display.mark.nextMark.nextMark.nextMark = {name = "远程素材"}
+		display.mark.nextMark.nextMark.nextMark = {name = TEXT_EDITINGITEMPAGE_LONGRANGEADD_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -548,13 +505,13 @@ editingItemPage = {
 				end
 			end
 			if pad.isPress(KEY_A) then
-				if messageBox.show("确认添加99个"..editingItemPage.longrangeAddItemList[editingItemPage.currentIndex_longrangeAdd].name.."到你的道具箱吗 ？","确认","取消")=="A" then
-					messageBox.toast(   "                            执行中 ...")
+				if messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[1]..editingItemPage.longrangeAddItemList[editingItemPage.currentIndex_longrangeAdd].name..TEXT_EDITINGITEMPAGE_ALLADD_O[2],TEXT_OK,TEXT_CANCEL)=="A" then
+					messageBox.toast(TEXT_EDITINGITEMPAGE_ALLADD_O[3])
 					if item.addItemToBox(editingItemPage.longrangeAddItemList[editingItemPage.currentIndex_longrangeAdd].id,99) then
 						item.rewriteItemBox()
-						messageBox.show("                            添加成功 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[4],TEXT_OK,TEXT_CANCEL)
 					else
-						messageBox.show("                 添加失败 ，箱子可能已满 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[5],TEXT_OK,TEXT_CANCEL)
 					end
 				end
 			end
@@ -568,11 +525,9 @@ editingItemPage = {
 
 	otherAddItemList = {
 		{
-			name = "素材玉",
 			id = 69
 		},
 		{
-			name = "增殖稿",
 			id = 449
 		}
 	},
@@ -585,7 +540,7 @@ editingItemPage = {
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGITEMPAGE_BACKGROUND,TOP_SCREEN)
 		--标题
-		Font.print(theFont,260,10,"添加其他物品 (+99)",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,260,10,TEXT_EDITINGITEMPAGE_OTHERADD[1],COLOR_MAKA,TOP_SCREEN)
 		--光标
 		Font.print(theFont,35,15+20*(editingItemPage.currentIndex_otherAdd-editingItemPage.displayIndexFirst_otherAdd+1),"=>",COLOR_MAKA,TOP_SCREEN)
 		--字
@@ -604,19 +559,19 @@ editingItemPage = {
 		
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"←→","翻页"},
-			{"A","添加"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"←→",TEXT_PAGETURN},
+			{"A",TEXT_ADD},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "物品会被添加到你道具箱里最靠前的空位 。"
+		display.explain = TEXT_EDITINGITEMPAGE_ALLADD_E
 	end,
 	
 	padLoop_otherAdd = function()
 		editingItemPage.mode = 3
 		editingItemPage.currentIndex_otherAdd = 1
 		editingItemPage.displayIndexFirst_otherAdd = 1
-		display.mark.nextMark.nextMark.nextMark = {name = "其他物品"}
+		display.mark.nextMark.nextMark.nextMark = {name = TEXT_EDITINGITEMPAGE_OTHERADD_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -659,13 +614,13 @@ editingItemPage = {
 				end
 			end
 			if pad.isPress(KEY_A) then
-				if messageBox.show("确认添加99个"..editingItemPage.otherAddItemList[editingItemPage.currentIndex_otherAdd].name.."到你的道具箱吗 ？","确认","取消")=="A" then
-					messageBox.toast(   "                            执行中 ...")
+				if messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[1]..editingItemPage.otherAddItemList[editingItemPage.currentIndex_otherAdd].name..TEXT_EDITINGITEMPAGE_ALLADD_O[2],TEXT_OK,TEXT_CANCEL)=="A" then
+					messageBox.toast(TEXT_EDITINGITEMPAGE_ALLADD_O[3])
 					if item.addItemToBox(editingItemPage.otherAddItemList[editingItemPage.currentIndex_otherAdd].id,99) then
 						item.rewriteItemBox()
-						messageBox.show("                            添加成功 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[4],TEXT_OK,TEXT_CANCEL)
 					else
-						messageBox.show("                 添加失败 ，箱子可能已满 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGITEMPAGE_ALLADD_O[5],TEXT_OK,TEXT_CANCEL)
 					end
 				end
 			end

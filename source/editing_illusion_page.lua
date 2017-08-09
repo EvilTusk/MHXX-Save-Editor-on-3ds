@@ -28,39 +28,31 @@ editingIllusionPage = {
 		end
 	end,
 
-	displayText = {
-		"将第①格防具幻化为第②格防具的外形",
-		"将第③格防具幻化为第④格防具的外形",
-		"将第⑤格防具幻化为第⑥格防具的外形",
-		"将第⑦格防具幻化为第⑧格防具的外形",
-		"将第⑨格防具幻化为第⑩格防具的外形"
-	},
-	
 	display = function()
 		----上屏
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_ILLUSIONPAGE_BACKGROUND,TOP_SCREEN)
 		--光标
 		Font.print(theFont,85,20+editingIllusionPage.currentIndex*30,"=>",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,300,20+editingIllusionPage.currentIndex*30,"<=",COLOR_MAKA,TOP_SCREEN)
+		--Font.print(theFont,300,20+editingIllusionPage.currentIndex*30,"<=",COLOR_MAKA,TOP_SCREEN)
 		--字
 		for i=1,5 do
-			Font.print(theFont,105,20+i*30,editingIllusionPage.displayText[i],COLOR_ILLUSIONPAGE_FONT,TOP_SCREEN)
+			Font.print(theFont,105,20+i*30,TEXT_EDITINGILLUSIONPAGE[i],COLOR_ILLUSIONPAGE_FONT,TOP_SCREEN)
 		end
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","确定"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"A",TEXT_OK},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "使用方法举例 ：将你要穿戴的防具放在装备箱第一页\n第一格 ,将你需要幻化成的样子的美型防具放在第一页第\n二格 ,使用本页面第一个选项即可完成幻化 。"
+		display.explain = TEXT_EDITINGILLUSIONPAGE_E
 	end,
 	
 	padLoop = function()
 		editingIllusionPage.currentIndex = 1
 		editingIllusionPage.visible = true
 		editingMenuPage.visible = false
-		display.mark.nextMark.nextMark = {name = "幻化"}
+		display.mark.nextMark.nextMark = {name = TEXT_EDITINGILLUSIONPAGE_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -74,12 +66,12 @@ editingIllusionPage = {
 				end
 			end
 			if pad.isPress(KEY_A) then
-				if messageBox.show(" 确认"..editingIllusionPage.displayText[editingIllusionPage.currentIndex].." ？","确认","取消")=="A" then
-					messageBox.toast("                            幻化中 ...")
+				if messageBox.show(TEXT_EDITINGILLUSIONPAGE_O[1]..TEXT_EDITINGILLUSIONPAGE[editingIllusionPage.currentIndex]..TEXT_EDITINGILLUSIONPAGE_O[2],TEXT_OK,TEXT_CANCEL)=="A" then
+					messageBox.toast(TEXT_EDITINGILLUSIONPAGE_O[3])
 					if editingIllusionPage.setIllusion( editingIllusionPage.currentIndex*2 - 1    ,    editingIllusionPage.currentIndex*2 ) then
-						messageBox.show("                            幻化成功 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGILLUSIONPAGE_O[4],TEXT_OK,TEXT_CANCEL)
 					else
-						messageBox.show("                  幻化失败 ，请放好防具 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGILLUSIONPAGE_O[5],TEXT_OK,TEXT_CANCEL)
 					end
 				end
 			end

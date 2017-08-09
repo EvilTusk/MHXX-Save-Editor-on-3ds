@@ -33,9 +33,9 @@ palico = {
 			lv =                       buffer.get(offset + palico.zoneOffset + o*byteNum + 36) + 1,
 			kind =                     buffer.get(offset + palico.zoneOffset + o*byteNum + 37) + 1,
 			object =                   buffer.get(offset + palico.zoneOffset + o*byteNum + 39) + 1,
-			ability =                { buffer.get(offset + palico.zoneOffset + o*byteNum + 56  , 16) },
+			support =                { buffer.get(offset + palico.zoneOffset + o*byteNum + 56  , 16) },
 			skill =                  { buffer.get(offset + palico.zoneOffset + o*byteNum + 72  , 12) },
-			abilityTree =            { buffer.get(offset + palico.zoneOffset + o*byteNum + 84  , 2 ) },
+			supportTree =            { buffer.get(offset + palico.zoneOffset + o*byteNum + 84  , 2 ) },
 			skillTree =              { buffer.get(offset + palico.zoneOffset + o*byteNum + 86  , 2 ) },
 			nameGiver =   string.char( buffer.get(offset + palico.zoneOffset + o*byteNum + 156 , 32) ),
 			formerOwner = string.char( buffer.get(offset + palico.zoneOffset + o*byteNum + 188 , 32) ),
@@ -62,9 +62,9 @@ palico = {
 			end
 		end
 		for i=1,16 do
-			if detail.ability[i]==P_ABILITY_NULL then
+			if detail.support[i]==P_SUPPORT_NULL then
 				for i2=i,16 do
-					table.remove(detail.ability,i)
+					table.remove(detail.support,i)
 				end
 				break
 			end
@@ -98,7 +98,7 @@ palico = {
 			buffer.set(offset + palico.zoneOffset + o*byteNum + 188 + i-1, 0)
 		end
 		for i=1,16 do
-			buffer.set(offset + palico.zoneOffset + o*byteNum + 56 + i-1, P_ABILITY_NULL)
+			buffer.set(offset + palico.zoneOffset + o*byteNum + 56 + i-1, P_SUPPORT_NULL)
 		end
 		for i=1,12 do
 			buffer.set(offset + palico.zoneOffset + o*byteNum + 72 + i-1, P_SKILL_NULL)
@@ -107,9 +107,9 @@ palico = {
 		buffer.set(offset + palico.zoneOffset + o*byteNum + 36  , detail.lv-1       )
 		buffer.set(offset + palico.zoneOffset + o*byteNum + 37  , detail.kind-1     )
 		buffer.set(offset + palico.zoneOffset + o*byteNum + 39  , detail.object-1   )
-		buffer.set(offset + palico.zoneOffset + o*byteNum + 56  , detail.ability    )
+		buffer.set(offset + palico.zoneOffset + o*byteNum + 56  , detail.support    )
 		buffer.set(offset + palico.zoneOffset + o*byteNum + 72  , detail.skill      )
-		buffer.set(offset + palico.zoneOffset + o*byteNum + 84  , detail.abilityTree)
+		buffer.set(offset + palico.zoneOffset + o*byteNum + 84  , detail.supportTree)
 		buffer.set(offset + palico.zoneOffset + o*byteNum + 86  , detail.skillTree  )
 		buffer.set(offset + palico.zoneOffset + o*byteNum + 156 , t[2]              )
 		buffer.set(offset + palico.zoneOffset + o*byteNum + 188 , t[3]              )
@@ -118,13 +118,13 @@ palico = {
 		buffer.set(offset + palico.zoneOffset + o*byteNum + 290 , detail.lEyeColor  )
 		--修改装备的技能
 		if detail.kind==1 then
-			buffer.set(offset + palico.zoneOffset + o*byteNum + 40 , detail.ability[1])
+			buffer.set(offset + palico.zoneOffset + o*byteNum + 40 , detail.support[1])
 			for i=2,8 do
 				buffer.set(offset + palico.zoneOffset + o*byteNum + 40 + i-1 , 0)
 			end
 		else
-			buffer.set(offset + palico.zoneOffset + o*byteNum + 40     , detail.ability[1])
-			buffer.set(offset + palico.zoneOffset + o*byteNum + 40 + 1 , detail.ability[2])
+			buffer.set(offset + palico.zoneOffset + o*byteNum + 40     , detail.support[1])
+			buffer.set(offset + palico.zoneOffset + o*byteNum + 40 + 1 , detail.support[2])
 			for i=3,8 do
 				buffer.set(offset + palico.zoneOffset + o*byteNum + 40 + i-1 , 0)
 			end
@@ -149,8 +149,8 @@ editingPalicoPage = {
 			editingPalicoPage.display_choosing()
 			return
 		end
-		if editingPalicoPage.editing_ability then
-			editingPalicoPage.display_ability()
+		if editingPalicoPage.editing_support then
+			editingPalicoPage.display_support()
 			return
 		end
 		if editingPalicoPage.editing_skill then
@@ -185,19 +185,19 @@ editingPalicoPage = {
 		
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"←→","翻页"},
-			{"A","选择"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"←→",TEXT_PAGETURN},
+			{"A",TEXT_CHOOSE},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "建议猎人先在外形招募里招募到想要的外观的猎猫 ，\n再进行修改 ，修改时 ，请让猎猫处于完全待机状态 ，不\n能出击 、跟随等 ，请不要修改配信猫 ！避免出现问题 ！"
+		display.explain = TEXT_EDITINGPALICOPAGE_E
 	end,
 	
 	padLoop = function()
 		editingPalicoPage.editing = false
 		editingPalicoPage.visible = true
 		editingMenuPage.visible = false
-		display.mark.nextMark.nextMark = {name = "猎猫"}
+		display.mark.nextMark.nextMark = {name = TEXT_EDITINGPALICOPAGE_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -257,30 +257,30 @@ editingPalicoPage = {
 
 	detail = {},
 
-	resetAbilityOfKind = function()
+	resetSupportOfKind = function()
 		--技能初始化
-		editingPalicoPage.detail.ability = {}
+		editingPalicoPage.detail.support = {}
 		--固有技能1
-		editingPalicoPage.detail.ability[1] = pAbilityO[editingPalicoPage.detail.kind][1]
+		editingPalicoPage.detail.support[1] = pSupportO[editingPalicoPage.detail.kind][1]
 		--固有技能2-4
 		if editingPalicoPage.detail.kind==1 then
 			--领袖猫没有第2个固有技能
 			--技能2-3固定
-			editingPalicoPage.detail.ability[2] = pAbilityS[1]
-			editingPalicoPage.detail.ability[3] = pAbilityS[2]
+			editingPalicoPage.detail.support[2] = pSupportS[1]
+			editingPalicoPage.detail.support[3] = pSupportS[2]
 			--3个传授位预留
-			editingPalicoPage.detail.ability[4] = 0
-			editingPalicoPage.detail.ability[5] = 0
-			editingPalicoPage.detail.ability[6] = 0
+			editingPalicoPage.detail.support[4] = 0
+			editingPalicoPage.detail.support[5] = 0
+			editingPalicoPage.detail.support[6] = 0
 		else
 			--固有技能2
-			editingPalicoPage.detail.ability[2] = pAbilityO[editingPalicoPage.detail.kind][2]
+			editingPalicoPage.detail.support[2] = pSupportO[editingPalicoPage.detail.kind][2]
 			--技能3-4固定
-			editingPalicoPage.detail.ability[3] = pAbilityS[1]
-			editingPalicoPage.detail.ability[4] = pAbilityS[2]
+			editingPalicoPage.detail.support[3] = pSupportS[1]
+			editingPalicoPage.detail.support[4] = pSupportS[2]
 			--2个传授位预留
-			editingPalicoPage.detail.ability[5] = 0
-			editingPalicoPage.detail.ability[6] = 0
+			editingPalicoPage.detail.support[5] = 0
+			editingPalicoPage.detail.support[6] = 0
 		end
 	end,
 
@@ -296,25 +296,9 @@ editingPalicoPage = {
 	editing = false,
 	currentIndex_editing = 1,
 
-	kindText = {
-		"领袖",
-		"奋斗",
-		"防御",
-		"辅助",
-		"回复",
-		"爆弹",
-		"收集",
-		"野兽"
-	},
+	kindText = {},
 
-	objectText = {
-		"无指定",
-		"只打小型",
-		"小型优先",
-		"平衡",
-		"大型优先",
-		"只打大型"
-	},
+	objectText = {},
 	
 	display_editing = function()
 		----上屏
@@ -326,7 +310,7 @@ editingPalicoPage = {
 			Font.print(theFont,225,15+editingPalicoPage.currentIndex_editing*20,"(A)",COLOR_MAKA,TOP_SCREEN)
 		elseif editingPalicoPage.currentIndex_editing==2 then
 			Font.print(theFont,225,15+editingPalicoPage.currentIndex_editing*20,"<",COLOR_MAKA,TOP_SCREEN)
-			Font.print(theFont,272,15+editingPalicoPage.currentIndex_editing*20,">",COLOR_MAKA,TOP_SCREEN)
+			Font.print(theFont,292,15+editingPalicoPage.currentIndex_editing*20,">",COLOR_MAKA,TOP_SCREEN)
 		elseif editingPalicoPage.currentIndex_editing==3 then
 			Font.print(theFont,225,15+editingPalicoPage.currentIndex_editing*20,"<",COLOR_MAKA,TOP_SCREEN)
 			Font.print(theFont,292,15+editingPalicoPage.currentIndex_editing*20,">",COLOR_MAKA,TOP_SCREEN)
@@ -346,68 +330,68 @@ editingPalicoPage = {
 			Font.print(theFont,225,15+editingPalicoPage.currentIndex_editing*20,"(A)",COLOR_MAKA,TOP_SCREEN)
 		end
 		--字
-		Font.print(theFont,120,35,"等级",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,35,TEXT_EDITINGPALICOPAGE_EDITING[1],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,35,editingPalicoPage.detail.lv,COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,55,"猎猫类型",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,55,TEXT_EDITINGPALICOPAGE_EDITING[2],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,55,editingPalicoPage.kindText[editingPalicoPage.detail.kind],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,75,"攻击倾向",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,75,TEXT_EDITINGPALICOPAGE_EDITING[3],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,75,editingPalicoPage.objectText[editingPalicoPage.detail.object],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,95,"命名者",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,95,TEXT_EDITINGPALICOPAGE_EDITING[4],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,95,editingPalicoPage.detail.nameGiver,COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,115,"前主人",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,115,TEXT_EDITINGPALICOPAGE_EDITING[5],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,115,editingPalicoPage.detail.formerOwner,COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,135,"毛皮色",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,135,TEXT_EDITINGPALICOPAGE_EDITING[6],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		local furColor = Color.new(table.unpack(editingPalicoPage.detail.furColor))
 		Screen.fillRect(239,271,134,146,COLOR_EDITINGPALICOPAGE_COLORBACKGROUND,TOP_SCREEN)
 		Screen.fillRect(240,270,135,145,furColor,TOP_SCREEN)
-		Font.print(theFont,120,155,"右眼色",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,155,TEXT_EDITINGPALICOPAGE_EDITING[7],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		local rEyeColor = Color.new(table.unpack(editingPalicoPage.detail.rEyeColor))
 		Screen.fillRect(239,271,154,166,COLOR_EDITINGPALICOPAGE_COLORBACKGROUND,TOP_SCREEN)
 		Screen.fillRect(240,270,155,165,rEyeColor,TOP_SCREEN)
-		Font.print(theFont,120,175,"左眼色",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,175,TEXT_EDITINGPALICOPAGE_EDITING[8],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		local lEyeColor = Color.new(table.unpack(editingPalicoPage.detail.lEyeColor))
 		Screen.fillRect(239,271,174,186,COLOR_EDITINGPALICOPAGE_COLORBACKGROUND,TOP_SCREEN)
 		Screen.fillRect(240,270,175,185,lEyeColor,TOP_SCREEN)
-		Font.print(theFont,120,195,"主动技能",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,195,TEXT_EDITINGPALICOPAGE_EDITING[9],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,195,"<……>",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,215,"被动技能",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,215,TEXT_EDITINGPALICOPAGE_EDITING[10],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,215,"<……>",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		--Font.print(theFont,120,195,"被动树表",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		--Font.print(theFont,240,195,editingPalicoPage.detail.skillTree[1]..editingPalicoPage.detail.skillTree[2],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		--Font.print(theFont,120,215,"主动树表",COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
-		--Font.print(theFont,240,215,editingPalicoPage.detail.abilityTree[1]..editingPalicoPage.detail.abilityTree[2],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+		--Font.print(theFont,240,215,editingPalicoPage.detail.supportTree[1]..editingPalicoPage.detail.supportTree[2],COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 		----下屏
 		if editingPalicoPage.currentIndex_editing==1 then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"A","修改为99级"},
-				{"Y","保存修改"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"A",TEXT_EDITINGPALICOPAGE_EDITING[11]},
+				{"Y",TEXT_EDITINGPALICOPAGE_EDITING[12]},
+				{"B",TEXT_RETURN}
 			}
 		elseif editingPalicoPage.currentIndex_editing==2 or editingPalicoPage.currentIndex_editing==3 then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","更改"},
-				{"Y","保存修改"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_MODIFY},
+				{"Y",TEXT_EDITINGPALICOPAGE_EDITING[12]},
+				{"B",TEXT_RETURN}
 			}
 		else
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"A","修改"},
-				{"Y","保存修改"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"A",TEXT_MODIFY},
+				{"Y",TEXT_EDITINGPALICOPAGE_EDITING[12]},
+				{"B",TEXT_RETURN}
 			}
 		end
-		display.explain = "名字修改暂不支持中文 、日文 。修改猎猫类型后请务\n必接着修改主动技能与被动技能 。修改等级暂时只支持\n直接修改99级 。修改完成后需要按Y键保存 。"
+		display.explain = TEXT_EDITINGPALICOPAGE_EDITING_E
 	end,
 
 	padLoop_editing = function()
 		editingPalicoPage.isKindChanged = false
-		editingPalicoPage.editing_ability = false
+		editingPalicoPage.editing_support = false
 		editingPalicoPage.editing_skill = false
 		editingPalicoPage.editing = true
-		display.mark.nextMark.nextMark.nextMark = {name = "详情"}
+		display.mark.nextMark.nextMark.nextMark = {name = TEXT_EDITINGPALICOPAGE_EDITING_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -425,7 +409,7 @@ editingPalicoPage = {
 					if editingPalicoPage.detail.kind>1 then
 						editingPalicoPage.isKindChanged = true
 						editingPalicoPage.detail.kind = editingPalicoPage.detail.kind-1
-						editingPalicoPage.resetAbilityOfKind()
+						editingPalicoPage.resetSupportOfKind()
 						editingPalicoPage.resetSkillOfKind()
 					end
 				end
@@ -440,7 +424,7 @@ editingPalicoPage = {
 					if editingPalicoPage.detail.kind<8 then
 						editingPalicoPage.isKindChanged = true
 						editingPalicoPage.detail.kind = editingPalicoPage.detail.kind+1
-						editingPalicoPage.resetAbilityOfKind()
+						editingPalicoPage.resetSupportOfKind()
 						editingPalicoPage.resetSkillOfKind()
 					end
 				end
@@ -452,34 +436,34 @@ editingPalicoPage = {
 			end
 			if pad.isPress(KEY_Y) then
 				if editingPalicoPage.isKindChanged then
-					messageBox.show("修改猎猫类型后必须修改主动技能与被动技能 ！","确认","取消")
-				elseif messageBox.show("                       确认保存修改吗 ？","确认","取消")=="A" then
-					messageBox.toast("                              保存中 ...")
+					messageBox.show(TEXT_EDITINGPALICOPAGE_EDITING_O[1],TEXT_OK,TEXT_CANCEL)
+				elseif messageBox.show(TEXT_EDITINGPALICOPAGE_EDITING_O[2],TEXT_OK,TEXT_CANCEL)=="A" then
+					messageBox.toast(TEXT_EDITINGPALICOPAGE_EDITING_O[3])
 					palico.rewritePalicoDetail(editingPalicoPage.currentIndex,editingPalicoPage.detail)
 				end
 			end
 			if pad.isPress(KEY_A) then
 				if editingPalicoPage.currentIndex_editing==1 then
-					if messageBox.show("                  确认修改等级为99吗 ？","确认","取消")=="A" then
+					if messageBox.show(TEXT_EDITINGPALICOPAGE_EDITING_O[4],TEXT_OK,TEXT_CANCEL)=="A" then
 						editingPalicoPage.detail.lv = 99
 						editingPalicoPage.detail.expp = 950215
 					end
 				end
 				if editingPalicoPage.currentIndex_editing==4 then
-					local str = keyboard.get("请修改命名者名字 ：",editingPalicoPage.detail.nameGiver,10)
+					local str = keyboard.get(TEXT_EDITINGPALICOPAGE_EDITING_O[5],editingPalicoPage.detail.nameGiver,10)
 					if str~="" then
 						editingPalicoPage.detail.nameGiver = str
 					end
 				end
 				if editingPalicoPage.currentIndex_editing==5 then
-					local str = keyboard.get("请修改前主人名字 ：",editingPalicoPage.detail.formerOwner,10)
+					local str = keyboard.get(TEXT_EDITINGPALICOPAGE_EDITING_O[6],editingPalicoPage.detail.formerOwner,10)
 					if str~="" then
 						editingPalicoPage.detail.formerOwner = str
 					end
 				end
 				if editingPalicoPage.currentIndex_editing==6 then
 					editingPalicoPage.visible = false
-					local isChanged,r,g,b = colorPicker.show("请调整毛皮颜色 ：",table.unpack(editingPalicoPage.detail.furColor))
+					local isChanged,r,g,b = colorPicker.show(TEXT_EDITINGPALICOPAGE_EDITING_O[7],table.unpack(editingPalicoPage.detail.furColor))
 					if isChanged then
 						editingPalicoPage.detail.furColor = { r,g,b }
 					end
@@ -487,7 +471,7 @@ editingPalicoPage = {
 				end
 				if editingPalicoPage.currentIndex_editing==7 then
 					editingPalicoPage.visible = false
-					local isChanged,r,g,b = colorPicker.show("请调整左眼颜色 ：",table.unpack(editingPalicoPage.detail.rEyeColor))
+					local isChanged,r,g,b = colorPicker.show(TEXT_EDITINGPALICOPAGE_EDITING_O[8],table.unpack(editingPalicoPage.detail.rEyeColor))
 					if isChanged then
 						editingPalicoPage.detail.rEyeColor = { r,g,b }
 					end
@@ -495,14 +479,14 @@ editingPalicoPage = {
 				end
 				if editingPalicoPage.currentIndex_editing==8 then
 					editingPalicoPage.visible = false
-					local isChanged,r,g,b = colorPicker.show("请调整右眼颜色 ：",table.unpack(editingPalicoPage.detail.lEyeColor))
+					local isChanged,r,g,b = colorPicker.show(TEXT_EDITINGPALICOPAGE_EDITING_O[9],table.unpack(editingPalicoPage.detail.lEyeColor))
 					if isChanged then
 						editingPalicoPage.detail.lEyeColor = { r,g,b }
 					end
 					editingPalicoPage.visible = true
 				end
 				if editingPalicoPage.currentIndex_editing==9 then
-					editingPalicoPage.padLoop_ability()
+					editingPalicoPage.padLoop_support()
 				end
 				if editingPalicoPage.currentIndex_editing==10 then
 					editingPalicoPage.padLoop_skill()
@@ -516,232 +500,232 @@ editingPalicoPage = {
 	end,
 
 
-	editing_ability = false,
+	editing_support = false,
 
-	currentIndex_ability = 1,
-	displayIndexFirst_ability = 1,
+	currentIndex_support = 1,
+	displayIndexFirst_support = 1,
 
-	abilityEditing = {},
-	abilityPtLast = 0,
+	supportEditing = {},
+	supportPtLast = 0,
 
-	abilityRefresh = function()
-		editingPalicoPage.abilityEditing = {}
-		for i,v in ipairs(editingPalicoPage.detail.ability) do
-			editingPalicoPage.abilityEditing[i] = {}
-			editingPalicoPage.abilityEditing[i].id = v
+	supportRefresh = function()
+		editingPalicoPage.supportEditing = {}
+		for i,v in ipairs(editingPalicoPage.detail.support) do
+			editingPalicoPage.supportEditing[i] = {}
+			editingPalicoPage.supportEditing[i].id = v
 			if v~=0 then
-				editingPalicoPage.abilityEditing[i].name = pAbilityAll[v].name
-				editingPalicoPage.abilityEditing[i].pt = pAbilityAll[v].pt
+				editingPalicoPage.supportEditing[i].name = pSupportAll[v].name
+				editingPalicoPage.supportEditing[i].pt = pSupportAll[v].pt
 			else
-				editingPalicoPage.abilityEditing[i].name = "----- 无 -----"
-				editingPalicoPage.abilityEditing[i].pt = 0
+				editingPalicoPage.supportEditing[i].name = TEXT_SUPPORT_NULL
+				editingPalicoPage.supportEditing[i].pt = 0
 			end
 		end
 		--区分技能类型并计算剩余技能点数、添加自由技能预留位
 		local ptCount = 0
 		if editingPalicoPage.detail.kind==1 then
 			--领袖猫
-			editingPalicoPage.abilityEditing[1].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[2].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[3].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[1].ex = "（不可更改  ）"
-			editingPalicoPage.abilityEditing[2].ex = "（不可更改  ）"
-			editingPalicoPage.abilityEditing[3].ex = "（不可更改  ）"
-			for i=4,#editingPalicoPage.abilityEditing-3 do
-				editingPalicoPage.abilityEditing[i].tp = "MOD_DEL"
-				editingPalicoPage.abilityEditing[i].ex = "占用点数 ："..editingPalicoPage.abilityEditing[i].pt
-				ptCount = ptCount+editingPalicoPage.abilityEditing[i].pt
+			editingPalicoPage.supportEditing[1].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[2].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[3].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[1].ex = TEXT_SUPPORT_NOTMOD
+			editingPalicoPage.supportEditing[2].ex = TEXT_SUPPORT_NOTMOD
+			editingPalicoPage.supportEditing[3].ex = TEXT_SUPPORT_NOTMOD
+			for i=4,#editingPalicoPage.supportEditing-3 do
+				editingPalicoPage.supportEditing[i].tp = "MOD_DEL"
+				editingPalicoPage.supportEditing[i].ex = TEXT_SUPPORT_MODDEL..editingPalicoPage.supportEditing[i].pt
+				ptCount = ptCount+editingPalicoPage.supportEditing[i].pt
 			end
-			table.insert(editingPalicoPage.abilityEditing,#editingPalicoPage.abilityEditing-2,{ name = "##### 添加新的技能 #####", pt = 0, tp = "MOD_ADD", ex = ""})
-			editingPalicoPage.abilityPtLast = 9 - ptCount
-			for i=#editingPalicoPage.abilityEditing-2,#editingPalicoPage.abilityEditing do
-				editingPalicoPage.abilityEditing[i].tp = "MOD_ALL"
-				editingPalicoPage.abilityEditing[i].ex = "（传授技能  ）"
+			table.insert(editingPalicoPage.supportEditing,#editingPalicoPage.supportEditing-2,{ name = TEXT_SUPPORT_MODADD , pt = 0, tp = "MOD_ADD", ex = ""})
+			editingPalicoPage.supportPtLast = 9 - ptCount
+			for i=#editingPalicoPage.supportEditing-2,#editingPalicoPage.supportEditing do
+				editingPalicoPage.supportEditing[i].tp = "MOD_ALL"
+				editingPalicoPage.supportEditing[i].ex = TEXT_SUPPORT_MODALL
 			end
 		elseif editingPalicoPage.detail.kind==8 then
 			--野兽猫
-			editingPalicoPage.abilityEditing[1].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[2].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[3].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[4].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[1].ex = "（不可更改  ）"
-			editingPalicoPage.abilityEditing[2].ex = "（不可更改  ）"
-			editingPalicoPage.abilityEditing[3].ex = "（不可更改  ）"
-			editingPalicoPage.abilityEditing[4].ex = "（不可更改  ）"
-			for i=5,#editingPalicoPage.abilityEditing-2 do
-				editingPalicoPage.abilityEditing[i].tp = "MOD_DEL"
-				editingPalicoPage.abilityEditing[i].ex = "占用点数 ："..editingPalicoPage.abilityEditing[i].pt
-				ptCount = ptCount+editingPalicoPage.abilityEditing[i].pt
+			editingPalicoPage.supportEditing[1].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[2].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[3].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[4].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[1].ex = TEXT_SUPPORT_NOTMOD
+			editingPalicoPage.supportEditing[2].ex = TEXT_SUPPORT_NOTMOD
+			editingPalicoPage.supportEditing[3].ex = TEXT_SUPPORT_NOTMOD
+			editingPalicoPage.supportEditing[4].ex = TEXT_SUPPORT_NOTMOD
+			for i=5,#editingPalicoPage.supportEditing-2 do
+				editingPalicoPage.supportEditing[i].tp = "MOD_DEL"
+				editingPalicoPage.supportEditing[i].ex = TEXT_SUPPORT_MODDEL..editingPalicoPage.supportEditing[i].pt
+				ptCount = ptCount+editingPalicoPage.supportEditing[i].pt
 			end
-			table.insert(editingPalicoPage.abilityEditing,#editingPalicoPage.abilityEditing-1,{ name = "##### 添加新的技能 #####", pt = 0, tp = "MOD_ADD", ex = ""})
-			editingPalicoPage.abilityPtLast = 8 - ptCount
-			for i=#editingPalicoPage.abilityEditing-1,#editingPalicoPage.abilityEditing do
-				editingPalicoPage.abilityEditing[i].tp = "MOD_ALL"
-				editingPalicoPage.abilityEditing[i].ex = "（传授技能  ）"
+			table.insert(editingPalicoPage.supportEditing,#editingPalicoPage.supportEditing-1,{ name = TEXT_SUPPORT_MODADD , pt = 0, tp = "MOD_ADD", ex = ""})
+			editingPalicoPage.supportPtLast = 8 - ptCount
+			for i=#editingPalicoPage.supportEditing-1,#editingPalicoPage.supportEditing do
+				editingPalicoPage.supportEditing[i].tp = "MOD_ALL"
+				editingPalicoPage.supportEditing[i].ex = TEXT_SUPPORT_MODALL
 			end
 		else
 			--其他猫
-			editingPalicoPage.abilityEditing[1].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[2].tp = "MOD_1I2"
-			editingPalicoPage.abilityEditing[3].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[4].tp = "NOT_MOD"
-			editingPalicoPage.abilityEditing[1].ex = "（不可更改  ）"
-			editingPalicoPage.abilityEditing[2].ex = "（  二选一    ）"
-			editingPalicoPage.abilityEditing[3].ex = "（不可更改  ）"
-			editingPalicoPage.abilityEditing[4].ex = "（不可更改  ）"
-			for i=5,#editingPalicoPage.abilityEditing-2 do
-				editingPalicoPage.abilityEditing[i].tp = "MOD_DEL"
-				editingPalicoPage.abilityEditing[i].ex = "占用点数 ："..editingPalicoPage.abilityEditing[i].pt
-				ptCount = ptCount+editingPalicoPage.abilityEditing[i].pt
+			editingPalicoPage.supportEditing[1].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[2].tp = "MOD_1I2"
+			editingPalicoPage.supportEditing[3].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[4].tp = "NOT_MOD"
+			editingPalicoPage.supportEditing[1].ex = TEXT_SUPPORT_NOTMOD
+			editingPalicoPage.supportEditing[2].ex = TEXT_SUPPORT_MOD1I2
+			editingPalicoPage.supportEditing[3].ex = TEXT_SUPPORT_NOTMOD
+			editingPalicoPage.supportEditing[4].ex = TEXT_SUPPORT_NOTMOD
+			for i=5,#editingPalicoPage.supportEditing-2 do
+				editingPalicoPage.supportEditing[i].tp = "MOD_DEL"
+				editingPalicoPage.supportEditing[i].ex = TEXT_SUPPORT_MODDEL..editingPalicoPage.supportEditing[i].pt
+				ptCount = ptCount+editingPalicoPage.supportEditing[i].pt
 			end
-			table.insert(editingPalicoPage.abilityEditing,#editingPalicoPage.abilityEditing-1,{ name = "##### 添加新的技能 #####", pt = 0, tp = "MOD_ADD", ex = ""})
-			editingPalicoPage.abilityPtLast = 8 - ptCount
-			for i=#editingPalicoPage.abilityEditing-1,#editingPalicoPage.abilityEditing do
-				editingPalicoPage.abilityEditing[i].tp = "MOD_ALL"
-				editingPalicoPage.abilityEditing[i].ex = "（传授技能  ）"
+			table.insert(editingPalicoPage.supportEditing,#editingPalicoPage.supportEditing-1,{ name = TEXT_SUPPORT_MODADD , pt = 0, tp = "MOD_ADD", ex = ""})
+			editingPalicoPage.supportPtLast = 8 - ptCount
+			for i=#editingPalicoPage.supportEditing-1,#editingPalicoPage.supportEditing do
+				editingPalicoPage.supportEditing[i].tp = "MOD_ALL"
+				editingPalicoPage.supportEditing[i].ex = TEXT_SUPPORT_MODALL
 			end
 		end
 	end,
 
-	display_ability = function()
+	display_support = function()
 		----上屏
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGPALICOPAGE_BACKGROUND,TOP_SCREEN)
 		--标题
-		Font.print(theFont,280,10,"剩余点数 ："..editingPalicoPage.abilityPtLast,COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,280,10,TEXT_EDITINGPALICOPAGE_SUPPORT[1]..editingPalicoPage.supportPtLast,COLOR_MAKA,TOP_SCREEN)
 		--光标
-		Font.print(theFont,35,15+20*(editingPalicoPage.currentIndex_ability-editingPalicoPage.displayIndexFirst_ability+1),"=>",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,35,15+20*(editingPalicoPage.currentIndex_support-editingPalicoPage.displayIndexFirst_support+1),"=>",COLOR_MAKA,TOP_SCREEN)
 		--字
 		for i=1,10 do
-			if i<=#editingPalicoPage.abilityEditing then
-				Font.print(theFont,55,15+20*i,editingPalicoPage.abilityEditing[editingPalicoPage.displayIndexFirst_ability+i-1].name,COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
-				Font.print(theFont,280,15+20*i,editingPalicoPage.abilityEditing[editingPalicoPage.displayIndexFirst_ability+i-1].ex,COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+			if i<=#editingPalicoPage.supportEditing then
+				Font.print(theFont,55,15+20*i,editingPalicoPage.supportEditing[editingPalicoPage.displayIndexFirst_support+i-1].name,COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
+				Font.print(theFont,280,15+20*i,editingPalicoPage.supportEditing[editingPalicoPage.displayIndexFirst_support+i-1].ex,COLOR_EDITINGPALICOPAGE_FONT,TOP_SCREEN)
 			end
 		end
 		--滑条
-		if #editingPalicoPage.abilityEditing>10 then
-			local barLength = math.floor(10 / #editingPalicoPage.abilityEditing*192)
-			local barLoc = math.floor((editingPalicoPage.displayIndexFirst_ability-1)/(#editingPalicoPage.abilityEditing-10)*(192-barLength))
+		if #editingPalicoPage.supportEditing>10 then
+			local barLength = math.floor(10 / #editingPalicoPage.supportEditing*192)
+			local barLoc = math.floor((editingPalicoPage.displayIndexFirst_support-1)/(#editingPalicoPage.supportEditing-10)*(192-barLength))
 			Screen.fillRect(362,362,35,35+192,COLOR_EDITINGPALICOPAGE_SCROLLLINE,TOP_SCREEN)
 			Screen.fillRect(360,364,35+barLoc,35+barLoc+barLength,COLOR_EDITINGPALICOPAGE_SCROLLBAR,TOP_SCREEN)
 		end
 		
 		----下屏
-		if editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="NOT_MOD" then
+		if editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="NOT_MOD" then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"B",TEXT_RETURN}
 			}
-		elseif editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="MOD_1I2" or editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="MOD_ALL" then
+		elseif editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="MOD_1I2" or editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="MOD_ALL" then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","修改"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_MODIFY},
+				{"B",TEXT_RETURN}
 			}
-		elseif editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="MOD_DEL" then
+		elseif editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="MOD_DEL" then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","删除"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_EDITINGPALICOPAGE_SUPPORT[2]},
+				{"B",TEXT_RETURN}
 			}
-		elseif editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="MOD_ADD" then
+		elseif editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="MOD_ADD" then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","添加"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_ADD},
+				{"B",TEXT_RETURN}
 			}
 		end
-		display.explain = "注意 ！点数3的技能只能有一个 ，开头技能不能是单\n独的点数2技能 ，领袖猫比其他猫多1点技能点数 ，领袖\n猫必须有一个点数1的技能 。"
+		display.explain = TEXT_EDITINGPALICOPAGE_SUPPORT_E
 	end,
 
-	padLoop_ability = function()
-		editingPalicoPage.abilityRefresh()
+	padLoop_support = function()
+		editingPalicoPage.supportRefresh()
 		editingPalicoPage.editing_choosing = false
-		editingPalicoPage.editing_ability = true
-		editingPalicoPage.currentIndex_ability = 1
-		editingPalicoPage.displayIndexFirst_ability = 1
-		display.mark.nextMark.nextMark.nextMark.nextMark = {name = "主动技能"}
+		editingPalicoPage.editing_support = true
+		editingPalicoPage.currentIndex_support = 1
+		editingPalicoPage.displayIndexFirst_support = 1
+		display.mark.nextMark.nextMark.nextMark.nextMark = {name = TEXT_EDITINGPALICOPAGE_SUPPORT_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
-				if editingPalicoPage.currentIndex_ability>1 then
-					editingPalicoPage.currentIndex_ability = editingPalicoPage.currentIndex_ability-1
+				if editingPalicoPage.currentIndex_support>1 then
+					editingPalicoPage.currentIndex_support = editingPalicoPage.currentIndex_support-1
 				end
-				if editingPalicoPage.currentIndex_ability<editingPalicoPage.displayIndexFirst_ability then
-					editingPalicoPage.displayIndexFirst_ability = editingPalicoPage.displayIndexFirst_ability-1
+				if editingPalicoPage.currentIndex_support<editingPalicoPage.displayIndexFirst_support then
+					editingPalicoPage.displayIndexFirst_support = editingPalicoPage.displayIndexFirst_support-1
 				end
 			end
 			if pad.isPress(KEY_DDOWN) then
-				if editingPalicoPage.currentIndex_ability<#editingPalicoPage.abilityEditing then
-					editingPalicoPage.currentIndex_ability = editingPalicoPage.currentIndex_ability+1
+				if editingPalicoPage.currentIndex_support<#editingPalicoPage.supportEditing then
+					editingPalicoPage.currentIndex_support = editingPalicoPage.currentIndex_support+1
 				end
-				if editingPalicoPage.currentIndex_ability>(editingPalicoPage.displayIndexFirst_ability+9) then
-					editingPalicoPage.displayIndexFirst_ability = editingPalicoPage.displayIndexFirst_ability+1
+				if editingPalicoPage.currentIndex_support>(editingPalicoPage.displayIndexFirst_support+9) then
+					editingPalicoPage.displayIndexFirst_support = editingPalicoPage.displayIndexFirst_support+1
 				end
 			end
 			if pad.isPress(KEY_DLEFT) then
-				editingPalicoPage.currentIndex_ability = editingPalicoPage.currentIndex_ability-10
-				editingPalicoPage.displayIndexFirst_ability = editingPalicoPage.displayIndexFirst_ability-10
-				if editingPalicoPage.currentIndex_ability<1 then
-					editingPalicoPage.currentIndex_ability = 1
+				editingPalicoPage.currentIndex_support = editingPalicoPage.currentIndex_support-10
+				editingPalicoPage.displayIndexFirst_support = editingPalicoPage.displayIndexFirst_support-10
+				if editingPalicoPage.currentIndex_support<1 then
+					editingPalicoPage.currentIndex_support = 1
 				end
-				if editingPalicoPage.displayIndexFirst_ability<1 then
-					editingPalicoPage.displayIndexFirst_ability = 1
+				if editingPalicoPage.displayIndexFirst_support<1 then
+					editingPalicoPage.displayIndexFirst_support = 1
 				end
 			end
 			if pad.isPress(KEY_DRIGHT) then
-				editingPalicoPage.currentIndex_ability = editingPalicoPage.currentIndex_ability+10
-				editingPalicoPage.displayIndexFirst_ability = editingPalicoPage.displayIndexFirst_ability+10
-				if editingPalicoPage.currentIndex_ability>#editingPalicoPage.abilityEditing then
-					editingPalicoPage.currentIndex_ability = #editingPalicoPage.abilityEditing
+				editingPalicoPage.currentIndex_support = editingPalicoPage.currentIndex_support+10
+				editingPalicoPage.displayIndexFirst_support = editingPalicoPage.displayIndexFirst_support+10
+				if editingPalicoPage.currentIndex_support>#editingPalicoPage.supportEditing then
+					editingPalicoPage.currentIndex_support = #editingPalicoPage.supportEditing
 				end
-				if editingPalicoPage.displayIndexFirst_ability>#editingPalicoPage.abilityEditing-9 then
-					editingPalicoPage.displayIndexFirst_ability = #editingPalicoPage.abilityEditing-9
+				if editingPalicoPage.displayIndexFirst_support>#editingPalicoPage.supportEditing-9 then
+					editingPalicoPage.displayIndexFirst_support = #editingPalicoPage.supportEditing-9
 				end
-				if editingPalicoPage.displayIndexFirst_ability<1 then
-					editingPalicoPage.displayIndexFirst_ability = 1
+				if editingPalicoPage.displayIndexFirst_support<1 then
+					editingPalicoPage.displayIndexFirst_support = 1
 				end
 			end
 			if pad.isPress(KEY_A) then
 				--固有2选1技能
-				if editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="MOD_1I2" then
+				if editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="MOD_1I2" then
 					local t = {}
 					--添加依猎猫类型而定的2选1技能
-					local id1 = pAbilityO[editingPalicoPage.detail.kind][2]
-					local id2 = pAbilityO[editingPalicoPage.detail.kind][3]
-					t[1] = { id = id1, name = pAbilityAll[id1].name, ex = "" }
-					t[2] = { id = id2, name = pAbilityAll[id2].name, ex = "" }
+					local id1 = pSupportO[editingPalicoPage.detail.kind][2]
+					local id2 = pSupportO[editingPalicoPage.detail.kind][3]
+					t[1] = { id = id1, name = pSupportAll[id1].name, ex = "" }
+					t[2] = { id = id2, name = pSupportAll[id2].name, ex = "" }
 					local idGet = editingPalicoPage.getChoose(t)
 					if idGet~=0 then
-						editingPalicoPage.detail.ability[editingPalicoPage.currentIndex_ability] = idGet
-						editingPalicoPage.abilityRefresh()
+						editingPalicoPage.detail.support[editingPalicoPage.currentIndex_support] = idGet
+						editingPalicoPage.supportRefresh()
 					end
 				--删除自由技能
-				elseif editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="MOD_DEL" then
-					table.remove(editingPalicoPage.detail.ability, editingPalicoPage.currentIndex_ability)
-					editingPalicoPage.abilityRefresh()
+				elseif editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="MOD_DEL" then
+					table.remove(editingPalicoPage.detail.support, editingPalicoPage.currentIndex_support)
+					editingPalicoPage.supportRefresh()
 					--调整显示位置
-					editingPalicoPage.currentIndex_ability = editingPalicoPage.currentIndex_ability-1
-					if editingPalicoPage.displayIndexFirst_ability>1 then
-						editingPalicoPage.displayIndexFirst_ability = editingPalicoPage.displayIndexFirst_ability-1
+					editingPalicoPage.currentIndex_support = editingPalicoPage.currentIndex_support-1
+					if editingPalicoPage.displayIndexFirst_support>1 then
+						editingPalicoPage.displayIndexFirst_support = editingPalicoPage.displayIndexFirst_support-1
 					end
 				--添加自由技能
-				elseif editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="MOD_ADD" then
+				elseif editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="MOD_ADD" then
 					local t = {}
 					--添加所有自由系技能
-					for i,v in ipairs(pAbility) do
+					for i,v in ipairs(pSupport) do
 						for i2,v2 in ipairs(v) do
-							table.insert(t,{ id = v2, name = pAbilityAll[v2].name, ex = "需要点数 ："..pAbilityAll[v2].pt })
+							table.insert(t,{ id = v2, name = pSupportAll[v2].name, ex = TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[1]..pSupportAll[v2].pt })
 						end
 					end
 					local idGet = editingPalicoPage.getChoose(t)
 					if idGet~=0 then
 						local isExist = function()
-							for i,v in ipairs(editingPalicoPage.detail.ability) do
+							for i,v in ipairs(editingPalicoPage.detail.support) do
 								if idGet==v then
 									return true
 								end
@@ -750,63 +734,63 @@ editingPalicoPage = {
 						end
 						if not isExist() then
 							--自动调整技能位置
-							local pt = pAbilityAll[idGet].pt
+							local pt = pSupportAll[idGet].pt
 							if pt==3 then
 								if editingPalicoPage.detail.kind==1 then
-									table.insert(editingPalicoPage.detail.ability, 4, idGet)
+									table.insert(editingPalicoPage.detail.support, 4, idGet)
 								else
-									table.insert(editingPalicoPage.detail.ability, 5, idGet)
+									table.insert(editingPalicoPage.detail.support, 5, idGet)
 								end
 							elseif pt==2 then
 								if editingPalicoPage.detail.kind==1 then
-									for i,v in ipairs(editingPalicoPage.detail.ability) do
+									for i,v in ipairs(editingPalicoPage.detail.support) do
 										if v==0 then
-											table.insert(editingPalicoPage.detail.ability, i, idGet)
+											table.insert(editingPalicoPage.detail.support, i, idGet)
 											break
 										end
-										if i>3 and (pAbilityAll[v].pt==1 or pAbilityAll[v].pt==0) then
-											table.insert(editingPalicoPage.detail.ability, i, idGet)
+										if i>3 and (pSupportAll[v].pt==1 or pSupportAll[v].pt==0) then
+											table.insert(editingPalicoPage.detail.support, i, idGet)
 											break
 										end
 									end
 								else
-									for i,v in ipairs(editingPalicoPage.detail.ability) do
+									for i,v in ipairs(editingPalicoPage.detail.support) do
 										if v==0 then
-											table.insert(editingPalicoPage.detail.ability, i, idGet)
+											table.insert(editingPalicoPage.detail.support, i, idGet)
 											break
 										end
-										if i>4 and (pAbilityAll[v].pt==1 or pAbilityAll[v].pt==0) then
-											table.insert(editingPalicoPage.detail.ability, i, idGet)
+										if i>4 and (pSupportAll[v].pt==1 or pSupportAll[v].pt==0) then
+											table.insert(editingPalicoPage.detail.support, i, idGet)
 											break
 										end
 									end
 								end
 							elseif pt==1 then
-								table.insert(editingPalicoPage.detail.ability, editingPalicoPage.currentIndex_ability, idGet)
+								table.insert(editingPalicoPage.detail.support, editingPalicoPage.currentIndex_support, idGet)
 							end
-							editingPalicoPage.abilityRefresh()
+							editingPalicoPage.supportRefresh()
 							--调整显示位置
-							editingPalicoPage.currentIndex_ability = editingPalicoPage.currentIndex_ability+1
-							if editingPalicoPage.currentIndex_ability>(editingPalicoPage.displayIndexFirst_ability+9) then
-								editingPalicoPage.displayIndexFirst_ability = editingPalicoPage.displayIndexFirst_ability+1
+							editingPalicoPage.currentIndex_support = editingPalicoPage.currentIndex_support+1
+							if editingPalicoPage.currentIndex_support>(editingPalicoPage.displayIndexFirst_support+9) then
+								editingPalicoPage.displayIndexFirst_support = editingPalicoPage.displayIndexFirst_support+1
 							end
 						else
-							messageBox.show("                        该技能已存在 ！","确认","取消")
+							messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[2],TEXT_OK,TEXT_CANCEL)
 						end
 					end
 				--传授技能
-				elseif editingPalicoPage.abilityEditing[editingPalicoPage.currentIndex_ability].tp=="MOD_ALL" then
+				elseif editingPalicoPage.supportEditing[editingPalicoPage.currentIndex_support].tp=="MOD_ALL" then
 					local t = {}
 					--添加空选项
-					table.insert(t,{ id = -1, name = "----- 无 -----", ex = "" })
+					table.insert(t,{ id = -1, name = TEXT_SUPPORT_NULL, ex = "" })
 					--添加所有自由系技能
-					for i,v in ipairs(pAbility) do
+					for i,v in ipairs(pSupport) do
 						for i2,v2 in ipairs(v) do
-							table.insert(t,{ id = v2, name = pAbilityAll[v2].name, ex = "" })
+							table.insert(t,{ id = v2, name = pSupportAll[v2].name, ex = "" })
 						end
 					end
 					--添加所有类型（除了领袖和野兽）的猫的固有2选1技能
-					for i,v in ipairs(pAbilityO) do
+					for i,v in ipairs(pSupportO) do
 						if i~=1 and i~=8 then
 							local isExist = function()
 								for i2,v2 in ipairs(t) do
@@ -817,7 +801,7 @@ editingPalicoPage = {
 								return false
 							end
 							if not isExist() then
-								table.insert(t,{ id = v[2], name = pAbilityAll[v[2]].name, ex = "" })
+								table.insert(t,{ id = v[2], name = pSupportAll[v[2]].name, ex = "" })
 							end
 							local isExist = function()
 								for i2,v2 in ipairs(t) do
@@ -828,17 +812,17 @@ editingPalicoPage = {
 								return false
 							end
 							if not isExist() then
-								table.insert(t,{ id = v[3], name = pAbilityAll[v[3]].name, ex = "" })
+								table.insert(t,{ id = v[3], name = pSupportAll[v[3]].name, ex = "" })
 							end
 						end
 					end
 					local idGet = editingPalicoPage.getChoose(t)
 					if idGet==-1 then
-						editingPalicoPage.detail.ability[editingPalicoPage.currentIndex_ability-1] = 0
-						editingPalicoPage.abilityRefresh()
+						editingPalicoPage.detail.support[editingPalicoPage.currentIndex_support-1] = 0
+						editingPalicoPage.supportRefresh()
 					elseif idGet~=0 then
 						local isExist = function()
-							for i,v in ipairs(editingPalicoPage.detail.ability) do
+							for i,v in ipairs(editingPalicoPage.detail.support) do
 								if idGet==v then
 									return true
 								end
@@ -846,93 +830,93 @@ editingPalicoPage = {
 							return false
 						end
 						if not isExist() then
-							editingPalicoPage.detail.ability[editingPalicoPage.currentIndex_ability-1] = idGet
-							editingPalicoPage.abilityRefresh()
+							editingPalicoPage.detail.support[editingPalicoPage.currentIndex_support-1] = idGet
+							editingPalicoPage.supportRefresh()
 						else
-							messageBox.show("                        该技能已存在 ！","确认","取消")
+							messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[2],TEXT_OK,TEXT_CANCEL)
 						end
 					end
 				end
 			end
 			if pad.isPress(KEY_B) then
-				if editingPalicoPage.abilityPtLast~=0 then
-					if messageBox.show("        剩余技能点数不为0 ！确认返回 ？","确认","取消")=="A" then
+				if editingPalicoPage.supportPtLast~=0 then
+					if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[3],TEXT_OK,TEXT_CANCEL)=="A" then
 						editingPalicoPage.padLoop_editing()
 					end
 				elseif editingPalicoPage.detail.kind==1 then
-					local isHaveOnePtAbility = function()
-						for i,v in ipairs(editingPalicoPage.abilityEditing) do
+					local isHaveOnePtSupport = function()
+						for i,v in ipairs(editingPalicoPage.supportEditing) do
 							if v.tp=="MOD_DEL" and v.pt==1 then
 								return true
 							end
 						end
 						return false
 					end
-					if isHaveOnePtAbility() then
+					if isHaveOnePtSupport() then
 						local ptTree = {}
-						for i,v in ipairs(editingPalicoPage.abilityEditing) do
+						for i,v in ipairs(editingPalicoPage.supportEditing) do
 							if v.tp=="MOD_DEL" then
 								table.insert(ptTree, v.pt)
 							end
 						end
 						table.remove(ptTree)
-						local threePtAbilityCount = 0
-						local twoPtAbilityCount = 0
+						local threePtSupportCount = 0
+						local twoPtSupportCount = 0
 						for i,v in ipairs(ptTree) do
 							if v==3 then
-								threePtAbilityCount = threePtAbilityCount+1
+								threePtSupportCount = threePtSupportCount+1
 							elseif v==2 then
-								twoPtAbilityCount = twoPtAbilityCount+1
+								twoPtSupportCount = twoPtSupportCount+1
 							end
 						end
-						if threePtAbilityCount>1 then
-							if messageBox.show("      点数3的技能只能有一个 ！确认返回 ？","确认","取消")=="A" then
+						if threePtSupportCount>1 then
+							if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[4],TEXT_OK,TEXT_CANCEL)=="A" then
 								editingPalicoPage.padLoop_editing()
 							end
-						elseif threePtAbilityCount==0 and twoPtAbilityCount==1 then
-							if messageBox.show("开头技能不能是单独的点数2技能 ！确认返回 ？","确认","取消")=="A" then
+						elseif threePtSupportCount==0 and twoPtSupportCount==1 then
+							if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[5],TEXT_OK,TEXT_CANCEL)=="A" then
 								editingPalicoPage.padLoop_editing()
 							end
 						else
 							--完全合法通道
-							local abilityTree = pAbilityTree[table.concat(ptTree,nil)]
-							abilityTree[2] = abilityTree[2]+1 --领袖猫补正
-							editingPalicoPage.detail.abilityTree = abilityTree
+							local supportTree = pSupportTree[table.concat(ptTree,nil)]
+							supportTree[2] = supportTree[2]+1 --领袖猫补正
+							editingPalicoPage.detail.supportTree = supportTree
 							editingPalicoPage.padLoop_editing()
 						end
 					else
-						if messageBox.show(" 领袖猫必须有一个点数1的技能 ！确认返回 ？","确认","取消")=="A" then
+						if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[6],TEXT_OK,TEXT_CANCEL)=="A" then
 							editingPalicoPage.padLoop_editing()
 						end
 					end
 				else
 					local ptTree = {}
-					for i,v in ipairs(editingPalicoPage.abilityEditing) do
+					for i,v in ipairs(editingPalicoPage.supportEditing) do
 						if v.tp=="MOD_DEL" then
 							table.insert(ptTree, v.pt)
 						end
 					end
-					local threePtAbilityCount = 0
-					local twoPtAbilityCount = 0
+					local threePtSupportCount = 0
+					local twoPtSupportCount = 0
 					for i,v in ipairs(ptTree) do
 						if v==3 then
-							threePtAbilityCount = threePtAbilityCount+1
+							threePtSupportCount = threePtSupportCount+1
 						elseif v==2 then
-							twoPtAbilityCount = twoPtAbilityCount+1
+							twoPtSupportCount = twoPtSupportCount+1
 						end
 					end
-					if threePtAbilityCount>1 then
-						if messageBox.show("      点数3的技能只能有一个 ！确认返回 ？","确认","取消")=="A" then
+					if threePtSupportCount>1 then
+						if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[4],TEXT_OK,TEXT_CANCEL)=="A" then
 							editingPalicoPage.padLoop_editing()
 						end
-					elseif threePtAbilityCount==0 and twoPtAbilityCount==1 then
-						if messageBox.show("开头技能不能是单独的点数2技能 ！确认返回 ？","确认","取消")=="A" then
+					elseif threePtSupportCount==0 and twoPtSupportCount==1 then
+						if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[5],TEXT_OK,TEXT_CANCEL)=="A" then
 							editingPalicoPage.padLoop_editing()
 						end
 					else
 						--完全合法通道
-						local abilityTree = pAbilityTree[table.concat(ptTree,nil)]
-						editingPalicoPage.detail.abilityTree = abilityTree
+						local supportTree = pSupportTree[table.concat(ptTree,nil)]
+						editingPalicoPage.detail.supportTree = supportTree
 						editingPalicoPage.padLoop_editing()
 					end
 				end
@@ -959,7 +943,7 @@ editingPalicoPage = {
 				editingPalicoPage.skillEditing[i].name = pSkillAll[v].name
 				editingPalicoPage.skillEditing[i].pt = pSkillAll[v].pt
 			else
-				editingPalicoPage.skillEditing[i].name = "----- 无 -----"
+				editingPalicoPage.skillEditing[i].name = TEXT_SUPPORT_NULL
 				editingPalicoPage.skillEditing[i].pt = 0
 			end
 		end
@@ -967,18 +951,18 @@ editingPalicoPage = {
 		local ptCount = 0
 		editingPalicoPage.skillEditing[1].tp = "NOT_MOD"
 		editingPalicoPage.skillEditing[2].tp = "NOT_MOD"
-		editingPalicoPage.skillEditing[1].ex = "（不可更改  ）"
-		editingPalicoPage.skillEditing[2].ex = "（不可更改  ）"
+		editingPalicoPage.skillEditing[1].ex = TEXT_SUPPORT_NOTMOD
+		editingPalicoPage.skillEditing[2].ex = TEXT_SUPPORT_NOTMOD
 		for i=3,#editingPalicoPage.skillEditing-2 do
 			editingPalicoPage.skillEditing[i].tp = "MOD_DEL"
-			editingPalicoPage.skillEditing[i].ex = "占用点数 ："..editingPalicoPage.skillEditing[i].pt
+			editingPalicoPage.skillEditing[i].ex = TEXT_SUPPORT_MODDEL..editingPalicoPage.skillEditing[i].pt
 			ptCount = ptCount+editingPalicoPage.skillEditing[i].pt
 		end
-		table.insert(editingPalicoPage.skillEditing,#editingPalicoPage.skillEditing-1,{ name = "##### 添加新的技能 #####", pt = 0, tp = "MOD_ADD", ex = ""})
+		table.insert(editingPalicoPage.skillEditing,#editingPalicoPage.skillEditing-1,{ name = TEXT_SUPPORT_MODADD , pt = 0, tp = "MOD_ADD", ex = ""})
 		editingPalicoPage.skillPtLast = 8 - ptCount
 		for i=#editingPalicoPage.skillEditing-1,#editingPalicoPage.skillEditing do
 			editingPalicoPage.skillEditing[i].tp = "MOD_ALL"
-			editingPalicoPage.skillEditing[i].ex = "（传授技能  ）"
+			editingPalicoPage.skillEditing[i].ex = TEXT_SUPPORT_MODALL
 		end
 	end,
 
@@ -987,7 +971,7 @@ editingPalicoPage = {
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_EDITINGPALICOPAGE_BACKGROUND,TOP_SCREEN)
 		--标题
-		Font.print(theFont,280,10,"剩余点数 ："..editingPalicoPage.skillPtLast,COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,280,10,TEXT_EDITINGPALICOPAGE_SKILL[1]..editingPalicoPage.skillPtLast,COLOR_MAKA,TOP_SCREEN)
 		--光标
 		Font.print(theFont,35,15+20*(editingPalicoPage.currentIndex_skill-editingPalicoPage.displayIndexFirst_skill+1),"=>",COLOR_MAKA,TOP_SCREEN)
 		--字
@@ -1008,33 +992,33 @@ editingPalicoPage = {
 		----下屏
 		if editingPalicoPage.skillEditing[editingPalicoPage.currentIndex_skill].tp=="NOT_MOD" then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"B",TEXT_RETURN}
 			}
 		elseif editingPalicoPage.skillEditing[editingPalicoPage.currentIndex_skill].tp=="MOD_ALL" then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","修改"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_MODIFY},
+				{"B",TEXT_RETURN}
 			}
 		elseif editingPalicoPage.skillEditing[editingPalicoPage.currentIndex_skill].tp=="MOD_DEL" then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","删除"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_EDITINGPALICOPAGE_SKILL[2]},
+				{"B",TEXT_RETURN}
 			}
 		elseif editingPalicoPage.skillEditing[editingPalicoPage.currentIndex_skill].tp=="MOD_ADD" then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","添加"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_ADD},
+				{"B",TEXT_RETURN}
 			}
 		end
-		display.explain = "注意 ！点数3的技能只能有一个 ，开头技能不能是单\n独的点数2技能 。领袖猫没有特殊的被动技能规则 。"
+		display.explain = TEXT_EDITINGPALICOPAGE_SKILL_E
 	end,
 
 	padLoop_skill = function()
@@ -1043,7 +1027,7 @@ editingPalicoPage = {
 		editingPalicoPage.editing_skill = true
 		editingPalicoPage.currentIndex_skill = 1
 		editingPalicoPage.displayIndexFirst_skill = 1
-		display.mark.nextMark.nextMark.nextMark.nextMark = {name = "被动技能"}
+		display.mark.nextMark.nextMark.nextMark.nextMark = {name = TEXT_EDITINGPALICOPAGE_SKILL_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -1101,7 +1085,7 @@ editingPalicoPage = {
 					--添加所有自由系技能
 					for i,v in ipairs(pSkill) do
 						for i2,v2 in ipairs(v) do
-							table.insert(t,{ id = v2, name = pSkillAll[v2].name, ex = "需要点数 ："..pSkillAll[v2].pt })
+							table.insert(t,{ id = v2, name = pSkillAll[v2].name, ex = TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[1]..pSkillAll[v2].pt })
 						end
 					end
 					local idGet = editingPalicoPage.getChoose(t)
@@ -1140,14 +1124,14 @@ editingPalicoPage = {
 								editingPalicoPage.displayIndexFirst_skill = editingPalicoPage.displayIndexFirst_skill+1
 							end
 						else
-							messageBox.show("                        该技能已存在 ！","确认","取消")
+							messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[2],TEXT_OK,TEXT_CANCEL)
 						end
 					end
 				--传授技能
 				elseif editingPalicoPage.skillEditing[editingPalicoPage.currentIndex_skill].tp=="MOD_ALL" then
 					local t = {}
 					--添加空选项
-					table.insert(t,{ id = -1, name = "----- 无 -----", ex = "" })
+					table.insert(t,{ id = -1, name = TEXT_SUPPORT_NULL, ex = "" })
 					--添加所有自由系技能
 					for i,v in ipairs(pSkill) do
 						for i2,v2 in ipairs(v) do
@@ -1180,14 +1164,14 @@ editingPalicoPage = {
 							editingPalicoPage.detail.skill[editingPalicoPage.currentIndex_skill-1] = idGet
 							editingPalicoPage.skillRefresh()
 						else
-							messageBox.show("                        该技能已存在 ！","确认","取消")
+							messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[2],TEXT_OK,TEXT_CANCEL)
 						end
 					end
 				end
 			end
 			if pad.isPress(KEY_B) then
 				if editingPalicoPage.skillPtLast~=0 then
-					if messageBox.show("        剩余技能点数不为0 ！确认返回 ？","确认","取消")=="A" then
+					if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[3],TEXT_OK,TEXT_CANCEL)=="A" then
 						editingPalicoPage.padLoop_editing()
 					end
 				else
@@ -1197,21 +1181,21 @@ editingPalicoPage = {
 							table.insert(ptTree, v.pt)
 						end
 					end
-					local threePtAbilityCount = 0
-					local twoPtAbilityCount = 0
+					local threePtSupportCount = 0
+					local twoPtSupportCount = 0
 					for i,v in ipairs(ptTree) do
 						if v==3 then
-							threePtAbilityCount = threePtAbilityCount+1
+							threePtSupportCount = threePtSupportCount+1
 						elseif v==2 then
-							twoPtAbilityCount = twoPtAbilityCount+1
+							twoPtSupportCount = twoPtSupportCount+1
 						end
 					end
-					if threePtAbilityCount>1 then
-						if messageBox.show("      点数3的技能只能有一个 ！确认返回 ？","确认","取消")=="A" then
+					if threePtSupportCount>1 then
+						if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[4],TEXT_OK,TEXT_CANCEL)=="A" then
 							editingPalicoPage.padLoop_editing()
 						end
-					elseif threePtAbilityCount==0 and twoPtAbilityCount==1 then
-						if messageBox.show("开头技能不能是单独的点数2技能 ！确认返回 ？","确认","取消")=="A" then
+					elseif threePtSupportCount==0 and twoPtSupportCount==1 then
+						if messageBox.show(TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O[5],TEXT_OK,TEXT_CANCEL)=="A" then
 							editingPalicoPage.padLoop_editing()
 						end
 					else
@@ -1257,10 +1241,10 @@ editingPalicoPage = {
 		
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"←→","翻页"},
-			{"A","选择"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"←→",TEXT_PAGETURN},
+			{"A",TEXT_CHOOSE},
+			{"B",TEXT_RETURN}
 		}
 	end,
 

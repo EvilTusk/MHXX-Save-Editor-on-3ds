@@ -1,0 +1,688 @@
+-- Skill of Hunter
+skillList[  1].name = "无"
+skillList[  2].name = "毒"
+skillList[  3].name = "麻痹"
+skillList[  4].name = "睡眠"
+skillList[  5].name = "晕眩"
+skillList[  6].name = "听觉保护"
+skillList[  7].name = "风压"
+skillList[  8].name = "耐震"
+skillList[  9].name = "雪人"
+skillList[ 10].name = "耐暑"
+skillList[ 11].name = "耐寒"
+skillList[ 12].name = "寒冷适应"
+skillList[ 13].name = "炎热适应"
+skillList[ 14].name = "偷盗无效"
+skillList[ 15].name = "对防御DOWN"
+skillList[ 16].name = "狂击耐性"
+skillList[ 17].name = "细菌学"
+skillList[ 18].name = "裂伤"
+skillList[ 19].name = "攻击"
+skillList[ 20].name = "防御"
+skillList[ 21].name = "体力"
+skillList[ 22].name = "火耐性"
+skillList[ 23].name = "水耐性"
+skillList[ 24].name = "雷耐性"
+skillList[ 25].name = "冰耐性"
+skillList[ 26].name = "龙耐性"
+skillList[ 27].name = "属性耐性"
+skillList[ 28].name = "火属性攻击"
+skillList[ 29].name = "水属性攻击"
+skillList[ 30].name = "雷属性攻击"
+skillList[ 31].name = "冰属性攻击"
+skillList[ 32].name = "龙属性攻击"
+skillList[ 33].name = "属性攻击"
+skillList[ 34].name = "特殊攻击"
+skillList[ 35].name = "研磨师"
+skillList[ 36].name = "匠"
+skillList[ 37].name = "锋利度"
+skillList[ 38].name = "剑术"
+skillList[ 39].name = "研磨术"
+skillList[ 40].name = "钝器"
+skillList[ 41].name = "拔刀会心"
+skillList[ 42].name = "拔刀灭气"
+skillList[ 43].name = "纳刀"
+skillList[ 44].name = "纳刀研磨"
+skillList[ 45].name = "刃鳞"
+skillList[ 46].name = "装填速度"
+skillList[ 47].name = "反动"
+skillList[ 48].name = "精密射击"
+skillList[ 49].name = "通常弹强化"
+skillList[ 50].name = "贯通弹强化"
+skillList[ 51].name = "散弹强化"
+skillList[ 52].name = "重击弹强化"
+skillList[ 53].name = "通常弹追加"
+skillList[ 54].name = "贯通弹追加"
+skillList[ 55].name = "散弹追加"
+skillList[ 56].name = "榴弹追加"
+skillList[ 57].name = "扩散弹追加"
+skillList[ 58].name = "毒瓶追加"
+skillList[ 59].name = "麻痹瓶追加"
+skillList[ 60].name = "睡眠瓶追加"
+skillList[ 61].name = "强击瓶追加"
+skillList[ 62].name = "属强瓶追加"
+skillList[ 63].name = "接击瓶追加"
+skillList[ 64].name = "灭气瓶追加"
+skillList[ 65].name = "爆破瓶追加"
+skillList[ 66].name = "速射"
+skillList[ 67].name = "射法"
+skillList[ 68].name = "装填数"
+skillList[ 69].name = "变则射击"
+skillList[ 70].name = "弹药节约"
+skillList[ 71].name = "达人"
+skillList[ 72].name = "痛击"
+skillList[ 73].name = "连击"
+skillList[ 74].name = "特殊会心"
+skillList[ 75].name = "属性会心"
+skillList[ 76].name = "会心强化"
+skillList[ 77].name = "里会心"
+skillList[ 78].name = "蓄力缩短"
+skillList[ 79].name = "耐力"
+skillList[ 80].name = "体术"
+skillList[ 81].name = "气力回复"
+skillList[ 82].name = "持续行走"
+skillList[ 83].name = "回避性能"
+skillList[ 84].name = "回避距离"
+skillList[ 85].name = "泡沫"
+skillList[ 86].name = "防御性能"
+skillList[ 87].name = "防御强化"
+skillList[ 88].name = "KO"
+skillList[ 89].name = "灭气攻击"
+skillList[ 90].name = "笛"
+skillList[ 91].name = "炮术"
+skillList[ 92].name = "重击"
+skillList[ 93].name = "爆弹强化"
+skillList[ 94].name = "认真"
+skillList[ 95].name = "斗魂"
+skillList[ 96].name = "无伤"
+skillList[ 97].name = "机会"
+skillList[ 98].name = "龙气"
+skillList[ 99].name = "底力"
+skillList[100].name = "逆境"
+skillList[101].name = "逆上"
+skillList[102].name = "穷地"
+skillList[103].name = "根性"
+skillList[104].name = "警惕"
+skillList[105].name = "采配"
+skillList[106].name = "号令"
+skillList[107].name = "骑乘"
+skillList[108].name = "跳跃"
+skillList[109].name = "无心"
+skillList[110].name = "忍耐"
+skillList[111].name = "ＳＰ延长"
+skillList[112].name = "千里眼"
+skillList[113].name = "观察眼"
+skillList[114].name = "猎人"
+skillList[115].name = "搬运"
+skillList[116].name = "守护"
+skillList[117].name = "英雄之盾"
+skillList[118].name = "回复量"
+skillList[119].name = "回复速度"
+skillList[120].name = "效果持续"
+skillList[121].name = "广域"
+skillList[122].name = "饥饿感"
+skillList[123].name = "大胃王"
+skillList[124].name = "进食"
+skillList[125].name = "节食"
+skillList[126].name = "肉食"
+skillList[127].name = "茸食"
+skillList[128].name = "野草知识"
+skillList[129].name = "调和成功率"
+skillList[130].name = "调和数"
+skillList[131].name = "高速设置"
+skillList[132].name = "采集"
+skillList[133].name = "蜂蜜"
+skillList[134].name = "护石王"
+skillList[135].name = "反复无常"
+skillList[136].name = "运气"
+skillList[137].name = "剥取"
+skillList[138].name = "捕获"
+skillList[139].name = "贝尔纳"
+skillList[140].name = "科科特"
+skillList[141].name = "波克"
+skillList[142].name = "结云"
+skillList[143].name = "龙识船"
+skillList[144].name = "飞行酒馆"
+skillList[145].name = "红兜"
+skillList[146].name = "大雪主"
+skillList[147].name = "矛碎"
+skillList[148].name = "岩穿"
+skillList[149].name = "紫毒姬"
+skillList[150].name = "宝缠"
+skillList[151].name = "白疾风"
+skillList[152].name = "独眼"
+skillList[153].name = "黑炎王"
+skillList[154].name = "金雷公"
+skillList[155].name = "荒钩爪"
+skillList[156].name = "烬灭刃"
+skillList[157].name = "胧隐"
+skillList[158].name = "铠裂"
+skillList[159].name = "天眼"
+skillList[160].name = "青电主"
+skillList[161].name = "银岭"
+skillList[162].name = "鏖魔"
+skillList[163].name = "真  - 红兜"
+skillList[164].name = "真  - 大雪主"
+skillList[165].name = "真  - 矛碎"
+skillList[166].name = "真  - 岩穿"
+skillList[167].name = "真  - 紫毒姬"
+skillList[168].name = "真  - 宝缠"
+skillList[169].name = "真  - 白疾风"
+skillList[170].name = "真  - 独眼"
+skillList[171].name = "真  - 黑炎王"
+skillList[172].name = "真  - 金雷公"
+skillList[173].name = "真  - 荒钩爪"
+skillList[174].name = "真  - 烬灭刃"
+skillList[175].name = "真  - 胧隐"
+skillList[176].name = "真  - 铠裂"
+skillList[177].name = "真  - 天眼"
+skillList[178].name = "真  - 青电主"
+skillList[179].name = "真  - 银岭"
+skillList[180].name = "真  - 鏖魔"
+skillList[181].name = "北辰纳豆流"
+skillList[182].name = "斩术"
+skillList[183].name = "食欲"
+skillList[184].name = "职工"
+skillList[185].name = "刚腕"
+skillList[186].name = "祈愿"
+skillList[187].name = "暗地工作"
+skillList[188].name = "刀匠"
+skillList[189].name = "射手"
+skillList[190].name = "状态耐性"
+skillList[191].name = "怒"
+skillList[192].name = "回避术"
+skillList[193].name = "居合"
+skillList[194].name = "顽强"
+skillList[195].name = "刚击"
+skillList[196].name = "盾持"
+skillList[197].name = "洁癖"
+skillList[198].name = "增幅"
+skillList[199].name = "护石收集"
+skillList[200].name = "强欲"
+skillList[201].name = "对钢龙"
+skillList[202].name = "对霞龙"
+skillList[203].name = "对炎龙"
+skillList[204].name = "胴系统加倍"
+skillList[205].name = "秘术"
+skillList[206].name = "护石强化"
+
+
+
+
+
+-- Support & Skill of Palico
+pSupportAll[ 1].name = "药草笛之技"
+pSupportAll[ 2].name = "回复笛之技"
+pSupportAll[ 3].name = "真  - 回复笛之技"
+pSupportAll[ 4].name = "解毒  - 消臭笛之技"
+pSupportAll[ 5].name = "应援笛之技"
+pSupportAll[ 6].name = "鬼人笛之技"
+pSupportAll[ 7].name = "硬化笛之技"
+pSupportAll[ 8].name = "超音波笛之技"
+pSupportAll[ 9].name = "迷你桶爆弹之技"
+pSupportAll[10].name = "小桶爆弹之技"
+pSupportAll[11].name = "大桶爆弹之技"
+pSupportAll[12].name = "大桶爆弹G之技"
+pSupportAll[13].name = "特大桶爆弹之技"
+pSupportAll[14].name = "飞空爆弹之技"
+pSupportAll[15].name = "闪光爆弹之技"
+pSupportAll[16].name = "设置型爆弹之技"
+pSupportAll[17].name = "设置型爆弹G之技"
+pSupportAll[18].name = "陷阱之技"
+pSupportAll[19].name = "麻痹陷阱之技"
+pSupportAll[20].name = "剧毒陷阱之技"
+pSupportAll[21].name = "踏板之技"
+pSupportAll[22].name = "猫式活力壶之技"
+pSupportAll[23].name = "回复赠物之技"
+pSupportAll[24].name = "紧急撤退之技"
+pSupportAll[25].name = "巨大回旋镖之技"
+pSupportAll[26].name = "贯通回旋镖之技"
+pSupportAll[27].name = "隐密防御之技"
+pSupportAll[28].name = "武器强化之技"
+pSupportAll[29].name = "愤怒之技"
+pSupportAll[30].name = "挑拨之技"
+pSupportAll[31].name = "随从猫鼓舞之技"
+pSupportAll[32].name = "肥料玉之技"
+pSupportAll[33].name = "应援舞之技"
+pSupportAll[34].name = "治  - 翻滚之技"
+pSupportAll[35].name = "爆  - 翻滚之技"
+pSupportAll[36].name = "偷窃之技"
+pSupportAll[37].name = "远距离偷窃之技"
+pSupportAll[38].name = "猫猫勇往无前之技"
+pSupportAll[39].name = "猫爪乱舞之技"
+pSupportAll[40].name = "踏地之技"
+pSupportAll[41].name = "刺刺坚果大炮之技"
+pSupportAll[42].name = "电转虫发射之技"
+pSupportAll[43].name = "挖掘之技"
+pSupportAll[44].name = "百万吨回旋镖之技"
+pSupportAll[45].name = "猫式火龙车之技"
+pSupportAll[46].name = "野兽变化之技"
+pSupportAll[47].name = "强化咆哮之技"
+pSupportAll[48].name = "猫式回复壶之技"
+pSupportAll[49].name = "返回玉之技"
+pSupportAll[50].name = "地下勇往无前之技"
+pSupportAll[51].name = "设置型炮台之技"
+pSupportAll[52].name = "铁  - 滚滚猫之技"
+pSupportAll[53].name = "爆  - 滚滚猫之技"
+pSupportAll[54].name = "猫式广域笛之技"
+pSupportAll[55].name = "SP笛之技"
+pSupportAll[56].name = "禁忌橡果之技"
+
+
+pSkillAll[ 1].name = "体力强化之术 [小]"
+pSkillAll[ 2].name = "体力强化之术 [大]"
+pSkillAll[ 3].name = "攻击强化之术 [小]"
+pSkillAll[ 4].name = "攻击强化之术 [大]"
+pSkillAll[ 5].name = "防御强化之术 [小]"
+pSkillAll[ 6].name = "防御强化之术 [大]"
+pSkillAll[ 7].name = "全耐性强化之术"
+pSkillAll[ 8].name = "会心强化之术 [小]"
+pSkillAll[ 9].name = "会心强化之术 [大]"
+pSkillAll[10].name = "匠之术"
+pSkillAll[11].name = "爆弹强化之术"
+pSkillAll[12].name = "属性攻击强化之术"
+pSkillAll[13].name = "状态异常攻击强化之术"
+pSkillAll[14].name = "KO之术"
+pSkillAll[15].name = "灭气攻击强化之术"
+pSkillAll[16].name = "防御性能之术 [小]"
+pSkillAll[17].name = "防御性能之术 [大]"
+pSkillAll[18].name = "防御强化之术"
+pSkillAll[19].name = "支援优先之术"
+pSkillAll[20].name = "支援上手之术"
+pSkillAll[21].name = "支援行动追加之术"
+pSkillAll[22].name = "偷窃强化之术"
+pSkillAll[23].name = "复活上手之术"
+pSkillAll[24].name = "热  - 爆弹耐性之术"
+pSkillAll[25].name = "毒耐性之术"
+pSkillAll[26].name = "风压无效之术"
+pSkillAll[27].name = "麻痹无效之术"
+pSkillAll[28].name = "晕眩无效之术"
+pSkillAll[29].name = "混乱无效之术"
+pSkillAll[30].name = "耐震之术"
+pSkillAll[31].name = "防音之术"
+pSkillAll[32].name = "睡眠无效之术"
+pSkillAll[33].name = "細菌学之术"
+pSkillAll[34].name = "防御力DOWN无效之术"
+pSkillAll[35].name = "だるま早割りの術"
+pSkillAll[36].name = "七转八起之术 [攻]"
+pSkillAll[37].name = "七转八起之术 [防]"
+pSkillAll[38].name = "背水之阵之术"
+pSkillAll[39].name = "怒り発動強化の術"
+pSkillAll[40].name = "反击支援上升之术"
+pSkillAll[41].name = "怪物探知之术"
+pSkillAll[42].name = "飞镖上手之术"
+pSkillAll[43].name = "陷阱设置上手之术"
+pSkillAll[44].name = "采取专门之术"
+pSkillAll[45].name = "サボりお仕置きの術"
+pSkillAll[46].name = "体力増加演奏之术"
+pSkillAll[47].name = "黄金魚狙いの術"
+pSkillAll[48].name = "最高のネコよ！の術"
+pSkillAll[49].name = "ハイケイデンスの術"
+pSkillAll[50].name = "地上最强之术"
+pSkillAll[51].name = "ゾンビーの術"
+pSkillAll[52].name = "绝体绝命之术"
+pSkillAll[53].name = "长飞丸之术"
+pSkillAll[54].name = "ファナリスの術"
+pSkillAll[55].name = "エーラの術"
+pSkillAll[56].name = "远程攻击强化之术"
+pSkillAll[57].name = "プチタル爆弾改造の術"
+pSkillAll[58].name = "着こなし上手の術"
+pSkillAll[59].name = "ユニバーサルの術"
+pSkillAll[60].name = "きりみ弁当の術"
+pSkillAll[61].name = "ぐでぐでの術"
+pSkillAll[62].name = "歌姫之术"
+pSkillAll[63].name = "風のタクトの術"
+pSkillAll[64].name = "ランドマスターの術"
+pSkillAll[65].name = "スーパーキノコの術"
+pSkillAll[66].name = "あきんどの術"
+pSkillAll[67].name = "トライフォースの術"
+pSkillAll[68].name = "メガフレアの術"
+pSkillAll[69].name = "防御优先之术"
+pSkillAll[70].name = "体力强化优先之术"
+pSkillAll[71].name = "火耐性强化之术"
+pSkillAll[72].name = "水耐性强化之术"
+pSkillAll[73].name = "雷耐性强化之术"
+pSkillAll[74].name = "冰耐性强化之术"
+pSkillAll[75].name = "龙耐性强化之术"
+
+pSkillAll[77].name = "超会心之术"
+pSkillAll[78].name = "回复速度＋之术"
+pSkillAll[79].name = "爆弾爆破追加の術"
+pSkillAll[80].name = "怒り延長の術"
+pSkillAll[81].name = "回避上手之术"
+pSkillAll[82].name = "经验上手之术"
+pSkillAll[83].name = "水属性强化之术"
+pSkillAll[84].name = "冰属性强化之术"
+pSkillAll[85].name = "龙属性强化之术"
+pSkillAll[86].name = "SP状态延长之术"
+pSkillAll[87].name = "弱点特效之术"
+pSkillAll[88].name = "潜行上手之术"
+pSkillAll[89].name = "根性之术"
+pSkillAll[90].name = "兽化延长之术"
+pSkillAll[91].name = "カブリもの上手の術"
+pSkillAll[92].name = "ネコ加護の術"
+pSkillAll[93].name = "搬运上手之术"
+pSkillAll[94].name = "防御超优先之术"
+pSkillAll[95].name = "転がり転がし上手の術"
+
+
+
+
+
+-- Palico
+editingPalicoPage.kindText[1] = "领袖"
+editingPalicoPage.kindText[2] = "奋斗"
+editingPalicoPage.kindText[3] = "防御"
+editingPalicoPage.kindText[4] = "辅助"
+editingPalicoPage.kindText[5] = "回复"
+editingPalicoPage.kindText[6] = "爆弹"
+editingPalicoPage.kindText[7] = "收集"
+editingPalicoPage.kindText[8] = "野兽"
+
+editingPalicoPage.objectText[1] = "无指定"
+editingPalicoPage.objectText[2] = "只打小型"
+editingPalicoPage.objectText[3] = "小型优先"
+editingPalicoPage.objectText[4] = "平衡"
+editingPalicoPage.objectText[5] = "大型优先"
+editingPalicoPage.objectText[6] = "只打大型"
+
+
+
+
+
+-- Item
+editingItemPage.medicAddItemList[1].name = "鬼人药G"
+editingItemPage.medicAddItemList[2].name = "硬化药G"
+editingItemPage.medicAddItemList[3].name = "强走药G"
+editingItemPage.medicAddItemList[4].name = "怪力之种"
+editingItemPage.medicAddItemList[5].name = "忍耐之种"
+editingItemPage.medicAddItemList[6].name = "秘药"
+editingItemPage.medicAddItemList[7].name = "古代秘药"
+editingItemPage.medicAddItemList[8].name = "生命大粉尘"
+
+editingItemPage.longrangeAddItemList[ 1].name = "空心果"
+editingItemPage.longrangeAddItemList[ 2].name = "空心骨"
+editingItemPage.longrangeAddItemList[ 3].name = "回复药"
+editingItemPage.longrangeAddItemList[ 4].name = "砥石"
+editingItemPage.longrangeAddItemList[ 5].name = "空瓶"
+editingItemPage.longrangeAddItemList[ 6].name = "药草"
+editingItemPage.longrangeAddItemList[ 7].name = "火药草"
+editingItemPage.longrangeAddItemList[ 8].name = "睡眠草"
+editingItemPage.longrangeAddItemList[ 9].name = "洛阳草之根"
+editingItemPage.longrangeAddItemList[10].name = "降霜草"
+editingItemPage.longrangeAddItemList[11].name = "硝化菇"
+editingItemPage.longrangeAddItemList[12].name = "麻痹菇"
+editingItemPage.longrangeAddItemList[13].name = "毒伞菇"
+editingItemPage.longrangeAddItemList[14].name = "疲劳伞菇"
+editingItemPage.longrangeAddItemList[15].name = "染色果"
+editingItemPage.longrangeAddItemList[16].name = "杀龙果"
+editingItemPage.longrangeAddItemList[17].name = "爆裂核桃"
+editingItemPage.longrangeAddItemList[18].name = "针果"
+editingItemPage.longrangeAddItemList[19].name = "贯通果"
+editingItemPage.longrangeAddItemList[20].name = "扩散果"
+editingItemPage.longrangeAddItemList[21].name = "切味鱼"
+editingItemPage.longrangeAddItemList[22].name = "眠鱼"
+editingItemPage.longrangeAddItemList[23].name = "针金枪鱼"
+editingItemPage.longrangeAddItemList[24].name = "爆裂沙丁鱼"
+editingItemPage.longrangeAddItemList[25].name = "扩散凸眼金鱼"
+editingItemPage.longrangeAddItemList[26].name = "破裂龙鱼"
+editingItemPage.longrangeAddItemList[27].name = "爆裂龙鱼"
+editingItemPage.longrangeAddItemList[28].name = "深水沙丁鱼"
+editingItemPage.longrangeAddItemList[29].name = "苦虫"
+editingItemPage.longrangeAddItemList[30].name = "光虫"
+editingItemPage.longrangeAddItemList[31].name = "龙牙"
+editingItemPage.longrangeAddItemList[32].name = "龙爪"
+editingItemPage.longrangeAddItemList[33].name = "鸟龙种的牙"
+editingItemPage.longrangeAddItemList[34].name = "黄速龙的麻痹牙"
+editingItemPage.longrangeAddItemList[35].name = "红速龙的毒牙"
+
+editingItemPage.otherAddItemList[1].name = "素材玉"
+editingItemPage.otherAddItemList[2].name = "增殖稿"
+
+
+
+
+
+-- Talisman
+editingTalismanPage.rareText[ 1] = "R①   兵士护石"
+editingTalismanPage.rareText[ 2] = "R②   斗士护石"
+editingTalismanPage.rareText[ 3] = "R③   骑士护石"
+editingTalismanPage.rareText[ 4] = "R④   城塞护石"
+editingTalismanPage.rareText[ 5] = "R⑤   女王护石"
+editingTalismanPage.rareText[ 6] = "R⑥   王之护石"
+editingTalismanPage.rareText[ 7] = "R⑦   龙之护石"
+editingTalismanPage.rareText[ 8] = "R⑧   英雄护石"
+editingTalismanPage.rareText[ 9] = "R⑨   传说护石"
+editingTalismanPage.rareText[10] = "R⑩   天之护石"
+
+editingTalismanPage.limitsText2[1] = "技能①"
+editingTalismanPage.limitsText2[2] = "技能②"
+
+
+
+
+
+
+-- menu
+TEXT_LOADING = "                            加载中 ..."
+TEXT_EXITING = "                            正在退出 ..."
+TEXT_MOVE = "移动光标"
+TEXT_ENTER = "进入"
+TEXT_CHOOSE = "选择"
+TEXT_RETURN = "上一层"
+TEXT_EXIT = "退出"
+TEXT_OK = "确认"
+TEXT_CANCEL = "取消"
+TEXT_MODIFY = "修改"
+TEXT_PAGETURN = "翻页"
+TEXT_ADD = "添加"
+TEXT_MENU = {
+	"进入修改",
+	"保存修改",
+	"备份/还原",
+	"Language switch"
+}
+TEXT_MENU_E = "欢迎使用MHXX存档修改器3DS ！\n修改完毕后请回到此页面进行保存 ，以让你的修改生效\n修改前还请先备份存档 ，以免发生意外 。"
+TEXT_MENU_O = {
+	"                            确认保存 ？",
+	"                            保存中 ...",
+	"                            保存成功 ！",
+	"                            保存失败 ！"
+}
+TEXT_USERSELECT = {
+	"存档一",
+	"存档二",
+	"存档三"
+}
+TEXT_USERSELECT_E = "请选择你要进行修改的存档 。"
+TEXT_USERSELECT_M = "修改"
+TEXT_USERSELECT_O = {
+	"                  该位置没有检测到存档 ！"
+}
+TEXT_EDITINGMENUPAGE = {
+	"综合",
+	"物品",
+	"幻化",
+	"护石",
+	"猎猫"
+}
+TEXT_EDITINGMENUPAGE_E = "请选择你要进行的修改类型 。"
+TEXT_EDITINGCOMPAGE = {
+	"名字",
+	"性别",
+	"声音",
+	"脸型",
+	"所持金",
+	"龙历院点数",
+	" ＨＲ "
+}
+TEXT_EDITINGCOMPAGE_E = "名字修改暂不支持中文 、日文 。\nHR修改请猎人先解禁HR上限 ，避免出现问题 。\n并且不能直接修改为999 。"
+TEXT_EDITINGCOMPAGE_M = "综合"
+TEXT_EDITINGCOMPAGE_O = {
+	"修改名字 ：",
+	"  确认将名字修改为 “",
+	"” ？",
+	"请输入金钱 ，不能超过7位数 ：",
+	"请输入龙历院点数 ，不能超过7位数 ：",
+	"请输入HR ，不能超过3位数 ："
+}
+TEXT_EDITINGCOMPAGE_SEXEDIT = {
+	"男",
+	"女"
+}
+TEXT_EDITINGCOMPAGE_SEXEDIT_E = "注意 ！修改性别后猎人在进入游戏后会发现存档上标\n注的性别和人物模型的性别不符 ，这属于正常现象 ，在\n游戏中保存一次存档即可正确修改 。"
+TEXT_EDITINGCOMPAGE_SEXEDIT_M = "性别"
+TEXT_EDITINGITEMPAGE = {
+	"消耗品",
+	"远程素材",
+	"其他物品"
+}
+TEXT_EDITINGITEMPAGE_E = "暂不支持在所有物品的列表随意选择进行添加 。"
+TEXT_EDITINGITEMPAGE_M = "物品"
+TEXT_EDITINGITEMPAGE_MEDICADD = {
+	"添加消耗品 (+99)"
+}
+TEXT_EDITINGITEMPAGE_MEDICADD_M = "消耗品"
+TEXT_EDITINGITEMPAGE_LONGRANGEADD = {
+	"添加远程素材 (+99)"
+}
+TEXT_EDITINGITEMPAGE_LONGRANGEADD_M = "远程素材"
+TEXT_EDITINGITEMPAGE_OTHERADD = {
+	"添加其他物品 (+99)"
+}
+TEXT_EDITINGITEMPAGE_OTHERADD_M = "其他物品"
+TEXT_EDITINGITEMPAGE_ALLADD_E = "物品会被添加到你道具箱里最靠前的空位 。"
+TEXT_EDITINGITEMPAGE_ALLADD_O = {
+	"确认添加99个",
+	"到你的道具箱吗 ？",
+	"                            执行中 ...",
+	"                            添加成功 ！",
+	"                 添加失败 ，箱子可能已满 ！"
+}
+TEXT_EDITINGILLUSIONPAGE = {
+	"将第①格防具幻化为第②格防具的外形",
+	"将第③格防具幻化为第④格防具的外形",
+	"将第⑤格防具幻化为第⑥格防具的外形",
+	"将第⑦格防具幻化为第⑧格防具的外形",
+	"将第⑨格防具幻化为第⑩格防具的外形"
+}
+TEXT_EDITINGILLUSIONPAGE_E = "使用方法举例 ：将你要穿戴的防具放在装备箱第一页\n第一格 ,将你需要幻化成的样子的美型防具放在第一页第\n二格 ,使用本页面第一个选项即可完成幻化 。"
+TEXT_EDITINGILLUSIONPAGE_M = "幻化"
+TEXT_EDITINGILLUSIONPAGE_O = {
+	" 确认",
+	" ？",
+	"                            幻化中 ...",
+	"                            幻化成功 ！",
+	"                  幻化失败 ，请放好防具 ！"
+}
+TEXT_EDITINGTALISMANPAGE = {
+	"护石类型",
+	"技能一",
+	"技能二",
+	"孔数",
+	"更改护石类型",
+	"更改技能点",
+	"更改孔数",
+	"选择技能",
+	"添加该护石"
+}
+TEXT_EDITINGTALISMANPAGE_E = "在选择技能时会提示你当前稀有度下 ，对应的该技能\n的[技能1]/[技能2]的理论极限值 ，强行突破造成的后果此\n修改器不承担 。护石会添加到你的装备箱最靠前的空位 。"
+TEXT_EDITINGTALISMANPAGE_M = "护石"
+TEXT_EDITINGTALISMANPAGE_O = {
+	"                  错误 ，必须选择技能一 ！",
+	"                  错误 ，必须填写技能点 ！",
+	"                    确认要添加该护石吗 ？",
+	"                            添加中 ...",
+	"                            添加成功 ！",
+	"                 添加失败 ，箱子可能已满 ！"
+}
+TEXT_EDITINGTALISMANPAGE_CHOOSESKILL = {
+	"极限值",
+	"选定技能"
+}
+TEXT_EDITINGTALISMANPAGE_CHOOSESKILL_M = "选择技能"
+TEXT_EDITINGPALICOPAGE_E = "建议猎人先在外形招募里招募到想要的外观的猎猫 ，\n再进行修改 ，修改时 ，请让猎猫处于完全待机状态 ，不\n能出击 、跟随等 ，请不要修改配信猫 ！避免出现问题 ！"
+TEXT_EDITINGPALICOPAGE_M = "猎猫"
+TEXT_EDITINGPALICOPAGE_EDITING = {
+	"等级",
+	"猎猫类型",
+	"攻击倾向",
+	"命名者",
+	"前主人",
+	"毛皮色",
+	"右眼色",
+	"左眼色",
+	"主动技能",
+	"被动技能",
+	"修改为99级",
+	"保存修改"
+}
+TEXT_EDITINGPALICOPAGE_EDITING_E = "名字修改暂不支持中文 、日文 。修改猎猫类型后请务\n必接着修改主动技能与被动技能 。修改等级暂时只支持\n直接修改99级 。修改完成后需要按Y键保存 。"
+TEXT_EDITINGPALICOPAGE_EDITING_M = "详情"
+TEXT_EDITINGPALICOPAGE_EDITING_O = {
+	"修改猎猫类型后必须修改主动技能与被动技能 ！",
+	"                       确认保存修改吗 ？",
+	"                              保存中 ...",
+	"                  确认修改等级为99吗 ？",
+	"请修改命名者名字 ：",
+	"请修改前主人名字 ：",
+	"请调整毛皮颜色 ：",
+	"请调整右眼颜色 ：",
+	"请调整左眼颜色 ："
+}
+TEXT_SUPPORT_NULL = "----- 无 -----"
+TEXT_SUPPORT_NOTMOD = "（不可更改  ）"
+TEXT_SUPPORT_MODALL = "（传授技能  ）"
+TEXT_SUPPORT_MOD1I2 = "（  二选一    ）"
+TEXT_SUPPORT_MODDEL = "占用点数 ："
+TEXT_SUPPORT_MODADD = "##### 添加新的技能 #####"
+TEXT_EDITINGPALICOPAGE_SUPPORT = {
+	"剩余点数 ：",
+	"删除"
+}
+TEXT_EDITINGPALICOPAGE_SUPPORT_E = "注意 ！点数3的技能只能有一个 ，开头技能不能是单\n独的点数2技能 ，领袖猫比其他猫多1点技能点数 ，领袖\n猫必须有一个点数1的技能 。"
+TEXT_EDITINGPALICOPAGE_SUPPORT_M = "主动技能"
+TEXT_EDITINGPALICOPAGE_SKILL = {
+	"剩余点数 ：",
+	"删除"
+}
+TEXT_EDITINGPALICOPAGE_SKILL_E = "注意 ！点数3的技能只能有一个 ，开头技能不能是单\n独的点数2技能 。领袖猫没有特殊的被动技能规则 。"
+TEXT_EDITINGPALICOPAGE_SKILL_M = "被动技能"
+TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O = {
+	"需要点数 ：",
+	"                        该技能已存在 ！",
+	"        剩余技能点数不为0 ！确认返回 ？",
+	"      点数3的技能只能有一个 ！确认返回 ？",
+	"开头技能不能是单独的点数2技能 ！确认返回 ？",
+	" 领袖猫必须有一个点数1的技能 ！确认返回 ？"
+}
+TEXT_COLORPICKER = {
+	"之前 ：",
+	"现在 ："
+}
+TEXT_KEYBOARD = {
+	"剩余字数 ："
+}
+TEXT_SAV = {
+	"------创建新的备份------",
+	"备份存档",
+	"还原存档",
+	"删除"
+}
+TEXT_SAV_M = "备份/还原"
+TEXT_SAV_O = {
+	"                    确认要删除该备份吗 ？",
+	"                            删除中 ...",
+	"                            删除成功 ！",
+	"备份存档名称 ：",
+	"                            备份中 ...",
+	"                            创建成功 ！",
+	"                    确认要还原该存档吗 ？",
+	"                            还原中 ...",
+	"                            还原成功 ！",
+	"                            还原失败 ！"
+}
+TEXT_DISPLAY = {
+	"ＭＨＸＸ存档修改器  ver ",
+	"：　"
+}

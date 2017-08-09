@@ -21,7 +21,7 @@ keyboard = {
 		--标题
 		Font.print(theFont,45,30,keyboard.title,COLOR_MAKA,TOP_SCREEN)
 		--字数提示
-		Font.print(theFont,270,30,"剩余字数 ："..(keyboard.maxLength-subStringGetTotalIndex(keyboard.displayText)),COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,270,30,TEXT_KEYBOARD[1]..(keyboard.maxLength-subStringGetTotalIndex(keyboard.displayText)),COLOR_MAKA,TOP_SCREEN)
 		--文本
 		local str = keyboard.displayText
 		if keyboard.typingMakaVisible then

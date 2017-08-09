@@ -50,18 +50,7 @@ editingTalismanPage = {
 
 	currentIndex = 1,
 
-	rareText = {
-		"R①   兵士护石",
-		"R②   斗士护石",
-		"R③   骑士护石",
-		"R④   城塞护石",
-		"R⑤   女王护石",
-		"R⑥   王之护石",
-		"R⑦   龙之护石",
-		"R⑧   英雄护石",
-		"R⑨   传说护石",
-		"R⑩   天之护石"
-	},
+	rareText = {},
 
 	currentSetting = {
 		rare = 1,
@@ -102,10 +91,10 @@ editingTalismanPage = {
 			Font.print(theFont,315,170,">",COLOR_MAKA,TOP_SCREEN)
 		end
 		--字
-		Font.print(theFont,80,50,"护石类型",COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,80,50,TEXT_EDITINGTALISMANPAGE[1],COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,50,editingTalismanPage.rareText[editingTalismanPage.currentSetting.rare],COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 
-		Font.print(theFont,80,90,"技能一",COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,80,90,TEXT_EDITINGTALISMANPAGE[2],COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,160,90,skillList[editingTalismanPage.currentSetting.sk_id[1]+1].name,COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		local str1 = editingTalismanPage.currentSetting.sk_pt[1]
 		if str1>=0 then
@@ -113,7 +102,7 @@ editingTalismanPage = {
 		end
 		Font.print(theFont,290,90,str1,COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		
-		Font.print(theFont,80,130,"技能二",COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,80,130,TEXT_EDITINGTALISMANPAGE[3],COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,160,130,skillList[editingTalismanPage.currentSetting.sk_id[2]+1].name,COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		local str2 = editingTalismanPage.currentSetting.sk_pt[2]
 		if str2>=0 then
@@ -121,43 +110,43 @@ editingTalismanPage = {
 		end
 		Font.print(theFont,290,130,str2,COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		
-		Font.print(theFont,80,170,"孔数",COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,80,170,TEXT_EDITINGTALISMANPAGE[4],COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,295,170,editingTalismanPage.currentSetting.slot,COLOR_EDITINGTALISMANPAGE_FONT,TOP_SCREEN)
 		
 		----下屏
 		if editingTalismanPage.currentIndex==1 then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","更改护石类型"},
-				{"Y","添加该护石"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_EDITINGTALISMANPAGE[5]},
+				{"Y",TEXT_EDITINGTALISMANPAGE[9]},
+				{"B",TEXT_RETURN}
 			}
 		end
 		if editingTalismanPage.currentIndex==2 or editingTalismanPage.currentIndex==3 then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","更改技能点"},
-				{"A","选择技能"},
-				{"Y","添加该护石"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_EDITINGTALISMANPAGE[6]},
+				{"A",TEXT_EDITINGTALISMANPAGE[8]},
+				{"Y",TEXT_EDITINGTALISMANPAGE[9]},
+				{"B",TEXT_RETURN}
 			}
 		end
 		if editingTalismanPage.currentIndex==4 then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","更改孔数"},
-				{"Y","添加该护石"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_EDITINGTALISMANPAGE[7]},
+				{"Y",TEXT_EDITINGTALISMANPAGE[9]},
+				{"B",TEXT_RETURN}
 			}
 		end
-		display.explain = "在选择技能时会提示你当前稀有度下 ，对应的该技能\n的[技能1]/[技能2]的理论极限值 ，强行突破造成的后果此\n修改器不承担 。护石会添加到你的装备箱最靠前的空位 。"
+		display.explain = TEXT_EDITINGTALISMANPAGE_E
 	end,
 
 	padLoop = function()
 		editingTalismanPage.mode = 0
 		editingTalismanPage.visible = true
 		editingMenuPage.visible = false
-		display.mark.nextMark.nextMark = {name = "护石"}
+		display.mark.nextMark.nextMark = {name = TEXT_EDITINGTALISMANPAGE_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -216,17 +205,17 @@ editingTalismanPage = {
 			end
 			if pad.isPress(KEY_Y) then
 				if editingTalismanPage.currentSetting.sk_id[1]==0 then
-					messageBox.show("                  错误 ，必须选择技能一 ！","确认","取消")
+					messageBox.show(TEXT_EDITINGTALISMANPAGE_O[1],TEXT_OK,TEXT_CANCEL)
 				else
 					if editingTalismanPage.currentSetting.sk_pt[1]==0 then
-						messageBox.show("                  错误 ，必须填写技能点 ！","确认","取消")
+						messageBox.show(TEXT_EDITINGTALISMANPAGE_O[2],TEXT_OK,TEXT_CANCEL)
 					else
-						if messageBox.show("                    确认要添加该护石吗 ？","确认","取消")=="A" then
-							messageBox.toast("                            添加中 ...")
+						if messageBox.show(TEXT_EDITINGTALISMANPAGE_O[3],TEXT_OK,TEXT_CANCEL)=="A" then
+							messageBox.toast(TEXT_EDITINGTALISMANPAGE_O[4])
 							if editingTalismanPage.addTalisman( editingTalismanPage.currentSetting.rare, editingTalismanPage.currentSetting.sk_id[1], editingTalismanPage.currentSetting.sk_id[2], editingTalismanPage.currentSetting.sk_pt[1], editingTalismanPage.currentSetting.sk_pt[2], editingTalismanPage.currentSetting.slot ) then
-								messageBox.show("                            添加成功 ！","确认","取消")
+								messageBox.show(TEXT_EDITINGTALISMANPAGE_O[5],TEXT_OK,TEXT_CANCEL)
 							else
-								messageBox.show("                 添加失败 ，箱子可能已满 ！","确认","取消")
+								messageBox.show(TEXT_EDITINGTALISMANPAGE_O[6],TEXT_OK,TEXT_CANCEL)
 							end
 						end
 					end
@@ -258,10 +247,7 @@ editingTalismanPage = {
 		"R⑩"
 	},
 
-	limitsText2 = {
-		"技能①",
-		"技能②"
-	},
+	limitsText2 = {},
 
 	currentEditingLoc_chooseSkill = 1,
 	currentIndex_chooseSkill = 1,
@@ -275,7 +261,7 @@ editingTalismanPage = {
 		Font.print(theFont,35,15+20*(editingTalismanPage.currentIndex_chooseSkill-editingTalismanPage.displayIndexFirst_chooseSkill+1),"=>",COLOR_MAKA,TOP_SCREEN)
 		--字
 		--极限值标题
-		Font.print(theFont,260,10,editingTalismanPage.limitsText1[editingTalismanPage.currentSetting.rare].."-"..editingTalismanPage.limitsText2[editingTalismanPage.currentEditingLoc_chooseSkill].."-".."极限值",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,260,10,editingTalismanPage.limitsText1[editingTalismanPage.currentSetting.rare].."-"..editingTalismanPage.limitsText2[editingTalismanPage.currentEditingLoc_chooseSkill].."-"..TEXT_EDITINGTALISMANPAGE_CHOOSESKILL[1],COLOR_MAKA,TOP_SCREEN)
 		for i=1,10 do
 			if i<=#skillList then
 				--技能名
@@ -312,17 +298,17 @@ editingTalismanPage = {
 		----下屏
 		if editingTalismanPage.currentIndex_chooseSkill==1 then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","选定技能"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_EDITINGTALISMANPAGE_CHOOSESKILL[2]},
+				{"B",TEXT_RETURN}
 			}
 		else
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","选定技能"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_EDITINGTALISMANPAGE_CHOOSESKILL[2]},
+				{"B",TEXT_RETURN}
 			}
 		end
 	end,
@@ -338,7 +324,7 @@ editingTalismanPage = {
 		if editingTalismanPage.displayIndexFirst_chooseSkill>#skillList-9 then
 			editingTalismanPage.displayIndexFirst_chooseSkill = #skillList-9
 		end
-		display.mark.nextMark.nextMark.nextMark = {name = "选择技能"}
+		display.mark.nextMark.nextMark.nextMark = {name = TEXT_EDITINGTALISMANPAGE_CHOOSESKILL_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then

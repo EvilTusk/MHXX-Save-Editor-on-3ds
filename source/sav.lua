@@ -60,7 +60,7 @@ sav = {
 	init = function()
 		System.createDirectory("/XXBackup")
 		local list = System.listDirectory("/XXBackup/")
-		sav.backupFileList = {"------创建新的备份------"}
+		sav.backupFileList = {TEXT_SAV[1]}
 		for i,v in ipairs(list) do
 			if string.sub(v.name,-6,-1)==".xxsav" then
 				table.insert(sav.backupFileList,string.sub(v.name,1,-7))
@@ -91,18 +91,18 @@ sav = {
 		----下屏
 		if sav.currentIndex==1 then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"A","备份存档"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"A",TEXT_SAV[2]},
+				{"B",TEXT_RETURN}
 			}
 		else
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","翻页"},
-				{"X","删除"},
-				{"A","还原存档"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_PAGETURN},
+				{"X",TEXT_SAV[4]},
+				{"A",TEXT_SAV[3]},
+				{"B",TEXT_RETURN}
 			}
 		end
 	end,
@@ -113,7 +113,7 @@ sav = {
 		sav.displayIndexFirst = 1
 		sav.visible = true
 		menu.visible = false
-		display.mark = {name = "备份/还原"}
+		display.mark = {name = TEXT_SAV_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -157,13 +157,13 @@ sav = {
 			end
 			if pad.isPress(KEY_X) then
 				if sav.currentIndex~=1 then
-					if messageBox.show("                    确认要删除该备份吗 ？","确认","取消")=="A" then
+					if messageBox.show(TEXT_SAV_O[1],TEXT_OK,TEXT_CANCEL)=="A" then
 						local path = "/XXBackup/"..sav.backupFileList[sav.currentIndex]..".xxsav"
-						messageBox.toast("                            删除中 ...")
+						messageBox.toast(TEXT_SAV_O[2])
 						if System.doesFileExist(path) then
 							System.deleteFile(path)
 						end
-						messageBox.show("                            删除成功 ！","确认","取消")
+						messageBox.show(TEXT_SAV_O[3],TEXT_OK,TEXT_CANCEL)
 						sav.padLoop()
 					end
 				end
@@ -173,22 +173,22 @@ sav = {
 					local week,day,month,year = System.getDate()
 					local h,m,s = System.getTime()
 					local fileName = year.."___"..month.."___"..day.."___"..h.."___"..m.."___"..s
-					fileName = keyboard.get("备份存档名称 ：",fileName,40)
+					fileName = keyboard.get(TEXT_SAV_O[4],fileName,40)
 					if fileName~="" then
 						local path = "/XXBackup/"..fileName..".xxsav"
-						messageBox.toast("                            备份中 ...")
+						messageBox.toast(TEXT_SAV_O[5])
 						sav.export(path)
-						messageBox.show("                            创建成功 ！","确认","取消")
+						messageBox.show(TEXT_SAV_O[6],TEXT_OK,TEXT_CANCEL)
 						sav.padLoop()
 					end
 				else
-					if messageBox.show("                    确认要还原该存档吗 ？","确认","取消")=="A" then
-						messageBox.toast("                            还原中 ...")
+					if messageBox.show(TEXT_SAV_O[7],TEXT_OK,TEXT_CANCEL)=="A" then
+						messageBox.toast(TEXT_SAV_O[8])
 						local path = "/XXBackup/"..sav.backupFileList[sav.currentIndex]..".xxsav"
 						if sav.import(path) then
-							messageBox.show("                            还原成功 ！","确认","取消")
+							messageBox.show(TEXT_SAV_O[9],TEXT_OK,TEXT_CANCEL)
 						else
-							messageBox.show("                            还原失败 ！","确认","取消")
+							messageBox.show(TEXT_SAV_O[10],TEXT_OK,TEXT_CANCEL)
 						end
 					end
 				end

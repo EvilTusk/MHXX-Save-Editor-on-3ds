@@ -1,0 +1,683 @@
+-- Skill of Hunter
+skillList[  1].name = "Nothing"
+skillList[  2].name = "Poison"
+skillList[  3].name = "Paralysis"
+skillList[  4].name = "Sleep"
+skillList[  5].name = "Stun"
+skillList[  6].name = "Hearing"
+skillList[  7].name = "Wind Res"
+skillList[  8].name = "Tremor Res"
+skillList[  9].name = "Bind Res"
+skillList[ 10].name = "Heat Res"
+skillList[ 11].name = "Cold Res"
+skillList[ 12].name = "Cold Blooded"
+skillList[ 13].name = "Hot Blooded"
+skillList[ 14].name = "Anti-Theft"
+skillList[ 15].name = "Def Lock"
+skillList[ 16].name = "Frenzy Res"
+skillList[ 17].name = "Biology"
+skillList[ 18].name = "Bleeding"
+skillList[ 19].name = "Attack"
+skillList[ 20].name = "Defense"
+skillList[ 21].name = "Health"
+skillList[ 22].name = "Fire Res"
+skillList[ 23].name = "Water Res"
+skillList[ 24].name = "Thunder Res"
+skillList[ 25].name = "Ice Res"
+skillList[ 26].name = "Dragon Res"
+skillList[ 27].name = "Blight Res"
+skillList[ 28].name = "Fire Atk"
+skillList[ 29].name = "Water Atk"
+skillList[ 30].name = "Thunder Atk"
+skillList[ 31].name = "Ice Atk"
+skillList[ 32].name = "Dragon Atk"
+skillList[ 33].name = "Elemental"
+skillList[ 34].name = "Status"
+skillList[ 35].name = "Sharpener"
+skillList[ 36].name = "Handicraft"
+skillList[ 37].name = "Sharpness"
+skillList[ 38].name = "Fencing"
+skillList[ 39].name = "Grinder"
+skillList[ 40].name = "Blunt"
+skillList[ 41].name = "Crit Draw"
+skillList[ 42].name = "Punish Draw"
+skillList[ 43].name = "Sheathing"
+skillList[ 44].name = "Sword Polisher"
+skillList[ 45].name = "Blade Scale"
+skillList[ 46].name = "Reaload Spd"
+skillList[ 47].name = "Recoil"
+skillList[ 48].name = "Precision"
+skillList[ 49].name = "Normal Up"
+skillList[ 50].name = "Pierce Up"
+skillList[ 51].name = "Pellet Up"
+skillList[ 52].name = "Heavy Up"
+skillList[ 53].name = "Normal S+"
+skillList[ 54].name = "Pierce S+"
+skillList[ 55].name = "Pellet S+"
+skillList[ 56].name = "Crag S+"
+skillList[ 57].name = "Clust S+"
+skillList[ 58].name = "Poison C+"
+skillList[ 59].name = "Para C+"
+skillList[ 60].name = "Sleep C+"
+skillList[ 61].name = "Power C+"
+skillList[ 62].name = "Elem C+"
+skillList[ 63].name = "C.Range C+"
+skillList[ 64].name = "Exhaust C+"
+skillList[ 65].name = "Blast C+"
+skillList[ 66].name = "Rapid Fire"
+skillList[ 67].name = "Dead Eye"
+skillList[ 68].name = "Loading"
+skillList[ 69].name = "Haphazard"
+skillList[ 70].name = "Ammo Saver"
+skillList[ 71].name = "Expert"
+skillList[ 72].name = "Tenderizer"
+skillList[ 73].name = "Chain Crit"
+skillList[ 74].name = "Crit Status"
+skillList[ 75].name = "Crit Element"
+skillList[ 76].name = "Critical Up"
+skillList[ 77].name = "Neg Affinity"
+skillList[ 78].name = "Fast Charge"
+skillList[ 79].name = "Stamina"
+skillList[ 80].name = "Constitution"
+skillList[ 81].name = "Stam Recov"
+skillList[ 82].name = "Long-Winded"
+skillList[ 83].name = "Evasion"
+skillList[ 84].name = "Evade Dist"
+skillList[ 85].name = "Bubble"
+skillList[ 86].name = "Guard"
+skillList[ 87].name = "Guard Up"
+skillList[ 88].name = "KO"
+skillList[ 89].name = "Stam Drain"
+skillList[ 90].name = "Maestro"
+skillList[ 91].name = "Artillery"
+skillList[ 92].name = "Destroyer"
+skillList[ 93].name = "Bomb Boost"
+skillList[ 94].name = "Gloves Off"
+skillList[ 95].name = "Spirit"
+skillList[ 96].name = "Unscathed"
+skillList[ 97].name = "Chance"
+skillList[ 98].name = "D.Instinct"
+skillList[ 99].name = "Potential"
+skillList[100].name = "Survivor"
+skillList[101].name = "Furor"
+skillList[102].name = "Crisis"
+skillList[103].name = "Guts"
+skillList[104].name = "Sense"
+skillList[105].name = "Team Player"
+skillList[106].name = "Team Leader"
+skillList[107].name = "Mounting"
+skillList[108].name = "Vault"
+skillList[109].name = "Insight"
+skillList[110].name = "Aware"
+skillList[111].name = "SP+"
+skillList[112].name = "Psychic"
+skillList[113].name = "Perception"
+skillList[114].name = "Ranger"
+skillList[115].name = "Transportr"
+skillList[116].name = "Protection"
+skillList[117].name = "Hero Shield"
+skillList[118].name = "Rec Level"
+skillList[119].name = "Rec Speed"
+skillList[120].name = "Lasting Pwr"
+skillList[121].name = "Wide-Range"
+skillList[122].name = "Hunger"
+skillList[123].name = "Gluttony"
+skillList[124].name = "Eating"
+skillList[125].name = "Light Eater"
+skillList[126].name = "Carnivore"
+skillList[127].name = "Mycology"
+skillList[128].name = "Botany"
+skillList[129].name = "Combo Rate"
+skillList[130].name = "Combo Plus"
+skillList[131].name = "Speed Setup"
+skillList[132].name = "Gathering"
+skillList[133].name = "Honey"
+skillList[134].name = "Charmer"
+skillList[135].name = "Whim"
+skillList[136].name = "Fate"
+skillList[137].name = "Carving"
+skillList[138].name = "Tranquilzr"
+skillList[139].name = "Bherna"
+skillList[140].name = "Kokoto"
+skillList[141].name = "Pokke"
+skillList[142].name = "Yukumo"
+skillList[143].name = "W.Airboat"
+skillList[144].name = "F.Tavern"
+skillList[145].name = "Redhelm"
+skillList[146].name = "Snowbaron"
+skillList[147].name = "Stonefist"
+skillList[148].name = "Drilltusk"
+skillList[149].name = "Dreedqueen"
+skillList[150].name = "C.beard"
+skillList[151].name = "Silverwind"
+skillList[152].name = "Deadeye"
+skillList[153].name = "Dreedking"
+skillList[154].name = "Thunderlord"
+skillList[155].name = "Grimclaw"
+skillList[156].name = "Hellblade"
+skillList[157].name = "Hazewing"
+skillList[158].name = "Shredclaw"
+skillList[159].name = "Divinesight"
+skillList[160].name = "Azurebolt"
+skillList[161].name = "Frostpeak"
+skillList[162].name = "Bloodlust"
+skillList[163].name = "Redhelm G"
+skillList[164].name = "Snowbaron G"
+skillList[165].name = "Stonefist G"
+skillList[166].name = "Drilltusk G"
+skillList[167].name = "Dreedqueen G"
+skillList[168].name = "C.beard G"
+skillList[169].name = "Silverwind G"
+skillList[170].name = "Deadeye G"
+skillList[171].name = "Dreedking G"
+skillList[172].name = "Thunderlord G"
+skillList[173].name = "Grimclaw G"
+skillList[174].name = "Hellblade G"
+skillList[175].name = "Hazewing G"
+skillList[176].name = "Shredclaw G"
+skillList[177].name = "Divinesight G"
+skillList[178].name = "Azurebolt G"
+skillList[179].name = "Frostpeak G"
+skillList[180].name = "Bloodlust G"
+skillList[181].name = "D. Fencing"
+skillList[182].name = "Edge Lore"
+skillList[183].name = "Power Eater"
+skillList[184].name = "Mechanic"
+skillList[185].name = "Brawn"
+skillList[186].name = "Prayer"
+skillList[187].name = "Covert"
+skillList[188].name = "Edgemaster"
+skillList[189].name = "Steady Hand"
+skillList[190].name = "Status Res"
+skillList[191].name = "Fury"
+skillList[192].name = "Nimbleness"
+skillList[193].name = "Sheathed"
+skillList[194].name = "Resilience"
+skillList[195].name = "Brutality"
+skillList[196].name = "Stalwart"
+skillList[197].name = "Prudence"
+skillList[198].name = "Amplify"
+skillList[199].name = "Hoarding"
+skillList[200].name = "Avarice"
+skillList[201].name = "Anti-Steel"
+skillList[202].name = "Anti-Haze"
+skillList[203].name = "Anti-Fire"
+skillList[204].name = "Torso Up"
+skillList[205].name = "Mystery"
+skillList[206].name = "Talisman+"
+
+
+
+
+
+-- Support & Skill of Palico
+pSupportAll[ 1].name = "Herb Horn"
+pSupportAll[ 2].name = "Health Horn"
+pSupportAll[ 3].name = "True Health Horn"
+pSupportAll[ 4].name = "Detox Horn"
+pSupportAll[ 5].name = "Cheer Horn"
+pSupportAll[ 6].name = "Demon Horn"
+pSupportAll[ 7].name = "Armor Horn"
+pSupportAll[ 8].name = "Ultrasonic Horn"
+pSupportAll[ 9].name = "Mini Barrel Bombay"
+pSupportAll[10].name = "Barrel Bombay"
+pSupportAll[11].name = "Big Barrel Bombay"
+pSupportAll[12].name = "Mega Barrel Bombay"
+pSupportAll[13].name = "Giga Barrel Bombay"
+pSupportAll[14].name = "Bounce Bombay"
+pSupportAll[15].name = "Flash Bombay"
+pSupportAll[16].name = "Anti-Monster Mine"
+pSupportAll[17].name = "Anti-Monster Mine+"
+pSupportAll[18].name = "Pitfall Purr-ison"
+pSupportAll[19].name = "Shock Purr-ison"
+pSupportAll[20].name = "Poison Purr-ison"
+pSupportAll[21].name = "Trampoliner"
+pSupportAll[22].name = "Vase of Vitality"
+pSupportAll[23].name = "Parting Gift"
+pSupportAll[24].name = "Emergency Retreat"
+pSupportAll[25].name = "Big Boomerangs"
+pSupportAll[26].name = "Piercing Boomerangs"
+pSupportAll[27].name = "Camouflage"
+pSupportAll[28].name = "Weapon Upgrade"
+pSupportAll[29].name = "Furr-ious"
+pSupportAll[30].name = "Taunt"
+pSupportAll[31].name = "Palico Rally"
+pSupportAll[32].name = "Dung Bombay"
+pSupportAll[33].name = "Go, Fight, Win"
+pSupportAll[34].name = "Soothing Roll"
+pSupportAll[35].name = "Explosive Roll"
+pSupportAll[36].name = "Pilfer"
+pSupportAll[37].name = "Plunderang"
+pSupportAll[38].name = "Felyne Comet"
+pSupportAll[39].name = "Claw Dance"
+pSupportAll[40].name = "Sumo Stomp"
+pSupportAll[41].name = "Chestnut Cannon"
+pSupportAll[42].name = "Shock Tripper"
+pSupportAll[43].name = "Excavator"
+pSupportAll[44].name = "Mega Boomerang"
+pSupportAll[45].name = "Rath-of-Meow"
+pSupportAll[46].name = "Beast Mode"
+pSupportAll[47].name = "Power Roar"
+pSupportAll[48].name = "Vase of Recovery"
+pSupportAll[49].name = "Purr-Caster"
+pSupportAll[50].name = "Diving Attack"
+pSupportAll[51].name = "Felyne Cannon"
+pSupportAll[52].name = "Wrecking Ball"
+pSupportAll[53].name = "Bombing Ride"
+pSupportAll[54].name = "Enhanced Horn"
+pSupportAll[55].name = "SP Horn"
+pSupportAll[56].name = "Acorn Sacrifice"
+
+
+pSkillAll[ 1].name = "Health Up (S)"
+pSkillAll[ 2].name = "Health Up (L)"
+pSkillAll[ 3].name = "Attack (S)"
+pSkillAll[ 4].name = "Attack (L)"
+pSkillAll[ 5].name = "Defense Up (S)"
+pSkillAll[ 6].name = "Defense Up (L)"
+pSkillAll[ 7].name = "Omniresistance"
+pSkillAll[ 8].name = "Critical Up (S)"
+pSkillAll[ 9].name = "Critical Up (L)"
+pSkillAll[10].name = "Handicraft"
+pSkillAll[11].name = "Bombay Boost"
+pSkillAll[12].name = "Element Attack Up"
+pSkillAll[13].name = "Status Attack Up"
+pSkillAll[14].name = "Knockout King"
+pSkillAll[15].name = "Stamina Drain"
+pSkillAll[16].name = "Guard (S)"
+pSkillAll[17].name = "Guard (L)"
+pSkillAll[18].name = "Guard Boost"
+pSkillAll[19].name = "Support Priority"
+pSkillAll[20].name = "Support Boost"
+pSkillAll[21].name = "Support Move +1"
+pSkillAll[22].name = "Pilfer Boost"
+pSkillAll[23].name = "Revival Pro"
+pSkillAll[24].name = "Heat/Bomb Res"
+pSkillAll[25].name = "Negate Poison"
+pSkillAll[26].name = "Negate Wind"
+pSkillAll[27].name = "Negate Paralysis"
+pSkillAll[28].name = "Negate Stun"
+pSkillAll[29].name = "Negate Confusion"
+pSkillAll[30].name = "Tremor Res"
+pSkillAll[31].name = "Earplugs"
+pSkillAll[32].name = "Negate Sleep"
+pSkillAll[33].name = "Biology"
+pSkillAll[34].name = "Iron Hide"
+pSkillAll[35].name = "Non-Stick Fur"
+pSkillAll[36].name = "Nine Lives (Attack)"
+pSkillAll[37].name = "Nine Lives (Defense)"
+pSkillAll[38].name = "Last Stand"
+pSkillAll[39].name = "Anger Prone"
+pSkillAll[40].name = "Counter Boost"
+pSkillAll[41].name = "Monsterdar"
+pSkillAll[42].name = "Boomerang Pro"
+pSkillAll[43].name = "Pro Trapper"
+pSkillAll[44].name = "Gathering Pro"
+pSkillAll[45].name = "Slacker Slap"
+pSkillAll[46].name = "Health Harmonics"
+pSkillAll[47].name = "Goldenfish Catcher"
+pSkillAll[48].name = "Baddest Cat Ever"
+pSkillAll[49].name = "High Cadence"
+pSkillAll[50].name = "World's Strongest"
+pSkillAll[51].name = "Zombie"
+pSkillAll[52].name = "Desperation"
+pSkillAll[53].name = "Nagatobimaru"
+pSkillAll[54].name = "Fanalis"
+pSkillAll[55].name = "Aera"
+pSkillAll[56].name = "Ranged Attack Up"
+pSkillAll[57].name = "Sonic Mini Bombay"
+pSkillAll[58].name = "Fashion Sense"
+pSkillAll[59].name = "Universal"
+pSkillAll[60].name = "Bento Jutsu"
+pSkillAll[61].name = "Jugido"
+pSkillAll[62].name = "Diva"
+pSkillAll[63].name = "Wind Waker"
+pSkillAll[64].name = "Landmaster"
+pSkillAll[65].name = "Super Mushroom"
+pSkillAll[66].name = "Shopkeeping"
+pSkillAll[67].name = "Triforce"
+pSkillAll[68].name = "Megaflare"
+pSkillAll[69].name = "DEF-centric"
+pSkillAll[70].name = "STAM-centric"
+pSkillAll[71].name = "Fire Res Up"
+pSkillAll[72].name = "Water Res Up"
+pSkillAll[73].name = "Thunder Res Up"
+pSkillAll[74].name = "Ice Res Up"
+pSkillAll[75].name = "Dragon Res Up"
+
+pSkillAll[77].name = "Crit Boost"
+pSkillAll[78].name = "Recovery Up"
+pSkillAll[79].name = "Bombercat"
+pSkillAll[80].name = "Angery"
+pSkillAll[81].name = "Evasion Up"
+pSkillAll[82].name = "Trainer"
+pSkillAll[83].name = "Water Up"
+pSkillAll[84].name = "Ice Up"
+pSkillAll[85].name = "Dragon Up"
+pSkillAll[86].name = "SP Extender"
+pSkillAll[87].name = "Weakness Exploit"
+pSkillAll[88].name = "Ground Diver"
+pSkillAll[89].name = "Moxie"
+pSkillAll[90].name = "Beastly Cat"
+pSkillAll[91].name = "Morph Ball Bomb"
+pSkillAll[92].name = "Lucky Protector"
+pSkillAll[93].name = "Bomb Transporter"
+pSkillAll[94].name = "Defense Priority"
+pSkillAll[95].name = "Rolling Boost"
+
+
+
+-- Palico
+editingPalicoPage.kindText[1] = "leader"
+editingPalicoPage.kindText[2] = "struggle"
+editingPalicoPage.kindText[3] = "defense"
+editingPalicoPage.kindText[4] = "assist"
+editingPalicoPage.kindText[5] = "heal"
+editingPalicoPage.kindText[6] = "bomb"
+editingPalicoPage.kindText[7] = "collect"
+editingPalicoPage.kindText[8] = "beast"
+
+editingPalicoPage.objectText[1] = "No assign"
+editingPalicoPage.objectText[2] = "Small Only"
+editingPalicoPage.objectText[3] = "Small PRI"
+editingPalicoPage.objectText[4] = "Ballance"
+editingPalicoPage.objectText[5] = "Large PRI"
+editingPalicoPage.objectText[6] = "Large Only"
+
+
+
+
+-- Item
+editingItemPage.medicAddItemList[1].name = "Mega Demondrug"
+editingItemPage.medicAddItemList[2].name = "Mega Armorskin"
+editingItemPage.medicAddItemList[3].name = "Mega Dash Juice"
+editingItemPage.medicAddItemList[4].name = "Might Seed"
+editingItemPage.medicAddItemList[5].name = "Adamant Seed"
+editingItemPage.medicAddItemList[6].name = "Max Potion"
+editingItemPage.medicAddItemList[7].name = "Ancient Potion"
+editingItemPage.medicAddItemList[8].name = "Dust of Life"
+
+editingItemPage.longrangeAddItemList[ 1].name = "Huskberry"
+editingItemPage.longrangeAddItemList[ 2].name = "Bone Husk"
+editingItemPage.longrangeAddItemList[ 3].name = "Potion"
+editingItemPage.longrangeAddItemList[ 4].name = "Whetstone"
+editingItemPage.longrangeAddItemList[ 5].name = "Empty Phial"
+editingItemPage.longrangeAddItemList[ 6].name = "Herb"
+editingItemPage.longrangeAddItemList[ 7].name = "Fire Herb"
+editingItemPage.longrangeAddItemList[ 8].name = "Sleep Herb"
+editingItemPage.longrangeAddItemList[ 9].name = "Gloamgrass Root"
+editingItemPage.longrangeAddItemList[10].name = "Snow Herb"
+editingItemPage.longrangeAddItemList[11].name = "Nitroshroom"
+editingItemPage.longrangeAddItemList[12].name = "Parashroom"
+editingItemPage.longrangeAddItemList[13].name = "Toadstool"
+editingItemPage.longrangeAddItemList[14].name = "Mopeshroom"
+editingItemPage.longrangeAddItemList[15].name = "Paintberry"
+editingItemPage.longrangeAddItemList[16].name = "Dragonfell Berry"
+editingItemPage.longrangeAddItemList[17].name = "Scatternut"
+editingItemPage.longrangeAddItemList[18].name = "Needleberry"
+editingItemPage.longrangeAddItemList[19].name = "Latchberry"
+editingItemPage.longrangeAddItemList[20].name = "Bomberry"
+editingItemPage.longrangeAddItemList[21].name = "Whetfish"
+editingItemPage.longrangeAddItemList[22].name = "Sleepyfish"
+editingItemPage.longrangeAddItemList[23].name = "Pin Tuna"
+editingItemPage.longrangeAddItemList[24].name = "Popfish"
+editingItemPage.longrangeAddItemList[25].name = "Scatterfish"
+editingItemPage.longrangeAddItemList[26].name = "Burst Arowana"
+editingItemPage.longrangeAddItemList[27].name = "Bomb Arowana"
+editingItemPage.longrangeAddItemList[28].name = "Wanchovy"
+editingItemPage.longrangeAddItemList[29].name = "Bitterbug"
+editingItemPage.longrangeAddItemList[30].name = "Flashbug"
+editingItemPage.longrangeAddItemList[31].name = "Wyvern Fang"
+editingItemPage.longrangeAddItemList[32].name = "Wyvern Claw"
+editingItemPage.longrangeAddItemList[33].name = "Bird Wyvern Fang"
+editingItemPage.longrangeAddItemList[34].name = "Genprey Fang"
+editingItemPage.longrangeAddItemList[35].name = "Ioprey Fang"
+
+editingItemPage.otherAddItemList[1].name = "Bomb Casing"
+editingItemPage.otherAddItemList[2].name = "Slickaxe"
+
+
+
+
+-- Talisman
+editingTalismanPage.rareText[ 1] = "        Rare 1"
+editingTalismanPage.rareText[ 2] = "        Rare 2"
+editingTalismanPage.rareText[ 3] = "        Rare 3"
+editingTalismanPage.rareText[ 4] = "        Rare 4"
+editingTalismanPage.rareText[ 5] = "        Rare 5"
+editingTalismanPage.rareText[ 6] = "        Rare 6"
+editingTalismanPage.rareText[ 7] = "        Rare 7"
+editingTalismanPage.rareText[ 8] = "        Rare 8"
+editingTalismanPage.rareText[ 9] = "        Rare 9"
+editingTalismanPage.rareText[10] = "        Rare 10"
+
+editingTalismanPage.limitsText2[1] = "Skill 1"
+editingTalismanPage.limitsText2[2] = "Skill 2"
+
+
+
+
+
+-- menu
+TEXT_LOADING = "Loading..."
+TEXT_EXITING = "Exiting..."
+TEXT_MOVE = "Move"
+TEXT_ENTER = "Enter"
+TEXT_CHOOSE = "Choose"
+TEXT_RETURN = "Return"
+TEXT_EXIT = "Exit"
+TEXT_OK = "OK"
+TEXT_CANCEL = "Cancel"
+TEXT_MODIFY = "Modify"
+TEXT_PAGETURN = "Page Turn"
+TEXT_ADD = "Add"
+TEXT_MENU = {
+	"Enter editor",
+	"Save your changes",
+	"Backup/Restore",
+	"语言切换"
+}
+TEXT_MENU_E = "Welcome to the MHXX Save Editor on 3DS ! After the\nmodification, please go back to this page to save your\nchanges. And please backup the Save before you modify."
+TEXT_MENU_O = {
+	"Are you sure you want to save it?",
+	"Saving...",
+	"Done !",
+	"Failed !"
+}
+TEXT_USERSELECT = {
+	"SAVE 1",
+	"SAVE 2",
+	"SAVE 3"
+}
+TEXT_USERSELECT_E = "Select the Save you want to modify."
+TEXT_USERSELECT_M = "Modify"
+TEXT_USERSELECT_O = {
+	"The Save in this location does not exist !"
+}
+TEXT_EDITINGMENUPAGE = {
+	"Comprehensive",
+	"Items",
+	"Illusion",
+	"Talisman",
+	"Palico"
+}
+TEXT_EDITINGMENUPAGE_E = "Please select the type of modification."
+TEXT_EDITINGCOMPAGE = {
+	"Name",
+	"Gender",
+	"Voice",
+	"Face",
+	"Money",
+	"Pts.",
+	"HR."
+}
+TEXT_EDITINGCOMPAGE_E = "The name does not support Japanese. Please follow the \nprogress of the game. Do not modify HR directly to 999"
+TEXT_EDITINGCOMPAGE_M = "Comprehensive"
+TEXT_EDITINGCOMPAGE_O = {
+	"Name :",
+	"Is \"",
+	"\" you want?",
+	"Money :",
+	"Pts :",
+	"HR :"
+}
+TEXT_EDITINGCOMPAGE_SEXEDIT = {
+	"Male",
+	"Female"
+}
+TEXT_EDITINGCOMPAGE_SEXEDIT_E = "After modification, the description of the save in game is \nnot correct, but you only need to save again in the game."
+TEXT_EDITINGCOMPAGE_SEXEDIT_M = "Gender"
+TEXT_EDITINGITEMPAGE = {
+	"Medicine",
+	"Long-Range material",
+	"Others"
+}
+TEXT_EDITINGITEMPAGE_E = "All items are not supported."
+TEXT_EDITINGITEMPAGE_M = "Items"
+TEXT_EDITINGITEMPAGE_MEDICADD = {
+	"        Add (+99)"
+}
+TEXT_EDITINGITEMPAGE_MEDICADD_M = "Medicine"
+TEXT_EDITINGITEMPAGE_LONGRANGEADD = {
+	"        Add (+99)"
+}
+TEXT_EDITINGITEMPAGE_LONGRANGEADD_M = "Long-Range material"
+TEXT_EDITINGITEMPAGE_OTHERADD = {
+	"        Add (+99)"
+}
+TEXT_EDITINGITEMPAGE_OTHERADD_M = "Others"
+TEXT_EDITINGITEMPAGE_ALLADD_E = "Add to the top empty space in the box."
+TEXT_EDITINGITEMPAGE_ALLADD_O = {
+	"Add 99 ",
+	" to your box?",
+	"Running...",
+	"Done !",
+	"Failed ! Your box may be full."
+}
+TEXT_EDITINGILLUSIONPAGE = {
+	"Make illusion for 1st eqpt look like 2nd eqpt in box",
+	"Make illusion for 3rd eqpt look like 4th eqpt in box",
+	"Make illusion for 5th eqpt look like 6th eqpt in box",
+	"Make illusion for 7th eqpt look like 8th eqpt in box",
+	"Make illusion for 9th eqpt look like 10th eqpt in box"
+}
+TEXT_EDITINGILLUSIONPAGE_E = "Example: The eqpt you wear put at 1st slot in box, the eqpt\nyou want to look like put at 2nd slot in box, then use first\noption in thie page."
+TEXT_EDITINGILLUSIONPAGE_M = "Illusion"
+TEXT_EDITINGILLUSIONPAGE_O = {
+	"",
+	"?",
+	"Running...",
+	"Done !",
+	"Failed ! Please set the eqpt to correct position."
+}
+TEXT_EDITINGTALISMANPAGE = {
+	"Type",
+	"Skill 1",
+	"Skill 2",
+	"Slot",
+	"Change type",
+	"Change skill point",
+	"Change slot",
+	"Choose skill",
+	"Add it to box"
+}
+TEXT_EDITINGTALISMANPAGE_E = "When you choose the skill, you will be prompted to the\ntheoretical limit of the skills. Talisman will add to the top\nempty space in the box."
+TEXT_EDITINGTALISMANPAGE_M = "Talisman"
+TEXT_EDITINGTALISMANPAGE_O = {
+	"Must choose skill 1 !",
+	"Must fill in skill points !",
+	"Are you sure you want to add this talisman ?",
+	"Running...",
+	"Done !",
+	"Failed ! Your box may be full."
+}
+TEXT_EDITINGTALISMANPAGE_CHOOSESKILL = {
+	"Limits",
+	"Choose skill"
+}
+TEXT_EDITINGTALISMANPAGE_CHOOSESKILL_M = "Choose skill"
+TEXT_EDITINGPALICOPAGE_E = "It is recommended to recruit to the specified appearance\npalico. Please let the palico to be modified in the standby\nstate, can not be in the working and followwing state."
+TEXT_EDITINGPALICOPAGE_M = "Palico"
+TEXT_EDITINGPALICOPAGE_EDITING = {
+	"Level",
+	"Forte",
+	"Target",
+	"Name giver",
+	"Previous master",
+	"Coat color",
+	"Right eye color",
+	"Left eye color",
+	"Support",
+	"Skill",
+	"Modify to 99",
+	"SAVE"
+}
+TEXT_EDITINGPALICOPAGE_EDITING_E = "Must modify the support&skill after change the forte ! After\nthe modification is complete, press Y to save."
+TEXT_EDITINGPALICOPAGE_EDITING_M = "Details"
+TEXT_EDITINGPALICOPAGE_EDITING_O = {
+	"Must modify the support&skill after change the forte !",
+	"Are you sure you want to save the changes ?",
+	"Saving...",
+	"Modify the level to 99 ?",
+	"Name giver :",
+	"Previous master :",
+	"Coat color :",
+	"Right eye color :",
+	"Left eye color :"
+}
+TEXT_SUPPORT_NULL = "----- Nothing -----"
+TEXT_SUPPORT_NOTMOD = "(Unchangeable)"
+TEXT_SUPPORT_MODALL = "(Teach skills)"
+TEXT_SUPPORT_MOD1I2 = "(Pick one)"
+TEXT_SUPPORT_MODDEL = "Occupies points:"
+TEXT_SUPPORT_MODADD = "##### Add new skill #####"
+TEXT_EDITINGPALICOPAGE_SUPPORT = {
+	"Remaining point:",
+	"Delete"
+}
+TEXT_EDITINGPALICOPAGE_SUPPORT_E = "Points 3 skills can only have one. The first skill can not be a\nseparate point 2 skills. The leader has an extra point, but it\nmust have a points 1 skill."
+TEXT_EDITINGPALICOPAGE_SUPPORT_M = "Support"
+TEXT_EDITINGPALICOPAGE_SKILL = {
+	"Remaining point:",
+	"Delete"
+}
+TEXT_EDITINGPALICOPAGE_SKILL_E = "Points 3 skills can only have one. The first skill can not be a\nseparate point 2 skills. Leader do not have special rules to\nfollow."
+TEXT_EDITINGPALICOPAGE_SKILL_M = "Skill"
+TEXT_EDITINGPALICOPAGE_SUPPORTANDSKILL_O = {
+	"Occupies points:",
+	"Failed ! It is already existed !",
+	"The remaining points are not 0, confirm to return ?",
+	"Points 3 skills can only have one ! confirm to return ?",
+	"The first skill can not be a separate point 2 skills.",
+	"Leader must hava a points 1 skill ! confirm to return ?"
+}
+TEXT_COLORPICKER = {
+	"Before :",
+	"Now   :"
+}
+TEXT_KEYBOARD = {
+	"Remaining words:"
+}
+TEXT_SAV = {
+	"------Create new save------",
+	"Backup save",
+	"Restore save",
+	"Delete"
+}
+TEXT_SAV_M = "Backup/Restore"
+TEXT_SAV_O = {
+	"Confirm to delete this backup ?",
+	"Deleting...",
+	"Done !",
+	"File name :",
+	"Backuping...",
+	"Done !",
+	"Confirm to restore this save ?",
+	"Restoring...",
+	"Done !",
+	"Failed !"
+}
+TEXT_DISPLAY = {
+	"MHXX Save Editor ver ",
+	":    "
+}

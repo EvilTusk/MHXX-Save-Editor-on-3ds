@@ -78,10 +78,10 @@ display = {
 
 			--下屏
 			Screen.fillRect(0,319,0,239,COLOR_HINT_BACKGROUND,BOTTOM_SCREEN)
-			Font.print(theFont,95,30, "ＭＨＸＸ存档修改器  ver "..version,COLOR_HINT_TITLE,BOTTOM_SCREEN)
+			Font.print(theFont,95,30, TEXT_DISPLAY[1]..version,COLOR_HINT_TITLE,BOTTOM_SCREEN)
 			for i,v in ipairs(display.hint) do
 				Font.print(theFont,110,40+20*i, v[1],COLOR_HINT_ICON,BOTTOM_SCREEN)
-				Font.print(theFont,150,40+20*i, "：　"..v[2],COLOR_HINT_FONT,BOTTOM_SCREEN)
+				Font.print(theFont,150,40+20*i, TEXT_DISPLAY[2]..v[2],COLOR_HINT_FONT,BOTTOM_SCREEN)
 			end
 			Screen.fillRect(18,301,158,202,COLOR_HINT_EXPLAINBOXEDGE,BOTTOM_SCREEN)
 			Screen.fillRect(19,300,159,201,COLOR_HINT_BACKGROUND,BOTTOM_SCREEN)

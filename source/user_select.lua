@@ -28,12 +28,6 @@ userSelect = {
 	end,
 
 	
-	userStr = {
-		"存档一",
-		"存档二",
-		"存档三"
-	},
-	
 	display = function()
 		----上屏
 		--背景
@@ -44,18 +38,18 @@ userSelect = {
 		--字
 		for i=1,3 do
 			if userSelect.userExist[i] then
-				Font.print(theFont,180,30+40*i,userSelect.userStr[i],COLOR_USERSELECT_EXIST,TOP_SCREEN)
+				Font.print(theFont,180,30+40*i,TEXT_USERSELECT[i],COLOR_USERSELECT_EXIST,TOP_SCREEN)
 			else
-				Font.print(theFont,180,30+40*i,userSelect.userStr[i],COLOR_USERSELECT_NULL,TOP_SCREEN)
+				Font.print(theFont,180,30+40*i,TEXT_USERSELECT[i],COLOR_USERSELECT_NULL,TOP_SCREEN)
 			end
 		end
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","进入"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"A",TEXT_ENTER},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "请选择你要进行修改的存档 。"
+		display.explain = TEXT_USERSELECT_E
 	end,
 	
 	padLoop = function()
@@ -63,7 +57,7 @@ userSelect = {
 		editingMenuPage.visible = false
 		userSelect.visible = true
 		menu.visible = false
-		display.mark = {name = "修改"}
+		display.mark = {name = TEXT_USERSELECT_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -78,13 +72,13 @@ userSelect = {
 			end
 			if pad.isPress(KEY_A) then
 				if userSelect.userExist[userSelect.currentIndex] then
-					messageBox.toast("                            读取中 ...")
+					messageBox.toast(TEXT_LOADING)
 					offset = userSelect.userOffset[userSelect.currentIndex]
 					item.getItemBox()
 					palico.getPalicoZone()
 					editingMenuPage.padLoop()
 				else
-					messageBox.show("                  该位置没有检测到存档 ！","确认","取消")
+					messageBox.show(TEXT_USERSELECT_O[1],TEXT_OK,TEXT_CANCEL)
 				end
 			end
 			if pad.isPress(KEY_B) then

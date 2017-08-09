@@ -1,7 +1,7 @@
-P_ABILITY_NULL = 57
+P_SUPPORT_NULL = 57
 P_SKILL_NULL = 96
 
-pAbilityTree = {
+pSupportTree = {
 	["11111111"] = {0,14},
 	["221111"]   = {1,12},
 	["22211"]    = {2,11},
@@ -11,7 +11,7 @@ pAbilityTree = {
 	["3221"]     = {6,10}
 }
 
-pAbility = {
+pSupport = {
 	{
 		32,
 		34,
@@ -59,7 +59,7 @@ pAbility = {
 	}
 }
 
-pAbilityO = {
+pSupportO = {
 	{
 		31
 	},
@@ -99,7 +99,7 @@ pAbilityO = {
 	}
 }
 
-pAbilityS = {
+pSupportS = {
 	9,
 	1
 }
@@ -240,7 +240,7 @@ pSkillD = {
 	95
 }
 
-pAbilityAll = {
+pSupportAll = {
 	[1] = { name = "薬草笛の技" , pt = 0 },
 	[2] = { name = "回復笛の技" , pt = 3 },
 	[3] = { name = "真  - 回復笛の技" , pt = 0 },

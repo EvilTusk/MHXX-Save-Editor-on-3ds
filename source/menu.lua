@@ -11,19 +11,20 @@ menu = {
 		--背景
 		Screen.fillRect(0,399,0,239,COLOR_MENU_BACKGROUND,TOP_SCREEN)
 		--光标
-		Font.print(theFont,150,30+menu.currentIndex*40,"=>",COLOR_MAKA,TOP_SCREEN)
-		Font.print(theFont,240,30+menu.currentIndex*40,"<=",COLOR_MAKA,TOP_SCREEN)
+		Font.print(theFont,150,30+menu.currentIndex*30,"=>",COLOR_MAKA,TOP_SCREEN)
+		--Font.print(theFont,240,30+menu.currentIndex*40,"<=",COLOR_MAKA,TOP_SCREEN)
 		--字
-		Font.print(theFont,180,70,"进入修改",COLOR_MENU_FONT,TOP_SCREEN)
-		Font.print(theFont,180,110,"保存修改",COLOR_MENU_FONT,TOP_SCREEN)
-		Font.print(theFont,178,150,"备份/还原",COLOR_MENU_FONT,TOP_SCREEN)
+		Font.print(theFont,170,60,TEXT_MENU[1],COLOR_MENU_FONT,TOP_SCREEN)
+		Font.print(theFont,170,90,TEXT_MENU[2],COLOR_MENU_FONT,TOP_SCREEN)
+		Font.print(theFont,170,120,TEXT_MENU[3],COLOR_MENU_FONT,TOP_SCREEN)
+		Font.print(theFont,170,150,TEXT_MENU[4],COLOR_MENU_FONT,TOP_SCREEN)
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","进入"},
-			{"START","退出"}
+			{"↑↓",TEXT_MOVE},
+			{"A",TEXT_ENTER},
+			{"START",TEXT_EXIT}
 		}
-		display.explain = "欢迎使用MHXX存档修改器3DS ！\n修改完毕后请回到此页面进行保存 ，以让你的修改生效\n修改前还请先备份存档 ，以免发生意外 。"
+		display.explain = TEXT_MENU_E
 	end,
 	
 	padLoop = function()
@@ -39,7 +40,7 @@ menu = {
 				end
 			end
 			if pad.isPress(KEY_DDOWN) then
-				if menu.currentIndex<3 then
+				if menu.currentIndex<4 then
 					menu.currentIndex = menu.currentIndex+1
 				end
 			end
@@ -48,21 +49,34 @@ menu = {
 					userSelect.padLoop()
 				end
 				if menu.currentIndex==2 then
-					if messageBox.show("                            确认保存 ？","确认","取消")=="A" then
-						messageBox.toast("                            保存中 ...")
+					if messageBox.show(TEXT_MENU_O[1],TEXT_OK,TEXT_CANCEL)=="A" then
+						messageBox.toast(TEXT_MENU_O[2])
 						if sav.import() then
-							messageBox.show("                            保存成功 ！","确认","取消")
+							messageBox.show(TEXT_MENU_O[3],TEXT_OK,TEXT_CANCEL)
 						else
-							messageBox.show("                            保存失败 ！","确认","取消")
+							messageBox.show(TEXT_MENU_O[4],TEXT_OK,TEXT_CANCEL)
 						end
 					end
 				end
 				if menu.currentIndex==3 then
 					sav.padLoop()
 				end
+				if menu.currentIndex==4 then
+					if lang=="zh" then
+						lang = "en"
+						dofile(romfsPath.."lang_en")
+					else
+						lang = "zh"
+						dofile(romfsPath.."lang_zh")
+					end
+					fs = io.open("/XXBackup/.setting",FWRITE)
+					io.write(fs,0,lang,2)
+					io.close(fs)
+					menu.padLoop()
+				end
 			end
 			if pad.isPress(KEY_START) then
-				messageBox.toast("                            正在退出 ...")
+				messageBox.toast(TEXT_EXITING)
 				System.deleteFile("/MHXX_sav")
 				System.exit()
 			end

@@ -125,9 +125,9 @@ editingComPage = {
 	
 	getGender = function()
 		if editingComPage.getSex()==1 then
-			return "女"
+			return TEXT_EDITINGCOMPAGE_SEXEDIT[2]
 		end
-		return "男"
+		return TEXT_EDITINGCOMPAGE_SEXEDIT[1]
 	end,
 	
 	getVoice = function()
@@ -203,35 +203,35 @@ editingComPage = {
 			Font.print(theFont,225,45+editingComPage.currentIndex*20,"(A)",COLOR_MAKA,TOP_SCREEN)
 		end
 		--字
-		Font.print(theFont,120,65,"名字",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,65,TEXT_EDITINGCOMPAGE[1],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,65,editingComPage.toDisplay.hunterName,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,85,"性别",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,85,TEXT_EDITINGCOMPAGE[2],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,85,editingComPage.toDisplay.gender,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,105,"声音",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,105,TEXT_EDITINGCOMPAGE[3],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,105,editingComPage.toDisplay.voice,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,125,"脸型",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,125,TEXT_EDITINGCOMPAGE[4],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,125,editingComPage.toDisplay.face,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,145,"所持金",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,145,TEXT_EDITINGCOMPAGE[5],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,145,editingComPage.toDisplay.money,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,165,"龙历院点数",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,165,TEXT_EDITINGCOMPAGE[6],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,165,editingComPage.toDisplay.ap,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,120,185," ＨＲ ",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,120,185,TEXT_EDITINGCOMPAGE[7],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		Font.print(theFont,240,185,editingComPage.toDisplay.hr,COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		----下屏
 		if editingComPage.currentIndex==3 or editingComPage.currentIndex==4 then
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"←→","更改"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"←→",TEXT_MODIFY},
+				{"B",TEXT_RETURN}
 			}
 		else
 			display.hint = {
-				{"↑↓","移动光标"},
-				{"A","修改"},
-				{"B","上一层"}
+				{"↑↓",TEXT_MOVE},
+				{"A",TEXT_MODIFY},
+				{"B",TEXT_RETURN}
 			}
 		end
-		display.explain = "名字修改暂不支持中文 、日文 。\nHR修改请猎人先解禁HR上限 ，避免出现问题 。\n并且不能直接修改为999 。"
+		display.explain = TEXT_EDITINGCOMPAGE_E
 	end,
 	
 	padLoop = function()
@@ -239,7 +239,7 @@ editingComPage = {
 		editingComPage.toDisplayRefresh()
 		editingComPage.visible = true
 		editingMenuPage.visible = false
-		display.mark.nextMark.nextMark = {name = "综合"}
+		display.mark.nextMark.nextMark = {name = TEXT_EDITINGCOMPAGE_M}
 		while true do
 			pad.reload()
 			if pad.isPress(KEY_DUP) then
@@ -283,9 +283,9 @@ editingComPage = {
 			if pad.isPress(KEY_A) then
 				--名字
 				if editingComPage.currentIndex==1 then
-					local str = keyboard.get("修改名字 ：",editingComPage.getHunterName(),10)
+					local str = keyboard.get(TEXT_EDITINGCOMPAGE_O[1],editingComPage.getHunterName(),10)
 					if str~="" then
-						if messageBox.show("  确认将名字修改为 “"..str.."” ？","确认","取消")=="A" then
+						if messageBox.show(TEXT_EDITINGCOMPAGE_O[2]..str..TEXT_EDITINGCOMPAGE_O[3],TEXT_OK,TEXT_CANCEL)=="A" then
 							editingComPage.setHunterName(str)
 							editingComPage.toDisplayRefresh()
 						end
@@ -297,7 +297,7 @@ editingComPage = {
 				end
 				--所持金
 				if editingComPage.currentIndex==5 then
-					local money = keyboard.get("请输入金钱 ，不能超过7位数 ：",editingComPage.toDisplay.money,7,ONLY_NUMBER)
+					local money = keyboard.get(TEXT_EDITINGCOMPAGE_O[4],editingComPage.toDisplay.money,7,ONLY_NUMBER)
 					if money~="" then
 						editingComPage.setMoney(money)
 						editingComPage.toDisplayRefresh()
@@ -305,7 +305,7 @@ editingComPage = {
 				end
 				--龙历院点数
 				if editingComPage.currentIndex==6 then
-					local ap = keyboard.get("请输入龙历院点数 ，不能超过7位数 ：",editingComPage.toDisplay.ap,7,ONLY_NUMBER)
+					local ap = keyboard.get(TEXT_EDITINGCOMPAGE_O[5],editingComPage.toDisplay.ap,7,ONLY_NUMBER)
 					if ap~="" then
 						editingComPage.setAP(ap)
 						editingComPage.toDisplayRefresh()
@@ -313,7 +313,7 @@ editingComPage = {
 				end
 				--HR
 				if editingComPage.currentIndex==7 then
-					local hr = keyboard.get("请输入HR ，不能超过3位数 ：",editingComPage.toDisplay.hr,3,ONLY_NUMBER)
+					local hr = keyboard.get(TEXT_EDITINGCOMPAGE_O[6],editingComPage.toDisplay.hr,3,ONLY_NUMBER)
 					if hr~="" then
 						if hr==999 then
 							hr = 998
@@ -341,21 +341,21 @@ editingComPage = {
 		Font.print(theFont,170,50+editingComPage.currentIndex_sexEdit*20,"=>",COLOR_MAKA,TOP_SCREEN)
 		Font.print(theFont,210,50+editingComPage.currentIndex_sexEdit*20,"<=",COLOR_MAKA,TOP_SCREEN)
 		--字
-		Font.print(theFont,190,70,"男",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
-		Font.print(theFont,190,90,"女",COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,190,70,TEXT_EDITINGCOMPAGE_SEXEDIT[1],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
+		Font.print(theFont,190,90,TEXT_EDITINGCOMPAGE_SEXEDIT[2],COLOR_EDITINGCOMPAGE_FONT,TOP_SCREEN)
 		----下屏
 		display.hint = {
-			{"↑↓","移动光标"},
-			{"A","确认修改"},
-			{"B","上一层"}
+			{"↑↓",TEXT_MOVE},
+			{"A",TEXT_MODIFY},
+			{"B",TEXT_RETURN}
 		}
-		display.explain = "注意 ！修改性别后猎人在进入游戏后会发现存档上标\n注的性别和人物模型的性别不符 ，这属于正常现象 ，在\n游戏中保存一次存档即可正确修改 。"
+		display.explain = TEXT_EDITINGCOMPAGE_SEXEDIT_E
 	end,
 	
 	padLoop_sexEdit = function()
 		editingComPage.mode = 2
 		editingComPage.currentIndex_sexEdit = editingComPage.getSex()+1
-		display.mark.nextMark.nextMark.nextMark = {name = "性别"}
+		display.mark.nextMark.nextMark.nextMark = {name = TEXT_EDITINGCOMPAGE_SEXEDIT_M}
 		display.refresh()
 		while true do
 			pad.reload()

@@ -6,7 +6,7 @@ theFont = Font.load(romfsPath.."Deng.ttf")
 Font.setPixelSizes(theFont,12)
 
 
-version = "0.51"
+version = "1.00"
 
 
 COLOR_MAKA = Color.new(0,255,0)
@@ -30,9 +30,25 @@ dofile(romfsPath.."skill_list.lua")
 dofile(romfsPath.."skill_list_palico.lua")
 dofile(romfsPath.."user_select.lua")
 
+System.createDirectory("/XXBackup")
+if not System.doesFileExist("/XXBackup/.setting") then
+	fs = io.open("/XXBackup/.setting",FCREATE)
+	io.write(fs,0,"en",2)
+	io.close(fs)
+end
+fs = io.open("/XXBackup/.setting",FREAD)
+lang = io.read(fs,0,2)
+if lang=="zh" then
+	dofile(romfsPath.."lang_zh")
+else
+	dofile(romfsPath.."lang_en")
+end
+io.close(fs)
+
+
 offset = 0
 
-messageBox.toast("                            加载中 ...")
+messageBox.toast(TEXT_LOADING)
 sav.export()
 menu.padLoop()
 
