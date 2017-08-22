@@ -6,7 +6,7 @@ theFont = Font.load(romfsPath.."Deng.ttf")
 Font.setPixelSizes(theFont,12)
 
 
-version = "1.00"
+version = "1.11"
 
 
 COLOR_MAKA = Color.new(0,255,0)
@@ -38,12 +38,15 @@ if not System.doesFileExist("/XXBackup/.setting") then
 end
 fs = io.open("/XXBackup/.setting",FREAD)
 lang = io.read(fs,0,2)
-if lang=="zh" then
-	dofile(romfsPath.."lang_zh")
-else
-	dofile(romfsPath.."lang_en")
+if lang~="zh" and lang~="en" then
+	io.close(fs)
+	io.open("/XXBackup/.setting",FWRITE)
+	io.write(fs,0,"en",2)
+	lang = "en"
+	io.close(fs)
 end
 io.close(fs)
+dofile(romfsPath.."lang_"..lang)
 
 
 offset = 0

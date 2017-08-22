@@ -37,13 +37,13 @@ colorPicker = {
 	end,
 	
 	displayInit = function()
-		local bmp = Screen.loadImage(romfsPath.."color_picker.bmp")
+		local bmp = Screen.loadImage(romfsPath.."color_picker_"..lang..".bmp")
 		Screen.drawImage(0,0,bmp,BOTTOM_SCREEN)
 		Screen.freeImage(bmp)
 		--[[Screen.fillRect(0,319,0,239,Color.new(170,170,200),BOTTOM_SCREEN)
 		Screen.fillRect(0,399,0,239,Color.new(0,0,0),TOP_SCREEN)
-		Font.print(theFont,colorPicker.deckLoc.x,colorPicker.deckLoc.y-18,"色盘 ：",Color.new(0,0,0),BOTTOM_SCREEN)
-		Font.print(theFont,colorPicker.deckLoc.x,colorPicker.deckLoc.y-18,"色盘 ：",Color.new(0,0,0),BOTTOM_SCREEN)
+		Font.print(theFont,colorPicker.deckLoc.x,colorPicker.deckLoc.y-18,"Color plate :",Color.new(0,0,0),BOTTOM_SCREEN)
+		Font.print(theFont,colorPicker.deckLoc.x,colorPicker.deckLoc.y-18,"Color plate :",Color.new(0,0,0),BOTTOM_SCREEN)
 		for y=0,128 do
 			for x=0,51 do
 				local a = 255-y                                        --255
@@ -61,16 +61,17 @@ colorPicker = {
 			end
 		end
 
-		Font.print(theFont,colorPicker.brightLoc.x,colorPicker.brightLoc.y-18,"明亮度 ：",Color.new(0,0,0),BOTTOM_SCREEN)
-		Font.print(theFont,colorPicker.brightLoc.x,colorPicker.brightLoc.y-18,"明亮度 ：",Color.new(0,0,0),BOTTOM_SCREEN)
+		Font.print(theFont,colorPicker.brightLoc.x,colorPicker.brightLoc.y-18,"Brightness :",Color.new(0,0,0),BOTTOM_SCREEN)
+		Font.print(theFont,colorPicker.brightLoc.x,colorPicker.brightLoc.y-18,"Brightness :",Color.new(0,0,0),BOTTOM_SCREEN)
 		for x=0,255 do
 			Screen.fillRect(colorPicker.brightLoc.x+x,colorPicker.brightLoc.x+x,colorPicker.brightLoc.y,colorPicker.brightLoc.y+20,Color.new(x,x,x),BOTTOM_SCREEN)
 		end
 		
-		Font.print(theFont,200,220,"A ：确认",Color.new(255,0,0),BOTTOM_SCREEN)
-		Font.print(theFont,200,220,"A ：确认",Color.new(255,0,0),BOTTOM_SCREEN)
-		Font.print(theFont,260,220,"B ：取消",Color.new(255,0,0),BOTTOM_SCREEN)
-		Font.print(theFont,260,220,"B ：取消",Color.new(255,0,0),BOTTOM_SCREEN)]]
+		Font.print(theFont,200,220,"A : OK",Color.new(255,0,0),BOTTOM_SCREEN)
+		Font.print(theFont,200,220,"A : OK",Color.new(255,0,0),BOTTOM_SCREEN)
+		Font.print(theFont,260,220,"B : Cancel",Color.new(255,0,0),BOTTOM_SCREEN)
+		Font.print(theFont,260,220,"B : Cancel",Color.new(255,0,0),BOTTOM_SCREEN)
+		System.takeScreenshot("/file.bmp",false)]]
 	end,
 	
 	show = function(title,iR,iG,iB)
@@ -85,7 +86,7 @@ colorPicker = {
 				if x>=colorPicker.deckLoc.x and x<=colorPicker.deckLoc.x+306 and y>=colorPicker.deckLoc.y and y<=colorPicker.deckLoc.y+128 then
 					colorPicker.colorLoc.x = x
 					colorPicker.colorLoc.y = y
-					local bmp = Graphics.loadImage(romfsPath.."color_picker.bmp")
+					local bmp = Graphics.loadImage(romfsPath.."color_picker_"..lang..".bmp")
 					local p = Graphics.getPixel(colorPicker.colorLoc.x,colorPicker.colorLoc.y,bmp)
 					local r,g,b
 					if colorPicker.bright>=128 then
@@ -105,7 +106,7 @@ colorPicker = {
 				end
 				if x>=colorPicker.brightLoc.x and x<=colorPicker.brightLoc.x+255 and y>=colorPicker.brightLoc.y and y<=colorPicker.brightLoc.y+20 then
 					colorPicker.bright = x-colorPicker.brightLoc.x
-					local bmp = Graphics.loadImage(romfsPath.."color_picker.bmp")
+					local bmp = Graphics.loadImage(romfsPath.."color_picker_"..lang..".bmp")
 					local p = Graphics.getPixel(colorPicker.colorLoc.x,colorPicker.colorLoc.y,bmp)
 					local r,g,b
 					if colorPicker.bright>=128 then

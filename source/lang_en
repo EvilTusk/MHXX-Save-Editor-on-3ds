@@ -555,16 +555,18 @@ TEXT_EDITINGITEMPAGE_ALLADD_O = {
 	"Failed ! Your box may be full."
 }
 TEXT_EDITINGILLUSIONPAGE = {
-	"Make illusion for 1st eqpt look like 2nd eqpt in box",
-	"Make illusion for 3rd eqpt look like 4th eqpt in box",
-	"Make illusion for 5th eqpt look like 6th eqpt in box",
-	"Make illusion for 7th eqpt look like 8th eqpt in box",
-	"Make illusion for 9th eqpt look like 10th eqpt in box"
+	"Make illusion for 1st eqpt look like 2nd eqpt in box (Hunter)",
+	"Make illusion for 3rd eqpt look like 4th eqpt in box (Hunter)",
+	"Make illusion for 5th eqpt look like 6th eqpt in box (Hunter)",
+	"Make illusion for 7th eqpt look like 8th eqpt in box (Hunter)",
+	"Make illusion for 9th eqpt look like 10th eqpt in box (Hunter)",
+	"Make illusion for 1st eqpt look like 2nd eqpt in box (Palico)",
+	"Make illusion for 3rd eqpt look like 4th eqpt in box (Palico)"
 }
-TEXT_EDITINGILLUSIONPAGE_E = "Example: The eqpt you wear put at 1st slot in box, the eqpt\nyou want to look like put at 2nd slot in box, then use first\noption in thie page."
+TEXT_EDITINGILLUSIONPAGE_E = "Example: The eqpt you wear put at 1st slot in box, the eqpt\nyou want to look like put at 2nd slot in box, then use first\noption in this page."
 TEXT_EDITINGILLUSIONPAGE_M = "Illusion"
 TEXT_EDITINGILLUSIONPAGE_O = {
-	"",
+	"Are you sure",
 	"?",
 	"Running...",
 	"Done !",
